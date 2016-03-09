@@ -2,16 +2,27 @@ package netease.com.weather;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import netease.com.weather.api.ApiService;
+import netease.com.weather.model.Attitude;
+import netease.com.weather.model.TopTen;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +51,34 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        initData();
+
+    }
+
+    private void initData() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiService.BASE_BASE)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ApiService service = retrofit.create(ApiService.class);
+
+        Call<Attitude> call = service.getAttitude();
+        call.enqueue(new Callback<Attitude>() {
+            @Override
+            public void onResponse(Call<Attitude> call, Response<Attitude> response) {
+                if (response != null) {
+                    ((TextView) findViewById(R.id.content)).setText(response.body().getEndtime());
+                    response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Attitude> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

@@ -1,3 +1,3 @@
 # Weather
 new third party
-s
+use MVP to construct this app

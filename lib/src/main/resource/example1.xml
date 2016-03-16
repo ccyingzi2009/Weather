@@ -1,0 +1,554 @@
+<!doctype html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+                <title>爱鼠绘漫画网</title>
+                <meta name="description" content="">
+                    <meta name="keywords" content="">
+                        <meta name="renderer" content="webkit">
+                            <meta http-equiv="cache-control" content="no-siteapp">
+                                <meta name="viewport" content="width=device-width">
+                                    
+                                    <script src="/Content/scripts/jq.js"></script>
+                                    <link rel="stylesheet" href="/Content/styles/style.css">
+                                        <link rel="stylesheet" type="text/css" media="only screen and (min-width:641px) and (max-width:1025px),only screen and (min-device-width:641px) and (max-device-width:1024px)" href="/Content/styles/pad.css">
+                                            <link rel="stylesheet" type="text/css" media="only screen and (max-width:640px),only screen and (max-device-width:640px)" href="/Content/styles/phone.css">
+                                                <script src="/Content/lhgdialog/lhgdialog.min.js?skin=default"></script>
+                                                <script src="/Content/lhgdialog/prettify.js"></script>
+                                                <script>
+                                                    var _czc = _czc || [];
+                                                    _czc.push(["_setAccount", "1256067150"]);
+                                                </script>
+                                            </head>
+                                            <body>
+                                                <header>
+                                                    <div class="header">
+                                                        <div class="wLimit">
+                                                            <div class="logoUser">
+                                                                <div class="logBox"></div>
+                                                                <div class="languageBox">
+                                                                    
+                                                                    
+                                                                </div>
+                                                                
+                                                                
+                                                                
+                                                            </div>
+                                                            <div class="search">
+                                                                
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="navBarBox">
+                                                        <div class="wLimit">
+                                                            <div class="mobileOpenNav"></div>
+                                                            <ul class="navBar">
+                                                                <li class="nav_active">
+                                                                    <a href="/">网站首页</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="/ComicBookList">在线漫画</a>
+                                                                </li>
+                                                                
+                                                                <li><a href="/CMS">动漫资讯</a></li>
+                                                                <li><a href="/About">关于我们</a></li>
+                                                                <li><a href="/Joinus">加入我们</a></li>
+                                                                
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <script>
+                                                        function GetLoginStatus()
+                                                        {
+                                                        $.ajax({
+                                                        type: "POST",
+                                                        url: '/GetLoginStatus',
+                                                        datatype: "html",
+                                                        success: function (data) {
+                                                        $('.navBar').append(data);
+                                                        },
+                                                        error: function () {
+                                                        }
+                                                        });
+                                                        }
+                                                        GetLoginStatus();
+                                                    </script>
+                                                </header>
+                                                
+                                                
+                                                <ul class="quickNavBox">
+                                                    <li><a href="http://www.ishuhui.com" style="background-color: #3a9bd9;color: white;">回到老站</a></li>
+                                                    <li><a href="/FeedBack">建议反馈</a></li>
+                                                    <li><a href="#" onclick="backTop()">返回顶部</a></li>
+                                                    
+                                                </ul>
+                                                <style>
+                                                    .quickNavBox {
+                                                    margin-left: 570px;
+                                                    }
+                                                </style>
+                                                
+                                                <div>
+                                                    
+                                                    <style>
+                                                        .quickNavBox {
+                                                        margin-left: 570px;
+                                                        }
+                                                    </style>
+                                                    <script src="/Content/scripts/banner.js"></script>
+                                                    <link href="/Content/styles/banner.css" rel="stylesheet" />
+                                                    <div class="banner-container" style="height:365px">
+                                                        <div class="banner-content">
+                                                            <div class="banner-img-container show">
+                                                                <a class="link" href="http://www.ishuhui.com/post/375596" target="_blank">
+                                                                    <img src="http://img.news.ishuhui.com/tuiguangwei/2.png" alt="">
+                                                                    </a>
+                                                                </div>
+                                                                
+                                                                
+                                                            </div>
+                                                            <div class="banner-control">
+                                                                <div class="controller left-control hidden"></div>
+                                                                <div class="controller right-control hidden"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="newsBox">
+                                                        <div class="wLimit">
+                                                            
+                                                            <div class="newsContentBox">
+                                                                <p>
+                                                                    <a href="/CMS/746">【海贼王】我们要如何面对恐惧？</a>
+                                                                    <a href="/CMS/734">汉化漫画的流程大解密，看过之后你们还忍心催更吗！？</a>
+                                                                    <a style="display: inline;" href="/CMS/729">#有声漫画第二期#海贼王795话，华丽来袭！</a>
+                                                                </p>
+                                                                <div class="newsControl">
+                                                                    <a class="newsPre"></a>
+                                                                    <a class="newsNext"></a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="newsTitleBox">
+                                                                <div class="newsTitleText"><a onclick="window.location.href = '/CMS/List/6'" style="cursor: pointer">热点资讯</a></div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="wLimit">
+                                                        
+                                                        <ul class="navMangaBarBox">
+                                                            <li>
+                                                                <a onclick="ViewClassifyId('3');">
+                                                                    <div class="navMangeBarImg"><img src="/Content/images/nav1.jpg" alt="" /></div>
+                                                                    <div class="navMangeBarText"><img src="/Content/images/navText1.jpg" alt="" /></div>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a onclick="ViewClassifyId('4');">
+                                                                    <div class="navMangeBarImg"><img src="/Content/images/nav2.jpg" alt="" /></div>
+                                                                    <div class="navMangeBarText"><img src="/Content/images/navText2.jpg" alt="" /></div>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a onclick="ViewClassifyId('2');">
+                                                                    <div class="navMangeBarImg"><img src="/Content/images/nav3.jpg" alt="" /></div>
+                                                                    <div class="navMangeBarText"><img src="/Content/images/navText3.jpg" alt="" /></div>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a onclick="window.location.href='/CMS'">
+                                                                    <div class="navMangeBarImg"><img src="/Content/images/nav4.jpg" alt="" /></div>
+                                                                    <div class="navMangeBarText"><img src="/Content/images/navText4.jpg" alt="" /></div>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a onclick="Tips5(' 对不起！此关卡您还尚未解锁！','提醒 ')">
+                                                                    <div class="navMangeBarImg"><img src="/Content/images/nav5.jpg" alt="" /></div>
+                                                                    <div class="navMangeBarText"><img src="/Content/images/navText5.jpg" alt="" /></div>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a onclick="Tips5(' 对不起！此关卡您还尚未解锁！','提醒 ')">
+                                                                    <div class="navMangeBarImg"><img src="/Content/images/nav6.jpg" alt="" /></div>
+                                                                    <div class="navMangeBarText"><img src="/Content/images/navText6.jpg" alt="" /></div>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="navLine"></div>
+                                                        <script>
+                                                            $(".navMangaBarBox li a").attr("style", "cursor:pointer");
+                                                            function ViewClassifyId(Id) {
+                                                            window.location.href = "/ComicBookList/" + Id;
+                                                            
+                                                            }
+                                                        </script>
+                                                    </div>
+                                                    <div class="wLimit">
+                                                        <div class="mangeListMainBox">
+                                                            <div class="mangeList">
+                                                                <div class="mangeListTitle"><span>漫画列表</span></div>
+                                                                
+                                                                
+                                                                <ul class="mangeListBox">
+                                                                    
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4662.html"><img src="http://img03.ishuhui.com/citang/08-1/208.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/49">「仇鸟刺唐」</a>  <a href="/ReadComicBooks/4662.html">8 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4662.html"> 第8话（01）</a></h2>
+                                                                            <p>发布时间:2016-03-15</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4661.html"><img src="http://img02.ishuhui.com/mhcover/bleach.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/23">「bleach」</a>  <a href="/ReadComicBooks/4661.html">665 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4661.html"> Theprincess Dissection</a></h2>
+                                                                            <p>发布时间:2016-03-14</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4660.html"><img src="http://img02.ishuhui.com/mhcover/kn.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/1">「名侦探柯南」</a>  <a href="/ReadComicBooks/4660.html">952 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4660.html"> 在可疑的邻室中</a></h2>
+                                                                            <p>发布时间:2016-03-14</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4659.html"><img src="http://img01.ishuhui.com/ft/ji477/fts.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/3">「妖精的尾巴」</a>  <a href="/ReadComicBooks/4659.html">477 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4659.html"> 传送</a></h2>
+                                                                            <p>发布时间:2016-03-13</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4657.html"><img src="http://img03.ishuhui.com/yz/508/yzs.png" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/13">「鸭子的天空」</a>  <a href="/ReadComicBooks/4657.html">508 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4657.html"> BIG TIME CHANGES⑰</a></h2>
+                                                                            <p>发布时间:2016-03-12</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4656.html"><img src="http://img01.ishuhui.com/comic/gongjiaonannv/gj.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/47">「公交男女爆笑漫画」</a>  <a href="/ReadComicBooks/4656.html">140 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4656.html"> 花痴的下场</a></h2>
+                                                                            <p>发布时间:2016-03-11</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4636.html"><img src="http://img02.ishuhui.com/comic/padiuriji/pd.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/66">「怕丢日记」</a>  <a href="/ReadComicBooks/4636.html">2 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4636.html"> 抓怕丢咯</a></h2>
+                                                                            <p>发布时间:2016-03-14</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4635.html"><img src="http://img02.ishuhui.com/comic/padiuriji/pd.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/66">「怕丢日记」</a>  <a href="/ReadComicBooks/4635.html">1 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4635.html"> 小猫怕丢</a></h2>
+                                                                            <p>发布时间:2016-03-14</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4634.html"><img src="http://img02.ishuhui.com/comic/nixibamowang/nxbmw.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/52">「逆袭吧魔王!」</a>  <a href="/ReadComicBooks/4634.html">14 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4634.html"> 第15话</a></h2>
+                                                                            <p>发布时间:2016-03-11</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4633.html"><img src="http://img02.ishuhui.com/comic/nixibamowang/nxbmw.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/52">「逆袭吧魔王!」</a>  <a href="/ReadComicBooks/4633.html">13 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4633.html"> 第13话</a></h2>
+                                                                            <p>发布时间:2016-03-11</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4632.html"><img src="http://img01.ishuhui.com/comic/qiannianshanhai/qnsh.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/56">「千年山海」</a>  <a href="/ReadComicBooks/4632.html">15 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4632.html"> 第15话</a></h2>
+                                                                            <p>发布时间:2016-03-12</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4631.html"><img src="http://img01.ishuhui.com/comic/qiannianshanhai/qnsh.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/56">「千年山海」</a>  <a href="/ReadComicBooks/4631.html">14 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4631.html"> 第14话</a></h2>
+                                                                            <p>发布时间:2016-03-12</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4630.html"><img src="http://img01.ishuhui.com/comic/qiannianshanhai/qnsh.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/56">「千年山海」</a>  <a href="/ReadComicBooks/4630.html">13 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4630.html"> 第13话</a></h2>
+                                                                            <p>发布时间:2016-03-12</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4629.html"><img src="http://img01.ishuhui.com/comic/sizhezhishu/szzs.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/64">「死者之书」</a>  <a href="/ReadComicBooks/4629.html">6 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4629.html"> 第6话</a></h2>
+                                                                            <p>发布时间:2016-03-12</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4627.html"><img src="http://img01.ishuhui.com/comic/xilinglou/xll.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/57">「昔灵楼」</a>  <a href="/ReadComicBooks/4627.html">13 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4627.html"> 第13话</a></h2>
+                                                                            <p>发布时间:2016-03-12</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4626.html"><img src="http://img02.ishuhui.com/comic/yidianyouxi/ydyx.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/54">「伊甸游戏」</a>  <a href="/ReadComicBooks/4626.html">13 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4626.html"> 第13话</a></h2>
+                                                                            <p>发布时间:2016-03-11</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4625.html"><img src="http://img02.ishuhui.com/comic/yidianyouxi/ydyx.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/54">「伊甸游戏」</a>  <a href="/ReadComicBooks/4625.html">12 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4625.html"> 第12话</a></h2>
+                                                                            <p>发布时间:2016-03-11</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="magesPhoto">
+                                                                            <a href="/ReadComicBooks/4624.html"><img src="http://img01.ishuhui.com/comic/zicaibaofan/zcbf.jpg" alt="" style="cursor: pointer" /></a>
+                                                                        </div>
+                                                                        <div class="magesMesBox">
+                                                                            <h1><a href="/ComicBookInfo/58">「诸神的紫菜包饭」</a>  <a href="/ReadComicBooks/4624.html">20 话</a></h1>
+                                                                            <h2><a href="ReadComicBooks/4624.html"> 第20话</a></h2>
+                                                                            <p>发布时间:2016-03-11</p>
+                                                                            
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="pagingBox">
+                                                                    <a href="/?PageIndex=1" class="pagingHome">首页</a>
+                                                                    <ul>
+                                                                        <li><a href="/?PageIndex=1" class="activePaging">1</a></li>
+                                                                        <li><a href="/?PageIndex=2">2</a></li>
+                                                                        <li><a href="/?PageIndex=3">3</a></li>
+                                                                        <li><a href="/?PageIndex=4">4</a></li>
+                                                                        <li><a href="/?PageIndex=5">5</a></li>
+                                                                        
+                                                                    </ul>
+                                                                    <a href="/?PageIndex=2" class="nextPaging">下一页</a>
+                                                                    <a href="/?PageIndex=237" class="lastPaging">尾页</a>
+                                                                    <label>页数：1/237</label>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            <div class="rightMangeList">
+                                                                
+                                                                
+                                                                
+                                                                <div class="shuhuiWikipedia">
+                                                                    
+                                                                </div>
+                                                                
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <link rel="stylesheet" type="text/css" href="/Content/styles/baner.css" />
+                                                    
+                                                    
+                                                    
+                                                    <footer>
+                                                        <div class="footerBox">
+                                                            <div class="wLimit">
+                                                                <div class="footerMesBox">
+                                                                    <div class="footerNavBar">
+                                                                        <div class="footerNabBarTitle">导航</div>
+                                                                        <ul class="footerNavBarList">
+                                                                            <li><a href="/" target="_blank"><span>></span>主页</a></li>
+                                                                            <li><a href="/About" target="_blank"><span>></span>关于我们</a></li>
+                                                                            <li><a href="/Joinus" target="_blank"><span>></span>加入我们</a></li>
+                                                                            <li><a href="/ComicBookList" target="_blank"><span>></span>在线漫画</a></li>
+                                                                            <li><a href="/Cooperate" target="_blank"><span>></span>合作事宜</a></li>
+                                                                            <li><a href="/CMS" target="_blank"><span>></span>新闻情报</a></li>
+                                                                            <li><a href="/Privacy" target=" _blank"><span>></span>隐私声明</a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div class="footerJoinUs">
+                                                                        <div class="footerNabBarTitle">加入我们</div>
+                                                                        <p>鼠绘新人QQ群：16256007</p>
+                                                                        <p>诚招翻译、修图、镶字、上色</p>
+                                                                        <ul class="footerJoinUsMain">
+                                                                            <li>
+                                                                                <div class="mailIconFooter"></div>
+                                                                                <div class="mailTitleFooter">邮箱：</div>
+                                                                                <div class="mainContentFooter"><a href="mailto:hr@ishuhui.com">hr@ishuhui.com</a></div>
+                                                                            </li>
+                                                                            <li>
+                                                                                <div class="sinaIconFooter"></div>
+                                                                                <div class="mailTitleFooter">新浪微博：</div>
+                                                                                <div class="mainContentFooter"><a href="http://weibo.com/shhhz" target="_blank">@鼠绘汉化网</a></div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div class="footerLinksBox">
+                                                                        
+                                                                        <div class="footerNabBarTitle">友情链接</div>
+                                                                        <ul class="footerLinksList">
+                                                                            <li><a href="http://www.dmzj.com/" target="_blank">动漫之家漫画网</a></li>
+                                                                            <li><a href="http://onepiece.cn/" target="_blank">onepiece中文网</a></li>
+                                                                            <li><a href="http://tieba.baidu.com/f?ie=utf-8&kw=%E6%B5%B7%E8%B4%BC%E7%8E%8B" target="_blank">百度海贼王吧</a></li>
+                                                                            <li><a href="http://tieba.baidu.com/f?ie=utf-8&kw=%E5%A6%96%E5%B0%BE" target="_blank">百度妖尾吧</a></li>
+                                                                            <li><a href="http://tieba.baidu.com/f?ie=utf-8&kw=%E6%8E%92%E7%90%83%E6%BC%AB%E7%94%BB" target="_blank">百度排球漫画吧</a></li>
+                                                                            <li><a href="http://bbs.11acg.com/" target="_blank">动漫11区</a></li>
+                                                                            <li><a href="http://shop64845442.taobao.com/?spm=a230r.7195193.1997079397.2.Rezknv" target="_blank">正版单行本淘宝</a></li>
+                                                                            <li><a href="http://www.xiaozhan.cc/" target="_blank">无名小站</a></li>
+                                                                            <li><a href="http://talkop.com/" target="_blank">鹰目话道</a></li>
+                                                                            <li><a href="http://comic.sfacg.com/" target="_blank">SF动漫</a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="footerCopyright">
+                                                                    <p>版权所有 &copy; 鼠绘漫画网 2014 蒙ICP备11003410</p>
+                                                                    <div><a href="/">回到首页</a>|<a href="">合作事宜</a></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </footer>
+                                                    
+                                                    
+                                                    <div class="loginBox">
+                                                        <div class="LoginMain">
+                                                            <div class="closeLoginBox">×</div>
+                                                            <div class="loginLine"></div>
+                                                            <div class="loginLogo"></div>
+                                                            <ul class="loginInputBox">
+                                                                <li>
+                                                                    <div class="loginTitleIcon"><img src="/Content/images/loginMail.jpg" alt="" /></div>
+                                                                    <input type="text" id="logEmail" placeholder="请输入您注册的邮箱" />
+                                                                </li>
+                                                                <li>
+                                                                    <div class="loginTitleIcon"><img src="/Content/images/pwd.jpg" alt="" /></div>
+                                                                    <input type="password" id="logPws" placeholder="请输入密码" />
+                                                                </li>
+                                                            </ul>
+                                                            <div class="rembBox">
+                                                                <div class="rebm-pwd-container">
+                                                                    <input id="rembPwd" checked="checked" class="rebm-pwd" type="checkbox" />
+                                                                    <label for="rembPwd">记住密码</label>
+                                                                </div>
+                                                                <div class="forget-pwd-container">
+                                                                    <a href="javascript:void(0)" onclick="alertmsg()">忘记密码？</a>
+                                                                </div>
+                                                            </div>
+                                                            <a href="#" id="loginSbmBt" class="loginSbmBt">登陆</a>
+                                                            <p class="nowReg">还没有账号？<span>现在注册</span></p>
+                                                        </div>
+                                                        <div class="regMain">
+                                                            <div class="closeLoginBox">×</div>
+                                                            <div class="loginLine"></div>
+                                                            <div class="loginLogo"></div>
+                                                            
+                                                            
+                                                            <ul class="regListBox">
+                                                                <li>
+                                                                    <div class="regTitleName">昵称</div>
+                                                                    <input type="text" id="regNickname" placeholder="两位以上中文字符、英文字符或数字" />
+                                                                </li>
+                                                                <li>
+                                                                    <div class="regTitleName">邮箱</div>
+                                                                    <input type="text" id="regEmail" placeholder="请输入有效的邮箱地址" />
+                                                                </li>
+                                                                <li>
+                                                                    <div class="regTitleName">密码</div>
+                                                                    <input type="password" id="regPws" placeholder="输入6-16位密码" />
+                                                                </li>
+                                                                <li>
+                                                                    <div class="regTitleName">确认</div>
+                                                                    <input type="password" id="regCPws" placeholder="再次确认密码" />
+                                                                </li>
+                                                            </ul>
+                                                            <a href="#" id="regSbmBt" class="regSbmBt">注册并登陆</a>
+                                                        </div>
+                                                    </div>
+                                                    <script>
+                                                        function alertmsg() {
+                                                        loginRegClose();
+                                                        $.dialog({
+                                                        title:'找回密码',
+                                                        time: 15,
+                                                        content: '请联系管理员，管理员QQ：358674273'
+                                                        });
+                                                        }
+                                                    </script>
+                                                    <script src="/Content/scripts/script.js"></script>
+                                                    <script src="/Content/scripts/Sunniboy.js"></script>
+                                                </body>
+                                            </html>
+                                            
+                                            <script type="text/javascript" src="http://tajs.qq.com/stats?sId=50120919" charset="UTF-8"></script>
+                                        <script src='http://w.cnzz.com/q_stat.php?id=1256067150&l=3' language='JavaScript'></script>

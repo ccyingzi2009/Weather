@@ -9,20 +9,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import netease.com.weather.api.ApiService;
-import netease.com.weather.model.Attitude;
-import netease.com.weather.model.TopTen;
+import netease.com.weather.model.MainPage;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,7 +32,8 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(
+                new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -59,26 +57,27 @@ public class MainActivity extends AppCompatActivity
     private void initData() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiService.BASE_BASE)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
 
         ApiService service = retrofit.create(ApiService.class);
 
-        Call<Attitude> call = service.getAttitude();
-        call.enqueue(new Callback<Attitude>() {
+        Call<MainPage> call = service.getMainTitle();
+        call.enqueue(new Callback<MainPage>() {
             @Override
-            public void onResponse(Call<Attitude> call, Response<Attitude> response) {
+            public void onResponse(Call<MainPage> call, Response<MainPage> response) {
                 if (response != null) {
-                    ((TextView) findViewById(R.id.content)).setText(response.body().getEndtime());
-                    response.body();
+                    MainPage mainPage = response.body();
+                    System.out.println("MainPage: " +mainPage.getTitle());
                 }
             }
 
             @Override
-            public void onFailure(Call<Attitude> call, Throwable t) {
+            public void onFailure(Call<MainPage> call, Throwable t) {
 
             }
         });
+
     }
 
     @Override

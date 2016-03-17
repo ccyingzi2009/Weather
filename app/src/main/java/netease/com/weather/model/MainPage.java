@@ -1,17 +1,22 @@
 package netease.com.weather.model;
 
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Path;
-import org.simpleframework.xml.Root;
+
+import java.util.List;
 
 /**
  * Created by user on 16-3-16.
  */
-@Root
 public class MainPage {
-    @Path("html/head")
-    @Element
     private String title;
+    private List<String> mCoverUrls;
+
+    public MainPage(String title) {
+        this.title = title;
+    }
+
+    public MainPage(List<String> mCoverUrls) {
+        this.mCoverUrls = mCoverUrls;
+    }
 
     public String getTitle() {
         return title;
@@ -19,5 +24,20 @@ public class MainPage {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<String> getmCoverUrls() {
+        return mCoverUrls;
+    }
+
+    public void setmCoverUrls(List<String> mCoverUrls) {
+        this.mCoverUrls = mCoverUrls;
+    }
+
+    @Override
+    public String toString() {
+        return "MainPage{" +
+                "mCoverUrls=" + mCoverUrls +
+                '}';
     }
 }

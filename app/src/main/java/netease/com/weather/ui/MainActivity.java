@@ -1,4 +1,4 @@
-package netease.com.weather;
+package netease.com.weather.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,38 +8,55 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
-import netease.com.weather.api.ApiService;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import netease.com.weather.R;
 import netease.com.weather.model.MainPage;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
+import netease.com.weather.util.html.MainPageHandler;
+import netease.com.weather.util.request.HtmlRequest;
+import netease.com.weather.util.request.VolleyUtils;
+
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Response.ErrorListener, Response.Listener<MainPage> {
+
+    @Bind(R.id.recycle_view)
+    RecyclerView recycleView;
+
+    private MainListAdapter mListAdapter;
+    private List<String> mUrl = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(
                 new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+                    @Override
+                    public void onClick(View view) {
+                        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -50,35 +67,39 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        recycleView.setLayoutManager(new LinearLayoutManager(this));
+        if (mListAdapter == null) {
+            mListAdapter = new MainListAdapter(this, mUrl);
+        }
+        recycleView.setAdapter(mListAdapter);
+
         initData();
 
     }
 
     private void initData() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ApiService.BASE_BASE)
-                .addConverterFactory(SimpleXmlConverterFactory.create())
-                .build();
+        String url = "http://ishuhui.net/?PageIndex=1";
+        VolleyUtils.addRequest(this, new HtmlRequest<>(url, new MainPageHandler(), this, this), this);
+    }
 
-        ApiService service = retrofit.create(ApiService.class);
 
-        Call<MainPage> call = service.getMainTitle();
-        call.enqueue(new Callback<MainPage>() {
-            @Override
-            public void onResponse(Call<MainPage> call, Response<MainPage> response) {
-                if (response != null) {
-                    MainPage mainPage = response.body();
-                    System.out.println("MainPage: " +mainPage.getTitle());
-                }
+    @Override
+    public void onResponse(MainPage response) {
+        if (response != null) {
+            List<String> urls = response.getmCoverUrls();
+            if (urls != null && !urls.isEmpty()) {
+                mUrl.clear();
+                mUrl.addAll(urls);
+                mListAdapter.notifyDataSetChanged();
             }
+        }
+    }
 
-            @Override
-            public void onFailure(Call<MainPage> call, Throwable t) {
-
-            }
-        });
+    @Override
+    public void onErrorResponse(VolleyError error) {
 
     }
+
 
     @Override
     public void onBackPressed() {
@@ -136,4 +157,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -15,7 +14,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
-import netease.com.weather.model.MainPage;
+import netease.com.weather.util.FrescoUtil;
 
 /**
  * Created by user on 16-3-17.
@@ -39,7 +38,8 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         String coverUrl = mList.get(position);
-        holder.img.setImageURI(Uri.parse(coverUrl));
+        //holder.img.setImageURI(Uri.parse(coverUrl));
+        FrescoUtil.loadImage(holder.img, Uri.parse(coverUrl));
     }
 
 

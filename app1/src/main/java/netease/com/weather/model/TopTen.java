@@ -1,5 +1,7 @@
 package netease.com.weather.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -37,6 +39,7 @@ public class TopTen {
      * id_count : 113
      */
 
+    @SerializedName(value = "article")
     private List<ArticleEntity> article;
 
     public void setName(String name) {
@@ -104,6 +107,7 @@ public class TopTen {
          * score : 462
          */
 
+        @SerializedName(value = "user")
         private UserEntity user;
         private int post_time;
         private String board_name;

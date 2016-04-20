@@ -1,4 +1,4 @@
-package netease.com.weather.model;
+package netease.com.weather.data.model;
 
 
 import java.util.List;

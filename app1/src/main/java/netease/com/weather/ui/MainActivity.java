@@ -9,11 +9,11 @@ import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarFragment;
 
 import netease.com.weather.R;
-import netease.com.weather.model.TopTen;
-import netease.com.weather.ui.SampleFragment.SampleFragment;
-import netease.com.weather.ui.SampleFragment.TopTenFragment;
-import netease.com.weather.util.api.BYApi;
-import netease.com.weather.util.api.BYService;
+import netease.com.weather.data.model.TopTen;
+import netease.com.weather.ui.biz.SampleFragment;
+import netease.com.weather.ui.biz.TopTenFragment;
+import netease.com.weather.data.api.BYApi;
+import netease.com.weather.data.api.BYService;
 import retrofit2.Call;
 import retrofit2.Callback;
 

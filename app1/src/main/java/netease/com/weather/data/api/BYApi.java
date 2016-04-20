@@ -1,5 +1,8 @@
 package netease.com.weather.data.api;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -30,7 +33,11 @@ public class BYApi {
     }
 
     private void create() {
+        OkHttpClient client = new OkHttpClient.Builder().
+                addNetworkInterceptor(new StethoInterceptor())
+                .build();
         api = new Retrofit.Builder()
+                .client(client)
                 .baseUrl(BYService.BASE)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(BYService.class);

@@ -25,7 +25,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
-import netease.com.weather.model.MainPage;
+import netease.com.weather.data.model.MainPage;
 import netease.com.weather.util.html.MainPageHandler;
 import netease.com.weather.util.request.HtmlRequest;
 import netease.com.weather.util.request.VolleyUtils;

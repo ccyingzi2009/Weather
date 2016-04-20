@@ -6,8 +6,7 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import netease.com.weather.model.MainPage;
-import netease.com.weather.model.MainSlider;
+import netease.com.weather.data.model.MainSlider;
 
 /**
  * Created by user on 16-3-17.

@@ -1,6 +1,6 @@
 package netease.com.weather.api;
 
-import netease.com.weather.model.MainPage;
+import netease.com.weather.data.model.MainPage;
 import retrofit2.Call;
 import retrofit2.http.GET;
 

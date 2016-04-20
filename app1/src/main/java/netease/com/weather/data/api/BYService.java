@@ -16,7 +16,7 @@ public interface BYService {
     String BASE = "http://api.byr.cn";
     String END = ".json?appkey=9c479ffea0d8b38d&";
 
-    String auth = "Basic "+ Base64.encodeToString(("guest:").getBytes(), Base64.DEFAULT).split("\n")[0];
+    String auth = "Basic "+ Base64.encodeToString(("ccyingzi2009:liushuai").getBytes(), Base64.NO_WRAP);
 
     @GET("/widget/topten" + END)
     Call<TopTen> getTopTen(@Header("Authorization") String authorization);

@@ -10,6 +10,7 @@ import com.roughike.bottombar.BottomBarFragment;
 
 import netease.com.weather.R;
 import netease.com.weather.data.model.TopTen;
+import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.biz.SampleFragment;
 import netease.com.weather.ui.biz.TopTenFragment;
 import netease.com.weather.data.api.BYApi;
@@ -18,7 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private BottomBar mBottomBar;
 

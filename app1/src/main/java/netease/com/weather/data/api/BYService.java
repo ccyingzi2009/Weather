@@ -1,11 +1,9 @@
-package netease.com.weather.util.api;
+package netease.com.weather.data.api;
 
 
 import android.util.Base64;
 
-import java.util.List;
-
-import netease.com.weather.model.TopTen;
+import netease.com.weather.data.model.TopTen;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;

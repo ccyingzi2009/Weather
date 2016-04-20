@@ -1,6 +1,5 @@
-package netease.com.weather.ui.SampleFragment;
+package netease.com.weather.ui.biz;
 
-import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +14,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
-import netease.com.weather.model.TopTen;
+import netease.com.weather.data.model.TopTen;
+import netease.com.weather.ui.MainActivity;
 import netease.com.weather.util.FrescoUtil;
 
 /**
@@ -23,12 +23,13 @@ import netease.com.weather.util.FrescoUtil;
  */
 public class Top10ListAdapter extends RecyclerView.Adapter<Top10ListAdapter.MyViewHolder> {
     private LayoutInflater mInflater;
-    private Context mContext;
     private List<TopTen.ArticleEntity> mList;
+    private MainActivity mActivity;
 
-    public Top10ListAdapter(Context context, List<TopTen.ArticleEntity> list) {
-        mContext = context;
-        mInflater = LayoutInflater.from(mContext);
+    public Top10ListAdapter(MainActivity activity
+            , List<TopTen.ArticleEntity> list) {
+        mActivity = activity;
+        mInflater = LayoutInflater.from(activity);
         mList = list;
     }
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package netease.com.weather.ui.SampleFragment;
+package netease.com.weather.ui.biz;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

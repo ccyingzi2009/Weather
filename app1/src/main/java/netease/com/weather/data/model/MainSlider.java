@@ -1,4 +1,4 @@
-package netease.com.weather.model;
+package netease.com.weather.data.model;
 
 /**
  * Created by liu_shuai on 16/3/17.

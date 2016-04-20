@@ -1,4 +1,4 @@
-package netease.com.weather.ui.SampleFragment;
+package netease.com.weather.ui.biz;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,16 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
-import netease.com.weather.model.TopTen;
+import netease.com.weather.data.model.TopTen;
+import netease.com.weather.ui.MainActivity;
 import netease.com.weather.ui.base.BaseFragment;
-import netease.com.weather.util.api.BYApi;
-import netease.com.weather.util.api.BYService;
+import netease.com.weather.data.api.BYApi;
+import netease.com.weather.data.api.BYService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,12 +42,12 @@ public class TopTenFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new Top10ListAdapter(getContext(), mArticles);
+        mAdapter = new Top10ListAdapter((MainActivity) getActivity(), mArticles);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_top_ten, null);
+        View view = inflater.inflate(R.layout.fragment_top_ten, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -65,8 +65,6 @@ public class TopTenFragment extends BaseFragment {
             @Override
             public void onResponse(Call<TopTen> call, Response<TopTen> response) {
                 TopTen top10 = response.body();
-                System.out.println(top10.toString());
-
                 List<TopTen.ArticleEntity> articleEntities = top10.getArticle();
                 if (articleEntities != null && !articleEntities.isEmpty()) {
                     mArticles.clear();

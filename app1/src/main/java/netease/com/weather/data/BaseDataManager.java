@@ -6,6 +6,9 @@ package netease.com.weather.data;
 public abstract class BaseDataManager<T> implements DataLoadingSubject {
 
 
+    public abstract void onDataLoaded(T data);
+
+
     @Override
     public boolean isDataLoading() {
         return false;

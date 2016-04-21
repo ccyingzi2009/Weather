@@ -3,6 +3,7 @@ package netease.com.weather.data.api;
 
 import android.util.Base64;
 
+import netease.com.weather.data.model.Article;
 import netease.com.weather.data.model.TopTen;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -24,6 +25,10 @@ public interface BYService {
     Call<TopTen> getTopTen(@Header("Authorization") String authorization);
 
     @GET("/article/{name}/{id}" + END)
-    Call<TopTen> getArticle(@Path("name") String name, @Path("id") String id, @Query("count") int count, @Query("page") int page);
+    Call<Article> getArticle(@Header("Authorization") String authorization,
+                             @Path("name") String name,
+                             @Path("id") String id,
+                             @Query("count") int count,
+                             @Query("page") int page);
 
 }

@@ -11,11 +11,24 @@ import retrofit2.Response;
 /**
  * Created by user on 16-4-21.
  */
-public abstract class DataManager extends BaseDataManager<Article> {
+public abstract class DataManager extends PageDataManager<Article> {
 
-    public void loadData(String name, String id, int page, int count) {
+    private String mName;
+    private String mId;
+    private int mPage = 0;
+    private int mCount;
 
-        Call<Article> article = BYApi.get().getApi().getArticle(BYService.auth, );
+    public DataManager(String name, String id, int count) {
+        this.mCount = count;
+        this.mId = id;
+        this.mName = name;
+    }
+
+    @Override
+    protected void loadData(int page) {
+        super.loadData(page);
+        Call<Article> article = BYApi.get().getApi().getArticle(BYService.auth
+                , mName, mId, mPage, mCount);
         article.enqueue(new Callback<Article>() {
             @Override
             public void onResponse(Call<Article> call, Response<Article> response) {
@@ -26,6 +39,6 @@ public abstract class DataManager extends BaseDataManager<Article> {
             public void onFailure(Call<Article> call, Throwable t) {
 
             }
-        })
+        });
     }
 }

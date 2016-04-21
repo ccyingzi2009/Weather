@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -17,7 +18,13 @@ import netease.com.weather.data.model.Article;
  * Created by user on 16-4-21.
  */
 public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Article.ArticleEntity> mList;
+    private List<Article.ArticleEntity> mList = new ArrayList<>();
+
+
+    public void addItem(List<Article.ArticleEntity> list) {
+        mList.addAll(list);
+        notifyDataSetChanged();
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

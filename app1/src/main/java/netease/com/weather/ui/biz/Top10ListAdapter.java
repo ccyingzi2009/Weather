@@ -1,6 +1,8 @@
 package netease.com.weather.ui.biz;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +18,13 @@ import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.data.model.TopTen;
 import netease.com.weather.ui.MainActivity;
+import netease.com.weather.ui.biz.article.ArticleActivity;
 import netease.com.weather.util.FrescoUtil;
 
 /**
  * Created by user on 16-3-17.
  */
-public class Top10ListAdapter extends RecyclerView.Adapter<Top10ListAdapter.MyViewHolder> {
+public class Top10ListAdapter extends RecyclerView.Adapter<Top10ListAdapter.MyViewHolder> implements View.OnClickListener {
     private LayoutInflater mInflater;
     private List<TopTen.ArticleEntity> mList;
     private MainActivity mActivity;
@@ -45,12 +48,28 @@ public class Top10ListAdapter extends RecyclerView.Adapter<Top10ListAdapter.MyVi
         FrescoUtil.loadImage(holder.img, Uri.parse(article.getUser().getFace_url()));
 
         holder.title.setText(article.getTitle());
+        holder.itemView.setOnClickListener(this);
+        holder.itemView.setTag(position);
     }
 
 
     @Override
     public int getItemCount() {
         return mList != null ? mList.size() : 0;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int position = (int) v.getTag();
+        TopTen.ArticleEntity article = mList.get(position);
+        int id = article.getId();
+        String name = article.getBoard_name();
+        Bundle args = new Bundle();
+        args.putString("id", id+"");
+        args.putString("name", name);
+        Intent intent = new Intent(mActivity, ArticleActivity.class);
+        intent.putExtras(args);
+        mActivity.startActivity(intent);
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

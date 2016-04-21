@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
@@ -27,22 +29,26 @@ public class ArticleActivity extends BaseActivity {
     private String mName;
     private String mId;
     private int page = 0;
+    public final static int PAGE_COUNT = 10;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
         Bundle args = getIntent().getExtras();
-        if (args != null) {
 
+        if (args != null) {
+            mName = args.getString("name");
+            mId = args.getString("id");
         }
         ButterKnife.bind(this);
 
-        mDataManager = new DataManager() {
+        mDataManager = new DataManager(mName, mId, PAGE_COUNT) {
 
             @Override
             public void onDataLoaded(Article data) {
-
+                List<Article.ArticleEntity> articleEntities = data.getArticle();
+                mAdapter.addItem(articleEntities);
             }
         };
 

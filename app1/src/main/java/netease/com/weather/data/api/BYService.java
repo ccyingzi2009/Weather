@@ -16,15 +16,19 @@ import retrofit2.http.Query;
  */
 public interface BYService {
 
+    int PER_PAGE_DEFAULT = 10;
+
     String BASE = "http://api.byr.cn";
     String END = ".json?appkey=9c479ffea0d8b38d&";
 
     String auth = "Basic " + Base64.encodeToString(("ccyingzi2009:liushuai").getBytes(), Base64.NO_WRAP);
 
+    //获取十大信息
     @GET("/widget/topten" + END)
     Call<TopTen> getTopTen(@Header("Authorization") String authorization);
 
-    @GET("/article/{name}/{id}" + END)
+    //获取主题信息
+    @GET("/threads/{name}/{id}" + END)
     Call<Article> getArticle(@Header("Authorization") String authorization,
                              @Path("name") String name,
                              @Path("id") String id,

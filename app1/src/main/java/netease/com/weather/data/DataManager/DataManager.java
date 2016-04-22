@@ -1,6 +1,5 @@
 package netease.com.weather.data.DataManager;
 
-import netease.com.weather.data.BaseDataManager;
 import netease.com.weather.data.api.BYApi;
 import netease.com.weather.data.api.BYService;
 import netease.com.weather.data.model.Article;
@@ -15,29 +14,43 @@ public abstract class DataManager extends PageDataManager<Article> {
 
     private String mName;
     private String mId;
-    private int mPage = 0;
     private int mCount;
 
+    Call<Article> articleCall;
+
     public DataManager(String name, String id, int count) {
+        super();
         this.mCount = count;
         this.mId = id;
         this.mName = name;
     }
 
     @Override
-    protected void loadData(int page) {
+    protected void loadData(final int page) {
         super.loadData(page);
-        Call<Article> article = BYApi.get().getApi().getArticle(BYService.auth
-                , mName, mId, mPage, mCount);
-        article.enqueue(new Callback<Article>() {
+        articleCall = BYApi.get().getApi().getArticle(BYService.auth
+                , mName, mId, mCount, page);
+        articleCall.enqueue(new Callback<Article>() {
             @Override
             public void onResponse(Call<Article> call, Response<Article> response) {
-                onDataLoaded(response.body());
+                if (response.isSuccess()) {
+                    onDataLoaded(response.body(), page == 0);
+                    moreDataAble = (response.body().getArticle().size() == BYService.PER_PAGE_DEFAULT);
+                    loadFinish();
+                }else {
+                    failure();
+                }
             }
 
             @Override
             public void onFailure(Call<Article> call, Throwable t) {
+                failure();
+            }
 
+            private void failure() {
+                loadFinish();
+                moreDataAble = false;
+                articleCall = null;
             }
         });
     }

@@ -31,7 +31,7 @@ import netease.com.weather.data.DataLoadingSubject;
 public abstract class InfiniteScrollListener extends RecyclerView.OnScrollListener {
 
     // The minimum number of items remaining before we should loading more.
-    private static final int VISIBLE_THRESHOLD = 5;
+    private static final int VISIBLE_THRESHOLD = 1;
 
     private final LinearLayoutManager layoutManager;
     private final DataLoadingSubject dataLoading;

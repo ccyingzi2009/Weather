@@ -5,12 +5,17 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
+import netease.com.weather.data.DataManager.DataManager;
+
 /**
- * Created by YC on 14-12-30.
  */
 public class AdapterHandler {
 
     public static void notifyDataSetChanged(RecyclerView.Adapter adapter, List data) {
+        notifyDataSetChanged(adapter, data, true);
+    }
+
+    public static void notifyDataSetChanged(RecyclerView.Adapter adapter, DataManager manager, List data) {
         notifyDataSetChanged(adapter, data, true);
     }
 

@@ -5,6 +5,10 @@ import org.simpleframework.xml.Root;
 
 public class MyClass {
 
+    static {
+        Print();
+    }
+
     /* snippet */
     @Root
     public static class Example {
@@ -24,6 +28,14 @@ public class MyClass {
 //        Example example = persister.read(Example.class, file);
 //
 //        System.out.println(example.html);
-        System.out.println(1<<2);
+        //System.out.println(1<<2);
+
+    }
+
+    static void Print(){
+        System.out.println("静态代码块");
+    }
+
+    static void getUrlParam(){
     }
 }

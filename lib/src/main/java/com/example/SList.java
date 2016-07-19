@@ -25,5 +25,6 @@ public class SList {
         Vector<String> vercor = new Vector<>();
         System.out.println(100 >> 1); //左移动。
         Set<String> set = new LinkedHashSet<>();
+
     }
 }

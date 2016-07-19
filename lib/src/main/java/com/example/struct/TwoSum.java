@@ -20,6 +20,8 @@ public class TwoSum {
 
         System.out.println(hash1.get("11"));
         System.out.println(hash2.get("11"));
+
+        
     }
 
 }

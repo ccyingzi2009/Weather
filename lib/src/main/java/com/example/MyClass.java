@@ -5,7 +5,7 @@ import org.simpleframework.xml.Root;
 
 public class MyClass {
 
-    
+
     static {
         Print();
     }

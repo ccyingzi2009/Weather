@@ -3,18 +3,19 @@ package netease.com.weather.ui;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarFragment;
 
 import netease.com.weather.R;
+import netease.com.weather.data.api.BYApi;
+import netease.com.weather.data.api.BYService;
 import netease.com.weather.data.model.TopTen;
 import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.biz.SampleFragment;
 import netease.com.weather.ui.biz.TopTenFragment;
-import netease.com.weather.data.api.BYApi;
-import netease.com.weather.data.api.BYService;
+import netease.com.weather.ui.biz.article.ArticleFragment;
+import netease.com.weather.ui.biz.custom.CustomViewFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -37,8 +38,8 @@ public class MainActivity extends BaseActivity {
         mBottomBar = BottomBar.attach(this, savedInstanceState);
         mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
                 new BottomBarFragment(TopTenFragment.newInstance(), R.drawable.ic_recents, "Top10"),
-                new BottomBarFragment(SampleFragment.newInstance("Content for favorites."), R.drawable.ic_favorites, "Favorites"),
-                new BottomBarFragment(SampleFragment.newInstance("Content for nearby stuff."), R.drawable.ic_nearby, "Nearby"),
+                new BottomBarFragment(ArticleFragment.newInstance(), R.drawable.ic_favorites, "Favorites"),
+                new BottomBarFragment(CustomViewFragment.newInstance(), R.drawable.ic_nearby, "Nearby"),
                 new BottomBarFragment(SampleFragment.newInstance("Content for friends."), R.drawable.ic_friends, "Friends"),
                 new BottomBarFragment(SampleFragment.newInstance("Content for food."), R.drawable.ic_restaurants, "Food")
         );

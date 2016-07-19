@@ -19,6 +19,10 @@ public class TwoSum {
         hash2.put("11", "12");
 
         System.out.println(hash1.get("11"));
+<<<<<<< HEAD
+=======
+        System.out.println(hash2.get("11"));
+>>>>>>> master
     }
 
 }

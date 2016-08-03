@@ -9,10 +9,16 @@ import com.facebook.stetho.Stetho;
  * Created by user on 16-3-17.
  */
 public class BaseApplication extends MultiDexApplication {
+    private static BaseApplication mInstance;
     @Override
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
         Stetho.initializeWithDefaults(this);
+        mInstance = this;
+    }
+
+    public static BaseApplication getInstance() {
+        return mInstance;
     }
 }

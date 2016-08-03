@@ -27,7 +27,7 @@ public class HtmlRequest<T> extends BaseRequest<T> {
     @Override
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
-            String html = new String(response.data, "gbk");
+            String html = new String(response.data, "GBK");
             if (!TextUtils.isEmpty(html)) {
                 Element element = Jsoup.parse(html);
                 T o = mHtmlHandler.process(element);

@@ -12,10 +12,9 @@ import netease.com.weather.data.api.BYApi;
 import netease.com.weather.data.api.BYService;
 import netease.com.weather.data.model.TopTen;
 import netease.com.weather.ui.base.BaseActivity;
-import netease.com.weather.ui.biz.SampleFragment;
-import netease.com.weather.ui.biz.TopTenFragment;
 import netease.com.weather.ui.biz.article.ArticleFragment;
 import netease.com.weather.ui.biz.custom.CustomViewFragment;
+import netease.com.weather.ui.biz.main.SampleFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -37,7 +36,7 @@ public class MainActivity extends BaseActivity {
 
         mBottomBar = BottomBar.attach(this, savedInstanceState);
         mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
-                new BottomBarFragment(TopTenFragment.newInstance(), R.drawable.ic_recents, "Top10"),
+                new BottomBarFragment(SampleFragment.newInstance(""), R.drawable.ic_recents, "Top10"),
                 new BottomBarFragment(ArticleFragment.newInstance(), R.drawable.ic_favorites, "Favorites"),
                 new BottomBarFragment(CustomViewFragment.newInstance(), R.drawable.ic_nearby, "Nearby"),
                 new BottomBarFragment(SampleFragment.newInstance("Content for friends."), R.drawable.ic_friends, "Friends"),

@@ -24,15 +24,30 @@ public class MainPageHandler implements HtmlHandler<List<MainSlider>> {
             coverUrls.add(coverUrl);
         }
         return new MainPage(coverUrls);*/
-        Elements elements = element.select("table.hotTable").select("tbody");
-        List<MainSlider> sliders = new ArrayList<>();
+//        Elements elements = element.select("table.hotTable").select("tbody");
+//        List<MainSlider> sliders = new ArrayList<>();
+//        for (Element e : elements) {
+//            String href = e.select("td.HotTitle").select("a").get(0).attr("href");
+//            String data = e.select("td.HotTitle").select("a").get(0).text();
+//            MainSlider slider = new MainSlider(href, data, "");
+//            sliders.add(slider);
+//        }
+//        return sliders;
+
+        List<MainSlider> mainSliders = new ArrayList<>();
+        Element elementNode = element.getElementById("top10");
+        Elements elements = elementNode.select("ul").select("li");
         for (Element e : elements) {
-            String href = e.select("td.HotTitle").select("a").get(0).attr("href");
-            String data = e.select("td.HotTitle").select("a").get(0).text();
-            MainSlider slider = new MainSlider(href, data, "");
-            sliders.add(slider);
+            //title
+            String title = e.select("a").get(1).attr("title");
+            String articleUrl = e.select("a").get(1).attr("href");
+
+            String board = e.select("a").get(0).attr("title");
+            String board_url = e.select("a").get(0).attr("href");
+            MainSlider slider = new MainSlider(title,articleUrl, board, board_url);
+            mainSliders.add(slider);
         }
-        return sliders;
+        return mainSliders;
     }
 
     @Override

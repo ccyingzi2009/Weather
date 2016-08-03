@@ -4,30 +4,16 @@ package netease.com.weather.data.model;
  * Created by liu_shuai on 16/3/17.
  */
 public class MainSlider {
-    private String href;
     private String title;
-    private String src;
+    private String article_url;
+    private String board;
+    private String board_url;
 
-    public MainSlider(String href, String src, String title) {
-        this.href = href;
-        this.src = src;
+    public MainSlider(String title, String article_url, String board, String board_url) {
         this.title = title;
-    }
-
-    public String getHref() {
-        return href;
-    }
-
-    public void setHref(String href) {
-        this.href = href;
-    }
-
-    public String getSrc() {
-        return src;
-    }
-
-    public void setSrc(String src) {
-        this.src = src;
+        this.article_url = article_url;
+        this.board = board;
+        this.board_url = board_url;
     }
 
     public String getTitle() {
@@ -38,12 +24,27 @@ public class MainSlider {
         this.title = title;
     }
 
-    @Override
-    public String toString() {
-        return "MainSlider{" +
-                "href='" + href + '\'' +
-                ", title='" + title + '\'' +
-                ", src='" + src + '\'' +
-                '}';
+    public String getArticle_url() {
+        return article_url;
+    }
+
+    public void setArticle_url(String article_url) {
+        this.article_url = article_url;
+    }
+
+    public String getBoard() {
+        return board;
+    }
+
+    public void setBoard(String board) {
+        this.board = board;
+    }
+
+    public String getBoard_url() {
+        return board_url;
+    }
+
+    public void setBoard_url(String board_url) {
+        this.board_url = board_url;
     }
 }

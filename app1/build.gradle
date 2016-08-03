@@ -70,6 +70,8 @@ dependencies {
     compile 'de.greenrobot:eventbus:2.4.0'
     // Gif
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.15'
+    // adapter
+    compile 'eu.davidea:flexible-adapter:5.0.0-SNAPSHOT'
 
 
 }

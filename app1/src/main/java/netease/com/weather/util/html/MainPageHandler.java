@@ -15,27 +15,28 @@ public class MainPageHandler implements HtmlHandler<List<MainSlider>> {
 
     @Override
     public List<MainSlider> process(Element element) {
-        /*String title = element.getElementsByTag("title").toString();
-        Elements elements = element.select("ul.mangeListBox").select("li");
-
-        List<String> coverUrls = new ArrayList<>();
-        for (Element e : elements) {
-            String coverUrl = e.select("img").attr("src");
-            coverUrls.add(coverUrl);
-        }
-        return new MainPage(coverUrls);*/
-//        Elements elements = element.select("table.hotTable").select("tbody");
-//        List<MainSlider> sliders = new ArrayList<>();
-//        for (Element e : elements) {
-//            String href = e.select("td.HotTitle").select("a").get(0).attr("href");
-//            String data = e.select("td.HotTitle").select("a").get(0).text();
-//            MainSlider slider = new MainSlider(href, data, "");
-//            sliders.add(slider);
-//        }
-//        return sliders;
-
         List<MainSlider> mainSliders = new ArrayList<>();
+        //解析十大
         Element elementNode = element.getElementById("top10");
+        parseData(elementNode, mainSliders, "top10");
+        //解析其它版块
+        Elements w_sections = element.getElementsByClass("w_section");
+        for (Element w_section : w_sections) {
+            Element section_topics = w_section.getElementsByClass("topics").first();
+            if (section_topics != null) {
+                String sectionName = w_section.select("h3").first().select("a").text();
+                parseData(w_section.getElementsByClass("topics").first(), mainSliders, sectionName);
+            }
+        }
+        return mainSliders;
+    }
+
+    @Override
+    public void save() {
+
+    }
+
+    private void parseData(Element elementNode, List<MainSlider> mainSliders, String senctionName) {
         Elements elements = elementNode.select("ul").select("li");
         for (Element e : elements) {
             //title
@@ -44,14 +45,9 @@ public class MainPageHandler implements HtmlHandler<List<MainSlider>> {
 
             String board = e.select("a").get(0).attr("title");
             String board_url = e.select("a").get(0).attr("href");
-            MainSlider slider = new MainSlider(title,articleUrl, board, board_url);
+            MainSlider slider = new MainSlider(title, articleUrl, board, board_url);
+            slider.setSection(senctionName);
             mainSliders.add(slider);
         }
-        return mainSliders;
-    }
-
-    @Override
-    public void save() {
-
     }
 }

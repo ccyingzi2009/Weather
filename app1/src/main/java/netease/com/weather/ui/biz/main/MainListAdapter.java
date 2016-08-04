@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ import netease.com.weather.ui.base.BaseActivity;
 /**
  * Created by user on 16-8-3.
  */
-public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyViewHolder> implements View.OnClickListener {
+public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyViewHolder> implements View.OnClickListener, StickyRecyclerHeadersAdapter<MainListAdapter.HeaderViewHolder> {
     private LayoutInflater mInflater;
     private List<MainSlider> mList;
     private BaseActivity mActivity;
@@ -46,6 +47,28 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
     }
 
 
+    private MainSlider getItem(int position) {
+        return mList.get(position);
+    }
+
+    @Override
+    public long getHeaderId(int position) {
+        String section = getItem(position).getSection();
+        return section.hashCode();
+    }
+
+
+    @Override
+    public HeaderViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        View v = mInflater.inflate(R.layout.adapter_main_list_item, null);
+        return new HeaderViewHolder(v);
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(HeaderViewHolder holder, int position) {
+        holder.title.setText(getItem(position).getSection());
+    }
+
     @Override
     public int getItemCount() {
         return mList != null ? mList.size() : 0;
@@ -64,6 +87,16 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
         TextView title;
 
         public MyViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class HeaderViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.title)
+        TextView title;
+
+        public HeaderViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, itemView);
         }

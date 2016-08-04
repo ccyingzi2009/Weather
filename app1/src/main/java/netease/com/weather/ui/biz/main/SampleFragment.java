@@ -24,6 +24,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +67,9 @@ public class SampleFragment extends BaseLoadFragment<List<MainSlider>> {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (mListAdapter == null) {
+            mListAdapter = new MainListAdapter((BaseActivity) getContext(), mLists);
+        }
     }
 
     @Override
@@ -77,6 +82,7 @@ public class SampleFragment extends BaseLoadFragment<List<MainSlider>> {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         loadNet();
     }
 
@@ -92,10 +98,9 @@ public class SampleFragment extends BaseLoadFragment<List<MainSlider>> {
         if (response != null && !response.isEmpty()) {
             mLists.clear();
             mLists.addAll(response);
-            if (mListAdapter == null) {
-                mListAdapter = new MainListAdapter((BaseActivity) getContext(), mLists);
-            }
             mRecycleView.setAdapter(mListAdapter);
+            final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(mListAdapter);
+            mRecycleView.addItemDecoration(decoration);
         }
 
     }

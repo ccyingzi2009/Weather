@@ -71,7 +71,8 @@ dependencies {
     // Gif
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.15'
     // adapter
-    compile 'eu.davidea:flexible-adapter:5.0.0-SNAPSHOT'
+    compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
+
 
 
 }

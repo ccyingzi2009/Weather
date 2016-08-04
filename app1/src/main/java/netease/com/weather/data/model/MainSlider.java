@@ -8,6 +8,7 @@ public class MainSlider {
     private String article_url;
     private String board;
     private String board_url;
+    private String section;
 
     public MainSlider(String title, String article_url, String board, String board_url) {
         this.title = title;
@@ -46,5 +47,13 @@ public class MainSlider {
 
     public void setBoard_url(String board_url) {
         this.board_url = board_url;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
     }
 }

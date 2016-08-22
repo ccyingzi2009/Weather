@@ -13,12 +13,13 @@ import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.data.DataLoadingSubject;
 import netease.com.weather.data.model.Article;
+import netease.com.weather.data.model.ArticleBean;
 import netease.com.weather.ui.base.PageAdapter;
 
 /**
  * Created by user on 16-4-21.
  */
-public class ArticleAdapter extends PageAdapter<Article.ArticleEntity> implements DataLoadingSubject.DataLoadingCallbacks {
+public class ArticleNewAdapter extends PageAdapter<ArticleBean> implements DataLoadingSubject.DataLoadingCallbacks {
 
     @Override
     public RecyclerView.ViewHolder onCreateBasicItemViewHolder(ViewGroup parent, int viewType) {
@@ -31,7 +32,7 @@ public class ArticleAdapter extends PageAdapter<Article.ArticleEntity> implement
 
     }
 
-    private void bindCommentHolder(Article.ArticleEntity article, CommentHolder holder) {
+    private void bindCommentHolder(ArticleBean article, CommentHolder holder) {
         holder.content.setText(article.getContent());
     }
 

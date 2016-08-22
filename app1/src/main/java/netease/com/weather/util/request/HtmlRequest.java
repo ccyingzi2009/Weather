@@ -18,16 +18,23 @@ import netease.com.weather.util.html.HtmlHandler;
 public class HtmlRequest<T> extends BaseRequest<T> {
 
     private HtmlHandler<T> mHtmlHandler;
+    private String mEncode = "GBK";
 
-    public HtmlRequest(String url, HtmlHandler<T> htmlHandler, Response.Listener<T> listener, Response.ErrorListener errorListener) {
-        super(url, listener, errorListener);
-        mHtmlHandler = htmlHandler;
+    public HtmlRequest(String url, HtmlHandler<T> htmlHandler) {
+        this(url, htmlHandler, "GBK");
     }
+
+    public HtmlRequest(String url, HtmlHandler<T> htmlHandler, String encode) {
+        super(url);
+        mHtmlHandler = htmlHandler;
+        mEncode = encode;
+    }
+
 
     @Override
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
-            String html = new String(response.data, "GBK");
+            String html = new String(response.data, mEncode);
             if (!TextUtils.isEmpty(html)) {
                 Element element = Jsoup.parse(html);
                 T o = mHtmlHandler.process(element);

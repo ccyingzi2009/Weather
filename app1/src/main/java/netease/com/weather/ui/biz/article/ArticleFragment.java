@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import netease.com.weather.ui.base.BaseFragment;
 /**
  * Created by user on 16-4-20.
  */
-public class ArticleFragment extends BaseFragment {
+public class ArticleFragment extends Fragment {
 
     @Bind(R.id.send)
     Button mSend;

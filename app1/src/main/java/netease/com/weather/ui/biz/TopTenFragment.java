@@ -59,6 +59,11 @@ public class TopTenFragment extends BaseFragment {
         initData();
     }
 
+    @Override
+    protected int getContentViewId() {
+        return 0;
+    }
+
     private void initData() {
         Call<TopTen> tops = BYApi.get().getApi().getTopTen(BYService.auth);
         tops.enqueue(new Callback<TopTen>() {

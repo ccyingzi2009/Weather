@@ -12,16 +12,12 @@ import java.lang.ref.WeakReference;
  */
 public abstract class BaseRequest<T> extends Request<T> {
 
-    private WeakReference<Response.Listener<T>> mListenerRef;
-
-
-    public BaseRequest(String url, Response.Listener listener, Response.ErrorListener errorListener) {
-        this(Method.GET, url, listener, errorListener);
+    public BaseRequest(String url) {
+        this(Method.GET, url);
     }
 
-    public BaseRequest(int method, String url, Response.Listener listener, Response.ErrorListener errorListener) {
-        super(method, url, errorListener);
-        mListenerRef = new WeakReference<Response.Listener<T>>(listener);
+    public BaseRequest(int method, String url) {
+        super(method, url, null);
         //volley内部根据url缓存，post情况下url一致但参数不一致，故设置post情况下不使用cache
         if (method == Method.POST) {
             setShouldCache(false);
@@ -30,8 +26,8 @@ public abstract class BaseRequest<T> extends Request<T> {
 
     @Override
     protected void deliverResponse(T response) {
-        if (mListenerRef != null && mListenerRef.get() != null) {
-            mListenerRef.get().onResponse(response);
+        if (mListener != null) {
+            mListener.onResponse(response);
         }
     }
 
@@ -45,5 +41,24 @@ public abstract class BaseRequest<T> extends Request<T> {
             }
         }
         return super.parseNetworkError(volleyError);
+    }
+
+    @Override
+    public void deliverError(VolleyError error) {
+        if (mListener != null) {
+            mListener.onError(error);
+        }
+    }
+
+    private IResponseListener<T> mListener;
+
+    public void setResponseListener(IResponseListener<T> listener) {
+        mListener = listener;
+    }
+
+    public interface IResponseListener<T> {
+        void onResponse(T response);
+
+        void onError(VolleyError error);
     }
 }

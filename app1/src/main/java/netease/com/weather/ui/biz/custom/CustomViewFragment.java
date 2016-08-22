@@ -39,4 +39,9 @@ public class CustomViewFragment extends BaseFragment {
 
     }
 
+    @Override
+    protected int getContentViewId() {
+        return 0;
+    }
+
 }

@@ -1,5 +1,6 @@
 package netease.com.weather.ui.biz.main;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.data.model.MainSlider;
 import netease.com.weather.ui.base.BaseActivity;
+import netease.com.weather.ui.biz.article.ArticleActivity;
 
 /**
  * Created by user on 16-8-3.
@@ -41,8 +43,6 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
         MainSlider article = mList.get(position);
         holder.title.setText(article.getTitle());
-        holder.itemView.setOnClickListener(this);
-        holder.itemView.setTag(position);
     }
 
 
@@ -86,22 +86,23 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
         public MyViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    v.getContext().startActivity(new Intent(mActivity, ArticleActivity.class));
+                }
+            });
         }
     }
 
-    class HeaderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class HeaderViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.title)
         TextView title;
 
         public HeaderViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(v.getContext(), "a", Toast.LENGTH_SHORT).show();
-        }
     }
 }

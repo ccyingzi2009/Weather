@@ -3,7 +3,6 @@ package netease.com.weather.ui.base;
 import android.os.Bundle;
 import android.view.View;
 
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import netease.com.weather.util.request.BaseRequest;
@@ -12,7 +11,13 @@ import netease.com.weather.util.request.VolleyUtils;
 /**
  * Created by user on 16-8-3.
  */
-public class BaseLoadFragment<T> extends BaseFragment implements Response.Listener<T>, Response.ErrorListener{
+public abstract class BaseLoadFragment<T> extends BaseFragment {
+
+    public enum RefreshMode {
+        normal, //普通刷新
+        refresh, //下拉刷新
+        more, // 加载更多
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -21,28 +26,38 @@ public class BaseLoadFragment<T> extends BaseFragment implements Response.Listen
     }
 
     public void loadNet() {
-        VolleyUtils.addRequest(onCreateNet(),this);
+        createRequest(RefreshMode.normal);
     }
 
-    protected BaseRequest<T> onCreateNet() {
+    protected void createRequest(final RefreshMode refreshMode) {
+        BaseRequest<T> request = onCreateNet(refreshMode);
+        if (request != null) {
+            request.setResponseListener(new BaseRequest.IResponseListener<T>() {
+                @Override
+                public void onResponse(T response) {
+                    onNetResponse(refreshMode, response);
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    onErrorResponse(error);
+                }
+            });
+
+            VolleyUtils.addRequest(request, this);
+        }
+
+    }
+
+    protected BaseRequest<T> onCreateNet(RefreshMode refreshMode) {
         return null;
     }
 
-    public void loadMore() {
-        VolleyUtils.addRequest(onCreateMore(),this);
-    }
-
-    protected BaseRequest<T> onCreateMore() {
-        return null;
-    }
-
-    @Override
     public void onErrorResponse(VolleyError error) {
 
     }
 
-    @Override
-    public void onResponse(T response) {
+    public void onNetResponse(RefreshMode mode, T response) {
 
     }
 }

@@ -22,9 +22,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
@@ -32,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.data.model.MainSlider;
 import netease.com.weather.ui.base.BaseActivity;
@@ -77,17 +74,10 @@ public class SampleFragment extends BaseLoadFragment<List<MainSlider>> {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_list, container, false);
-        ButterKnife.bind(this, view);
-        return view;
-    }
-
-    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((BaseActivity)getActivity()).setSupportActionBar(mToolbar);
-        ActionBar ab = ((BaseActivity)getActivity()).getSupportActionBar();
+        ((BaseActivity) getActivity()).setSupportActionBar(mToolbar);
+        ActionBar ab = ((BaseActivity) getActivity()).getSupportActionBar();
         if (ab != null) {
             ab.setDisplayHomeAsUpEnabled(true);
             ab.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -96,14 +86,19 @@ public class SampleFragment extends BaseLoadFragment<List<MainSlider>> {
     }
 
     @Override
-    protected BaseRequest<List<MainSlider>> onCreateNet() {
-        String url = Constants.MAIN_URL;
-        return new HtmlRequest<>(url, new MainPageHandler(), this, this);
+    protected int getContentViewId() {
+        return R.layout.fragment_main_list;
     }
 
     @Override
-    public void onResponse(List<MainSlider> response) {
-        super.onResponse(response);
+    protected BaseRequest<List<MainSlider>> onCreateNet(RefreshMode mode) {
+        String url = Constants.MAIN_URL;
+        return new HtmlRequest<>(url, new MainPageHandler());
+    }
+
+    @Override
+    public void onNetResponse(RefreshMode mode, List<MainSlider> response) {
+        super.onNetResponse(mode, response);
         if (response != null && !response.isEmpty()) {
             mLists.clear();
             mLists.addAll(response);
@@ -111,12 +106,5 @@ public class SampleFragment extends BaseLoadFragment<List<MainSlider>> {
             final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(mListAdapter);
             mRecycleView.addItemDecoration(decoration);
         }
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }

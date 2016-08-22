@@ -11,7 +11,7 @@ import netease.com.weather.R;
 /**
  * 分页Adapter，使用ProgressBar样式的Footer
  */
-public abstract class PageAdapter<T> extends HeaderFooterRecyclerAdapter<T> {
+public abstract class PageAdapter<T> extends HeaderFooterRecyclerAdapter<T>  {
 
     private boolean mUseFooter = true;
 
@@ -65,4 +65,5 @@ public abstract class PageAdapter<T> extends HeaderFooterRecyclerAdapter<T> {
             progressBar = (ProgressBar) itemView.findViewById(android.R.id.progress);
         }
     }
+
 }

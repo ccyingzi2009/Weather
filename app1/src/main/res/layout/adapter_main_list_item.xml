@@ -1,28 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
+    android:padding="8dp"
     tools:context=".ui.MainActivity">
-
-
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/icon"
-        android:layout_width="@dimen/avatar_size"
-        android:layout_height="@dimen/avatar_size"
-        android:padding="4dp"
-        app:placeholderImage="@drawable/filter_placeholder"
-        app:roundAsCircle="true" />
 
     <TextView
         android:id="@+id/title"
+        style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/icon"
-        android:gravity="center_vertical"
         android:layout_centerInParent="true"
-        android:maxLines="2" />
+        android:gravity="center_vertical"
+        android:lineSpacingMultiplier="1.4"
+        android:maxLines="2"/>
 
 </RelativeLayout>

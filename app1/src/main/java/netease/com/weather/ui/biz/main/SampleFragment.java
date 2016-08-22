@@ -19,7 +19,9 @@ package netease.com.weather.ui.biz.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +49,8 @@ public class SampleFragment extends BaseLoadFragment<List<MainSlider>> {
     private static final String ARG_TEXT = "ARG_TEXT";
     @Bind(R.id.recycle_view)
     RecyclerView mRecycleView;
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
     private MainListAdapter mListAdapter;
     private List<MainSlider> mLists = new ArrayList<>();
 
@@ -82,7 +86,12 @@ public class SampleFragment extends BaseLoadFragment<List<MainSlider>> {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        ((BaseActivity)getActivity()).setSupportActionBar(mToolbar);
+        ActionBar ab = ((BaseActivity)getActivity()).getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
         loadNet();
     }
 

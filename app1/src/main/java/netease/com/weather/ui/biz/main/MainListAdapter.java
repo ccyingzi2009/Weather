@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import java.util.List;
@@ -40,7 +40,6 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         MainSlider article = mList.get(position);
-        //holder.img.setImageURI(Uri.parse(coverUrl));
         holder.title.setText(article.getTitle());
         holder.itemView.setOnClickListener(this);
         holder.itemView.setTag(position);
@@ -81,8 +80,6 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.icon)
-        SimpleDraweeView img;
         @Bind(R.id.title)
         TextView title;
 
@@ -92,13 +89,19 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
         }
     }
 
-    class HeaderViewHolder extends RecyclerView.ViewHolder {
+    class HeaderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Bind(R.id.title)
         TextView title;
 
         public HeaderViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(v.getContext(), "a", Toast.LENGTH_SHORT).show();
         }
     }
 }

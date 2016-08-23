@@ -1,5 +1,6 @@
 package netease.com.weather.util.html;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -14,7 +15,8 @@ import netease.com.weather.data.model.MainSlider;
 public class MainPageHandler implements HtmlHandler<List<MainSlider>> {
 
     @Override
-    public List<MainSlider> process(Element element) {
+    public List<MainSlider> process(String html) {
+        Element element = Jsoup.parse(html);
         List<MainSlider> mainSliders = new ArrayList<>();
         //解析十大
         Element elementNode = element.getElementById("top10");

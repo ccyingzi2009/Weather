@@ -7,9 +7,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
-
 import netease.com.weather.util.html.HtmlHandler;
 
 /**
@@ -36,8 +33,8 @@ public class HtmlRequest<T> extends BaseRequest<T> {
         try {
             String html = new String(response.data, mEncode);
             if (!TextUtils.isEmpty(html)) {
-                Element element = Jsoup.parse(html);
-                T o = mHtmlHandler.process(element);
+                //Element element = Jsoup.parse(html);
+                T o = mHtmlHandler.process(html);
                 if (o != null) {
                     return Response.success(o, HttpHeaderParser.parseCacheHeaders(response));
                 } else {

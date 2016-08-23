@@ -1,9 +1,11 @@
 package netease.com.weather.data.model;
 
+import java.io.Serializable;
+
 /**
  * Created by liu_shuai on 16/3/17.
  */
-public class MainSlider {
+public class MainSlider implements Serializable{
     private String title;
     private String article_url;
     private String board;

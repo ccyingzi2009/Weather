@@ -1,12 +1,12 @@
 package netease.com.weather.ui.biz.main;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
@@ -18,6 +18,7 @@ import netease.com.weather.R;
 import netease.com.weather.data.model.MainSlider;
 import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.biz.article.ArticleActivity;
+import netease.com.weather.ui.biz.article.ArticleNewFragment;
 
 /**
  * Created by user on 16-8-3.
@@ -89,7 +90,13 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    v.getContext().startActivity(new Intent(mActivity, ArticleActivity.class));
+                    Bundle args = new Bundle();
+                    String articleUrl = mList.get(getLayoutPosition()).getArticle_url();
+                    articleUrl = articleUrl.substring(articleUrl.indexOf("article"));
+                    args.putSerializable(ArticleNewFragment.ARTICLE_URL, articleUrl);
+                    Intent intent = new Intent(mActivity, ArticleActivity.class);
+                    intent.putExtras(args);
+                    v.getContext().startActivity(intent);
                 }
             });
         }

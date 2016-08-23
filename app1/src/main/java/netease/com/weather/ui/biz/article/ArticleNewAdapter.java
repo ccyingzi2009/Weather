@@ -1,18 +1,16 @@
 package netease.com.weather.ui.biz.article;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.data.DataLoadingSubject;
-import netease.com.weather.data.model.Article;
 import netease.com.weather.data.model.ArticleBean;
 import netease.com.weather.ui.base.PageAdapter;
 
@@ -33,7 +31,7 @@ public class ArticleNewAdapter extends PageAdapter<ArticleBean> implements DataL
     }
 
     private void bindCommentHolder(ArticleBean article, CommentHolder holder) {
-        holder.content.setText(article.getContent());
+        holder.content.setText(Html.fromHtml(article.getContent()));
     }
 
     @Override

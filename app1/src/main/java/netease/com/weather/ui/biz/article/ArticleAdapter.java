@@ -1,12 +1,11 @@
 package netease.com.weather.ui.biz.article;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,7 +31,7 @@ public class ArticleAdapter extends PageAdapter<Article.ArticleEntity> implement
     }
 
     private void bindCommentHolder(Article.ArticleEntity article, CommentHolder holder) {
-        holder.content.setText(article.getContent());
+        holder.content.setText(Html.fromHtml(article.getContent()));
     }
 
     @Override

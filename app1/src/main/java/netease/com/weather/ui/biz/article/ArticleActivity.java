@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentTransaction;
 
 import netease.com.weather.R;
 import netease.com.weather.ui.base.BaseActivity;
-import netease.com.weather.ui.biz.main.SampleFragment;
 
 /**
  * Created by user on 16-4-21.
@@ -20,6 +19,7 @@ public class ArticleActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
+        Bundle args = getIntent().getExtras();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment fragment = fragmentManager.findFragmentById(R.id.fragmentContainer);
@@ -29,6 +29,7 @@ public class ArticleActivity extends BaseActivity {
             }
         } else {
             Fragment f = Fragment.instantiate(this, ArticleNewFragment.class.getName());
+            f.setArguments(args);
             ft.add(R.id.fragmentContainer, f);
             ft.commit();
         }

@@ -7,6 +7,7 @@ import java.util.List;
 
 import netease.com.weather.data.model.ArticleBean;
 import netease.com.weather.ui.base.BaseLoadListFragment;
+import netease.com.weather.ui.base.PageAdapter;
 import netease.com.weather.ui.base.constants.Constants;
 import netease.com.weather.ui.common.ListAdapter;
 import netease.com.weather.util.html.ArticleHandler;
@@ -36,15 +37,16 @@ public class ArticleNewFragment extends BaseLoadListFragment<ArticleBean> {
         if (refreshMode == RefreshMode.refresh) {
             String url = String.format(Constants.M_ARTICLE_URL, mArticleUrl);
             return new HtmlRequest<>(url, new ArticleHandler(), "utf-8");
-        } else {
-
+        } else if (refreshMode == RefreshMode.more) {
+            String url = String.format(Constants.M_ARTICLE_URL, mArticleUrl) + "?" + (mPage + 1);
+            return new HtmlRequest<>(url, new ArticleHandler(), "utf-8");
         }
 
         return super.onCreateNet(refreshMode);
     }
 
     @Override
-    protected ListAdapter<ArticleBean> createAdapter() {
+    protected PageAdapter<ArticleBean> createAdapter() {
         return new ArticleNewAdapter();
     }
 }

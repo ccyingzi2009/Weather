@@ -14,6 +14,9 @@ public class StringUtils {
         String[] lines = content.split("<br>");
         List<String> attachList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
+        StringBuilder ref = new StringBuilder();
+
+        boolean refStart = false;
         for (String line : lines) {
             Pattern urlPattern = Pattern.compile("<a target=\"_blank\" href=\"([ ^<>]+)\"><img");
             Matcher urlMatcher = urlPattern.matcher(line);
@@ -21,9 +24,41 @@ public class StringUtils {
                 attachList.add(line);
                 continue;
             }
+            if (line.startsWith("修改") || line.startsWith("FROM")) {
+                continue;
+            }
+            //引用
+            if (line.startsWith(":")) {
+                ref.append(line).append("<br/>");
+                continue;
+            }
+            if (line.contains("的大作中提到")) {
+                ref.append(line);
+                refStart = true;
+                continue;
+            }
+
+            if (line.startsWith("--")) {
+                refStart = false;
+                continue;
+            }
+
+            if (refStart) {
+                ref.append(line);
+            }
+
+            if (line.equals("")) {
+                continue;
+            }
+
             sb.append(line).append("<br/>");
         }
-        sb.delete(sb.length() - 6, sb.length() - 1);
-        return new Object[]{sb.toString(), attachList};
+        if (sb.length() > 5) {
+            sb.delete(sb.length() - 5, sb.length());
+        }
+        if (ref.length() > 5) {
+            ref.delete(ref.length() - 5, ref.length());
+        }
+        return new Object[]{sb.toString(), ref.toString(), attachList};
     }
 }

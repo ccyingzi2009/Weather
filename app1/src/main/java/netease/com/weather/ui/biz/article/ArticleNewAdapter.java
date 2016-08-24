@@ -19,6 +19,10 @@ import netease.com.weather.ui.base.PageAdapter;
  */
 public class ArticleNewAdapter extends PageAdapter<ArticleBean> implements DataLoadingSubject.DataLoadingCallbacks {
 
+    public ArticleNewAdapter(OnFooterViewCallback callback) {
+        super(callback);
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateBasicItemViewHolder(ViewGroup parent, int viewType) {
         return new CommentHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_article_item, parent, false));
@@ -32,6 +36,7 @@ public class ArticleNewAdapter extends PageAdapter<ArticleBean> implements DataL
 
     private void bindCommentHolder(ArticleBean article, CommentHolder holder) {
         holder.content.setText(Html.fromHtml(article.getContent()));
+        holder.userName.setText(article.getUser());
     }
 
     @Override
@@ -49,6 +54,8 @@ public class ArticleNewAdapter extends PageAdapter<ArticleBean> implements DataL
 
         @Bind(R.id.content)
         TextView content;
+        @Bind(R.id.article_user_name)
+        TextView userName;
 
         public CommentHolder(View itemView) {
             super(itemView);

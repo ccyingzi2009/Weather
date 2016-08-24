@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class StringUtils {
 
     public static Object[] parseMobileContent(String content) {
-        String []lines = content.split("<br>");
+        String[] lines = content.split("<br>");
         List<String> attachList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         for (String line : lines) {
@@ -21,9 +21,9 @@ public class StringUtils {
                 attachList.add(line);
                 continue;
             }
-
             sb.append(line).append("<br/>");
         }
+        sb.delete(sb.length() - 6, sb.length() - 1);
         return new Object[]{sb.toString(), attachList};
     }
 }

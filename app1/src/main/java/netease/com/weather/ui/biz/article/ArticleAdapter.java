@@ -19,6 +19,10 @@ import netease.com.weather.ui.base.PageAdapter;
  */
 public class ArticleAdapter extends PageAdapter<Article.ArticleEntity> implements DataLoadingSubject.DataLoadingCallbacks {
 
+    public ArticleAdapter(OnFooterViewCallback callback) {
+        super(callback);
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateBasicItemViewHolder(ViewGroup parent, int viewType) {
         return new CommentHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_article_item, parent, false));

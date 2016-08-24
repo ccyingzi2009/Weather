@@ -15,4 +15,12 @@ public class ArticleBean {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 }

@@ -15,15 +15,34 @@
   limitations under the License.
   -->
 
-<netease.com.weather.ui.view.ForegroundRelativeLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/article_user_name"
+        style="@style/ArticleUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="用户名"/>
+
+    <TextView
+        android:id="@+id/article_time"
+        style="@style/ArticleUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/article_user_name"
+        tools:text="用户名"/>
 
     <TextView
         android:id="@+id/content"
+        style="@style/ArticleContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/article_time"
+        tools:text="这是内容"/>
 
-</netease.com.weather.ui.view.ForegroundRelativeLayout>
+</RelativeLayout>

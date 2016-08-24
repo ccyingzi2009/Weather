@@ -40,7 +40,7 @@ public abstract class BaseLoadFragment<T> extends BaseFragment {
 
                 @Override
                 public void onError(VolleyError error) {
-                    onErrorResponse(error);
+                    onErrorResponse(refreshMode, error);
                 }
             });
 
@@ -53,7 +53,7 @@ public abstract class BaseLoadFragment<T> extends BaseFragment {
         return null;
     }
 
-    public void onErrorResponse(VolleyError error) {
+    public void onErrorResponse(RefreshMode mode, VolleyError error) {
 
     }
 

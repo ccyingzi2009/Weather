@@ -9,7 +9,6 @@ import netease.com.weather.data.model.ArticleBean;
 import netease.com.weather.ui.base.BaseLoadListFragment;
 import netease.com.weather.ui.base.PageAdapter;
 import netease.com.weather.ui.base.constants.Constants;
-import netease.com.weather.ui.common.ListAdapter;
 import netease.com.weather.util.html.ArticleHandler;
 import netease.com.weather.util.request.BaseRequest;
 import netease.com.weather.util.request.HtmlRequest;
@@ -38,7 +37,7 @@ public class ArticleNewFragment extends BaseLoadListFragment<ArticleBean> {
             String url = String.format(Constants.M_ARTICLE_URL, mArticleUrl);
             return new HtmlRequest<>(url, new ArticleHandler(), "utf-8");
         } else if (refreshMode == RefreshMode.more) {
-            String url = String.format(Constants.M_ARTICLE_URL, mArticleUrl) + "?" + (mPage + 1);
+            String url = String.format(Constants.M_ARTICLE_URL, mArticleUrl) + "?p=" + (mPage + 1);
             return new HtmlRequest<>(url, new ArticleHandler(), "utf-8");
         }
 
@@ -47,6 +46,6 @@ public class ArticleNewFragment extends BaseLoadListFragment<ArticleBean> {
 
     @Override
     protected PageAdapter<ArticleBean> createAdapter() {
-        return new ArticleNewAdapter();
+        return new ArticleNewAdapter(this);
     }
 }

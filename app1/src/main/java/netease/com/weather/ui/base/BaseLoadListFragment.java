@@ -5,9 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+
+import com.android.volley.VolleyError;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ import netease.com.weather.ui.common.AdapterHandler;
  * Created by ls on 16-8-3.
  */
 public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> implements
-        SwipeRefreshLayout.OnRefreshListener {
+        SwipeRefreshLayout.OnRefreshListener, PageAdapter.OnFooterViewCallback {
 
     @Bind(R.id.recycle_view)
     RecyclerView recycleView;
@@ -28,12 +29,15 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
 
     private PageAdapter<T> mAdapter;
     protected int mPage = -1;
+    protected int mSize = 10;
+    private RefreshConfig mRefreshConfig;
 
-    private RefreshMode mMode = RefreshMode.refresh;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAdapter = createAdapter();
+
+        mRefreshConfig = new RefreshConfig();
     }
 
     @Override
@@ -74,8 +78,22 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
         onPullDownToRefresh();
     }
 
+    @Override
+    public void loadMore() {
+        onPullUpToRefresh();
+    }
+
+
+    @Override
+    public void onRefresh() {
+        onPullDownToRefresh();
+    }
+
     protected void onScrollStateChanged(int state) {
-        if (state == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && mPage != -1) {
+        if (recycleView == null) {
+            return;
+        }
+        if (state == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && mPage != -1 && !mRefreshConfig.pageEnd) {
             int count = recycleView.getChildCount();
             RecyclerView.LayoutManager layoutManager = recycleView.getLayoutManager();
             int totalCount = 0;
@@ -89,8 +107,6 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
             if (totalCount == count + firstVisibleItem) {
                 onPullUpToRefresh();
             }
-            Log.d("recycleView====", count + "  " + totalCount + "  " + firstVisibleItem);
-            //if (count > 0 && recycleView.getChildAt(count - 1) == )
         }
     }
 
@@ -103,6 +119,7 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
     //上拉加载更多
     protected void onPullUpToRefresh() {
         createRequest(RefreshMode.more);
+        mRefreshConfig.isLoadingMore = true;
     }
 
     @Override
@@ -117,21 +134,31 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
             mAdapter.notifyDataSetChanged();
             mPage = 1;
             mAdapter.showFooter(true);
-            mMode = RefreshMode.refresh;
+            mRefreshConfig.pageEnd = false;
         } else if (mode == RefreshMode.more) {
             AdapterHandler.notifyDataSetChanged(mAdapter, response, false);
             mAdapter.notifyDataSetChanged();
             mPage++;
-            if (response.size() == 0) {
+            if (response.size() < mSize) {
                 mAdapter.showFooter(false);
+                mRefreshConfig.pageEnd = true;
             }
-            mMode = RefreshMode.more;
-
+            mRefreshConfig.isLoadingMore = false;
         }
     }
 
     @Override
-    public void onRefresh() {
-        onPullDownToRefresh();
+    public void onErrorResponse(RefreshMode mode, VolleyError error) {
+        super.onErrorResponse(mode, error);
+        if (mode == RefreshMode.more) {
+            mRefreshConfig.isLoadingMore = false;
+        }
+
+    }
+
+
+    public static class RefreshConfig {
+        public boolean pageEnd = false;
+        public boolean isLoadingMore = false;
     }
 }

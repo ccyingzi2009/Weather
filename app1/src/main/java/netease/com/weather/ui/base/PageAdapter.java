@@ -13,6 +13,16 @@ import netease.com.weather.R;
  */
 public abstract class PageAdapter<T> extends HeaderFooterRecyclerAdapter<T>  {
 
+    private OnFooterViewCallback mCallback;
+
+    public interface OnFooterViewCallback{
+        void loadMore();
+    }
+
+    public PageAdapter(OnFooterViewCallback callback) {
+        mCallback = callback;
+    }
+
     private boolean mUseFooter = true;
 
     public void showFooter(boolean show) {
@@ -65,5 +75,7 @@ public abstract class PageAdapter<T> extends HeaderFooterRecyclerAdapter<T>  {
             progressBar = (ProgressBar) itemView.findViewById(android.R.id.progress);
         }
     }
+
+
 
 }

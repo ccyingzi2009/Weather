@@ -1,6 +1,7 @@
 package netease.com.weather.ui.base;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.android.volley.VolleyError;
@@ -40,6 +41,7 @@ public abstract class BaseLoadFragment<T> extends BaseFragment {
 
                 @Override
                 public void onError(VolleyError error) {
+                    Log.v("volley", error.getMessage());
                     onErrorResponse(refreshMode, error);
                 }
             });

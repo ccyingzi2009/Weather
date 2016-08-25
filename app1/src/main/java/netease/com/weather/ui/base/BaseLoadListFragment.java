@@ -5,7 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 
 import com.android.volley.VolleyError;
@@ -26,6 +29,8 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
     RecyclerView recycleView;
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     private PageAdapter<T> mAdapter;
     protected int mPage = -1;
@@ -48,6 +53,12 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadNet();
+    }
+
+    @Override
+    protected void initLayout(View v, LayoutInflater inflater, ViewGroup container) {
+        super.initLayout(v, inflater, container);
         swipeRefreshLayout.setOnRefreshListener(this);
         recycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -63,9 +74,9 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
         });
 
         recycleView.setLayoutManager(createLayoutManager());
-        loadNet();
-    }
 
+        ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
+    }
 
     protected abstract PageAdapter<T> createAdapter();
 
@@ -139,11 +150,11 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
             AdapterHandler.notifyDataSetChanged(mAdapter, response, false);
             mAdapter.notifyDataSetChanged();
             mPage++;
-            if (response.size() < mSize) {
-                mAdapter.showFooter(false);
-                mRefreshConfig.pageEnd = true;
-            }
             mRefreshConfig.isLoadingMore = false;
+        }
+        if (response.size() < mSize) {
+            mAdapter.showFooter(false);
+            mRefreshConfig.pageEnd = true;
         }
     }
 
@@ -152,6 +163,10 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
         super.onErrorResponse(mode, error);
         if (mode == RefreshMode.more) {
             mRefreshConfig.isLoadingMore = false;
+        }
+
+        if (mode == RefreshMode.refresh && swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
         }
 
     }

@@ -1,7 +1,6 @@
 package netease.com.weather.util.string;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,19 +8,21 @@ import java.util.regex.Pattern;
  * Created by user on 16-8-23.
  */
 public class StringUtils {
-
+    public final static String IMG_NODE = "<IMG_NODE>";
     public static Object[] parseMobileContent(String content) {
         String[] lines = content.split("<br>");
-        List<String> attachList = new ArrayList<>();
+        ArrayList<String> attachList = new ArrayList();
         StringBuilder sb = new StringBuilder();
         StringBuilder ref = new StringBuilder();
 
+
         boolean refStart = false;
         for (String line : lines) {
-            Pattern urlPattern = Pattern.compile("<a target=\"_blank\" href=\"([ ^<>]+)\"><img");
+            Pattern urlPattern = Pattern.compile("<a target=\"_blank\" href=\"([^<>]+)\"><img");
             Matcher urlMatcher = urlPattern.matcher(line);
             if (urlMatcher.find()) {
-                attachList.add(line);
+                attachList.add(urlMatcher.group(1));
+                sb.append(IMG_NODE); //添加图片标签
                 continue;
             }
             if (line.startsWith("修改") || line.startsWith("FROM")) {

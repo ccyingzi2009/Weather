@@ -44,6 +44,9 @@ public class MainActivity extends BaseActivity {
 
         }
 
+        //首页禁止手势返回
+        setSwipeBackEnable(false);
+
         View headerView = navView.inflateHeaderView(R.layout.nav_header_main);
         //todo headerView
 

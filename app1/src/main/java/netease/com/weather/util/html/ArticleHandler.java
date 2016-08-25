@@ -34,6 +34,7 @@ public class ArticleHandler implements HtmlHandler<List<ArticleBean>> {
                     bean = new ArticleBean();
                     Object[] object = StringUtils.parseMobileContent(content.html());
                     bean.setContent((String) object[0]);
+                    bean.setImgs((ArrayList<String>) object[2]);
                     arrayList.add(bean);
                 }else {
                     continue;

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
-import netease.com.weather.R;
 
 /**
  * Created by liu_shuai on 16/3/19.
@@ -19,6 +18,7 @@ public abstract class BaseFragment extends Fragment {
         if (getContentViewId() > 0) {
             View v = inflater.inflate(getContentViewId(), container, false);
             ButterKnife.bind(this, v);
+            initLayout(v, inflater, container);
             return v;
         }
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -36,5 +36,9 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    protected void initLayout(View v, LayoutInflater inflater, ViewGroup container) {
+
     }
 }

@@ -37,12 +37,18 @@
         android:layout_below="@id/article_user_name"
         tools:text="用户名"/>
 
-    <TextView
+    <netease.com.weather.ui.CustomTextView
         android:id="@+id/content"
         style="@style/ArticleContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/article_time"
         tools:text="这是内容"/>
+
+    <LinearLayout
+        android:id="@+id/content_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
 
 </RelativeLayout>

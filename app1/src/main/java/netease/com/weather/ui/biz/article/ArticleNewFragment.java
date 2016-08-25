@@ -46,6 +46,6 @@ public class ArticleNewFragment extends BaseLoadListFragment<ArticleBean> {
 
     @Override
     protected PageAdapter<ArticleBean> createAdapter() {
-        return new ArticleNewAdapter(this);
+        return new ArticleNewAdapter(getActivity(), this);
     }
 }

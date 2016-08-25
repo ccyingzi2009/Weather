@@ -3,6 +3,7 @@
     <color name="colorPrimary">#673AB7</color>
     <color name="colorPrimaryDark">#512DA8</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryAlpha">#33673AB7</color>
 
     <!--头像背景-->
     <color name="content_placeholder">#ffe0e0e0</color>

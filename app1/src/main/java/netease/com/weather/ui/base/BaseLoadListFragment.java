@@ -31,6 +31,10 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
     SwipeRefreshLayout swipeRefreshLayout;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.loading_view)
+    View loadingView;
+    @Bind(R.id.layoutLoadFailed)
+    View loadingFailed;
 
     private PageAdapter<T> mAdapter;
     protected int mPage = -1;
@@ -75,7 +79,7 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
 
         recycleView.setLayoutManager(createLayoutManager());
 
-        ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
+        ((BaseActivity) getActivity()).setSupportActionBar(toolbar);
     }
 
     protected abstract PageAdapter<T> createAdapter();
@@ -86,6 +90,7 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
 
     @Override
     public void loadNet() {
+        onTaskStateChange(TaskState.prepare);
         onPullDownToRefresh();
     }
 
@@ -146,6 +151,7 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
             mPage = 1;
             mAdapter.showFooter(true);
             mRefreshConfig.pageEnd = false;
+            onTaskStateChange(TaskState.success);
         } else if (mode == RefreshMode.more) {
             AdapterHandler.notifyDataSetChanged(mAdapter, response, false);
             mAdapter.notifyDataSetChanged();
@@ -167,6 +173,7 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
 
         if (mode == RefreshMode.refresh && swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
+            onTaskStateChange(TaskState.failed);
         }
 
     }
@@ -175,5 +182,32 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
     public static class RefreshConfig {
         public boolean pageEnd = false;
         public boolean isLoadingMore = false;
+    }
+
+    @Override
+    protected void onTaskStateChange(TaskState state) {
+        super.onTaskStateChange(state);
+        if (state == TaskState.prepare) {
+            if (isContentEmpty()) {
+                recycleView.setVisibility(View.GONE);
+                loadingView.setVisibility(View.VISIBLE);
+            } else {
+                recycleView.setVisibility(View.VISIBLE);
+                loadingView.setVisibility(View.GONE);
+            }
+        } else if (state == TaskState.success) {
+            recycleView.setVisibility(View.VISIBLE);
+            loadingView.setVisibility(View.GONE);
+        } else if (state == TaskState.failed) {
+            if (isContentEmpty()) {
+                loadingFailed.setVisibility(View.VISIBLE);
+                recycleView.setVisibility(View.GONE);
+                loadingView.setVisibility(View.GONE);
+            } else {
+                loadingFailed.setVisibility(View.GONE);
+                recycleView.setVisibility(View.VISIBLE);
+                loadingView.setVisibility(View.GONE);
+            }
+        }
     }
 }

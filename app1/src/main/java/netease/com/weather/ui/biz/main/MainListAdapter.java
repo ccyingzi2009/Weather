@@ -60,7 +60,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
 
     @Override
     public HeaderViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        View v = mInflater.inflate(R.layout.adapter_main_list_item, null);
+        View v = mInflater.inflate(R.layout.adapter_main_list_item_header, null);
         return new HeaderViewHolder(v);
     }
 

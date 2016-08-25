@@ -3,7 +3,9 @@ package netease.com.weather.ui.base;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
 
 import netease.com.weather.util.request.BaseRequest;
@@ -14,10 +16,18 @@ import netease.com.weather.util.request.VolleyUtils;
  */
 public abstract class BaseLoadFragment<T> extends BaseFragment {
 
+    private boolean mIsEmpty = true;
+
     public enum RefreshMode {
         normal, //普通刷新
         refresh, //下拉刷新
         more, // 加载更多
+    }
+
+    public enum TaskState {
+        prepare,
+        success,
+        failed,
     }
 
     @Override
@@ -42,7 +52,7 @@ public abstract class BaseLoadFragment<T> extends BaseFragment {
                 @Override
                 public void onError(VolleyError error) {
                     Log.v("volley", error.getMessage());
-                    onErrorResponse(refreshMode, error);
+                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -60,6 +70,18 @@ public abstract class BaseLoadFragment<T> extends BaseFragment {
     }
 
     public void onNetResponse(RefreshMode mode, T response) {
+
+    }
+
+    public void setIsEmpty(boolean isEmpty) {
+        this.mIsEmpty = isEmpty;
+    }
+
+    protected boolean isContentEmpty(){
+        return mIsEmpty;
+    }
+
+    protected void onTaskStateChange(TaskState state) {
 
     }
 }

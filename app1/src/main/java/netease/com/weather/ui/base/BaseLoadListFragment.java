@@ -198,6 +198,7 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
         } else if (state == TaskState.success) {
             recycleView.setVisibility(View.VISIBLE);
             loadingView.setVisibility(View.GONE);
+            loadingFailed.setVisibility(View.GONE);
         } else if (state == TaskState.failed) {
             if (isContentEmpty()) {
                 loadingFailed.setVisibility(View.VISIBLE);

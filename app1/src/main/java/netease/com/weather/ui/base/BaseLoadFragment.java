@@ -53,6 +53,7 @@ public abstract class BaseLoadFragment<T> extends BaseFragment {
                 public void onError(VolleyError error) {
                     Log.v("volley", error.getMessage());
                     Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    onErrorResponse(refreshMode, error);
                 }
             });
 

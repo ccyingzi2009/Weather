@@ -5,5 +5,5 @@ package netease.com.weather.util.html;
  */
 public interface HtmlHandler<T> {
     T process(String html);
-    void save();
+    void save(String key);
 }

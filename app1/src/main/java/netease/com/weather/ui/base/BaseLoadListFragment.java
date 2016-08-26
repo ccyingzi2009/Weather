@@ -139,10 +139,27 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
     }
 
     @Override
-    public void onNetResponse(RefreshMode mode, List<T> response) {
+    protected List<T> getLocalData() {
+        return null;
+    }
+
+    @Override
+    final protected void initLocalData() {
+        List<T> data = getLocalData();
+        if (data != null && !data.isEmpty()) {
+            onNetResponse(RefreshMode.refresh, data);
+        }
+    }
+
+    @Override
+    final public void onNetResponse(RefreshMode mode, List<T> response) {
         super.onNetResponse(mode, response);
-        if (mode == RefreshMode.refresh && swipeRefreshLayout.isRefreshing()) { //下拉刷新
-            swipeRefreshLayout.setRefreshing(false);
+        if (swipeRefreshLayout == null) return;
+
+        if (mode == RefreshMode.refresh) { //下拉刷新
+            if (swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
             AdapterHandler.notifyDataSetChanged(mAdapter, response);
             if (recycleView.getAdapter() == null) {
                 recycleView.setAdapter(mAdapter);
@@ -152,6 +169,7 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
             mAdapter.showFooter(true);
             mRefreshConfig.pageEnd = false;
             onTaskStateChange(TaskState.success);
+            setIsEmpty(response.size() == 0);
         } else if (mode == RefreshMode.more) {
             AdapterHandler.notifyDataSetChanged(mAdapter, response, false);
             mAdapter.notifyDataSetChanged();
@@ -167,6 +185,8 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
     @Override
     public void onErrorResponse(RefreshMode mode, VolleyError error) {
         super.onErrorResponse(mode, error);
+        if (swipeRefreshLayout == null) return;
+
         if (mode == RefreshMode.more) {
             mRefreshConfig.isLoadingMore = false;
         }
@@ -187,6 +207,7 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
     @Override
     protected void onTaskStateChange(TaskState state) {
         super.onTaskStateChange(state);
+        if (recycleView == null || loadingView == null || loadingFailed == null) return;
         if (state == TaskState.prepare) {
             if (isContentEmpty()) {
                 recycleView.setVisibility(View.GONE);

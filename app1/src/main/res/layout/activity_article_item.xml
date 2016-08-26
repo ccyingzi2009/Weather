@@ -37,19 +37,37 @@
         android:layout_below="@id/article_user_name"
         tools:text="用户名"/>
 
-    <netease.com.weather.ui.CustomTextView
-        android:id="@+id/content"
-        style="@style/ArticleContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/article_time"
-        tools:text="这是内容"/>
-
     <LinearLayout
         android:id="@+id/content_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/article_time"
         android:orientation="vertical"/>
+
+    <RelativeLayout
+        android:id="@+id/quote_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/content_container"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/article_quote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            style="@style/ArticleContent"
+            tools:text="测试时"/>
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/article_quote"
+            android:layout_alignTop="@id/article_quote"
+            android:background="#eee"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

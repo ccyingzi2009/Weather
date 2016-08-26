@@ -1,37 +1,28 @@
 package netease.com.weather.data.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by liu_shuai on 16/8/22.
  */
 public class ArticleBean {
 
-    String content;
-    String user;
-    private ArrayList<String> imgs;
+    String title;
+    List<ArticleSingleBean> mSingleBeanList;
 
-    public String getContent() {
-        return content;
+    public String getTitle() {
+        return title;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getUser() {
-        return user;
+    public List<ArticleSingleBean> getSingleBeanList() {
+        return mSingleBeanList;
     }
 
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public ArrayList<String> getImgs() {
-        return imgs;
-    }
-
-    public void setImgs(ArrayList<String> imgs) {
-        this.imgs = imgs;
+    public void setSingleBeanList(List<ArticleSingleBean> singleBeanList) {
+        mSingleBeanList = singleBeanList;
     }
 }

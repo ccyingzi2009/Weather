@@ -16,15 +16,21 @@ public class HtmlRequest<T> extends BaseRequest<T> {
 
     private HtmlHandler<T> mHtmlHandler;
     private String mEncode = "GBK";
+    private Boolean mSaveCache = false;
 
     public HtmlRequest(String url, HtmlHandler<T> htmlHandler) {
-        this(url, htmlHandler, "GBK");
+        this(url, htmlHandler, false);
     }
 
-    public HtmlRequest(String url, HtmlHandler<T> htmlHandler, String encode) {
+    public HtmlRequest(String url, HtmlHandler<T> htmlHandler, boolean saveCache) {
+        this(url, htmlHandler, "GBK", saveCache);
+    }
+
+    public HtmlRequest(String url, HtmlHandler<T> htmlHandler, String encode, boolean saveCache) {
         super(url);
         mHtmlHandler = htmlHandler;
         mEncode = encode;
+        mSaveCache = saveCache;
     }
 
 
@@ -36,6 +42,9 @@ public class HtmlRequest<T> extends BaseRequest<T> {
                 //Element element = Jsoup.parse(html);
                 T o = mHtmlHandler.process(html);
                 if (o != null) {
+                    if (mSaveCache) {
+                        mHtmlHandler.save(mUrl);
+                    }
                     return Response.success(o, HttpHeaderParser.parseCacheHeaders(response));
                 } else {
                     return Response.error(new VolleyError("data is empty"));

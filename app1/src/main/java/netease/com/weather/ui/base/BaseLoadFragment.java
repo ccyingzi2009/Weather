@@ -1,11 +1,8 @@
 package netease.com.weather.ui.base;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
 
 import netease.com.weather.util.request.BaseRequest;
@@ -33,6 +30,16 @@ public abstract class BaseLoadFragment<T> extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initLocalData();
+    }
+
+    //同步方法
+    protected T getLocalData() {
+        T t = null;
+        return t;
+    }
+
+    protected void initLocalData() {
 
     }
 
@@ -51,8 +58,7 @@ public abstract class BaseLoadFragment<T> extends BaseFragment {
 
                 @Override
                 public void onError(VolleyError error) {
-                    Log.v("volley", error.getMessage());
-                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     onErrorResponse(refreshMode, error);
                 }
             });

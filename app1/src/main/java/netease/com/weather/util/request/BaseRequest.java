@@ -1,10 +1,7 @@
 package netease.com.weather.util.request;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-
-import java.lang.ref.WeakReference;
 
 
 /**
@@ -12,8 +9,10 @@ import java.lang.ref.WeakReference;
  */
 public abstract class BaseRequest<T> extends Request<T> {
 
+    protected String mUrl;
     public BaseRequest(String url) {
         this(Method.GET, url);
+        mUrl = url;
     }
 
     public BaseRequest(int method, String url) {

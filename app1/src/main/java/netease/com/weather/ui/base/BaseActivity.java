@@ -1,5 +1,6 @@
 package netease.com.weather.ui.base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -21,6 +22,8 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
 
         mHelper = new SwipeBackActivityHelper(this);
         mHelper.onActivityCreate();

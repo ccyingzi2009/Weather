@@ -13,4 +13,9 @@ public class Constants {
     //文章页
     public final static String M_ARTICLE_URL = M_BASE_URL + "%s";
 
+
+    //PreConstant
+    public final static String PREF_ARCICLE = "pref_arcicle";
+
+
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +20,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.data.DataLoadingSubject;
-import netease.com.weather.data.model.ArticleBean;
-import netease.com.weather.ui.CustomTextView;
+import netease.com.weather.data.model.ArticleSingleBean;
 import netease.com.weather.ui.base.PageAdapter;
-import netease.com.weather.util.string.StringUtils;
+import netease.com.weather.util.StringUtils;
 
 /**
  * Created by user on 16-4-21.
  */
-public class ArticleNewAdapter extends PageAdapter<ArticleBean> implements DataLoadingSubject.DataLoadingCallbacks {
+public class ArticleNewAdapter extends PageAdapter<ArticleSingleBean> implements DataLoadingSubject.DataLoadingCallbacks {
 
     private Activity mActivity;
 
@@ -47,7 +47,7 @@ public class ArticleNewAdapter extends PageAdapter<ArticleBean> implements DataL
 
     }
 
-    private void bindCommentHolder(ArticleBean article, CommentHolder holder) {
+    private void bindCommentHolder(ArticleSingleBean article, CommentHolder holder) {
         //holder.content.setText(article.getContent());
         holder.userName.setText(article.getUser());
 
@@ -57,6 +57,8 @@ public class ArticleNewAdapter extends PageAdapter<ArticleBean> implements DataL
         int position = 0;
 
         holder.contentContainer.removeAllViews();
+
+        //绑定图片和文字
         for (int i = 0; i < contentSec.length; i++) {
             String line = contentSec[i];
             //绑定图片
@@ -64,12 +66,19 @@ public class ArticleNewAdapter extends PageAdapter<ArticleBean> implements DataL
                 addImg(holder, mImgUrls, position++);
                 continue;
             }
-            View imgItem = LayoutInflater.from(mActivity).inflate(R.layout.activity_article_item_content, null, false);
-            holder.contentContainer.addView(imgItem);
-            TextView contentView = (TextView) imgItem.findViewById(R.id.content);
-            contentView.setText(Html.fromHtml(line));
+            addContent(holder, line);
             addImg(holder, mImgUrls, position++);
         }
+
+        //绑定引用
+        String quote = article.getQuote();
+        holder.articleQuote.setText(Html.fromHtml(quote));
+        if (!TextUtils.isEmpty(quote)) {
+            holder.quoteContainer.setVisibility(View.VISIBLE);
+        } else {
+            holder.quoteContainer.setVisibility(View.GONE);
+        }
+
     }
 
     private void addImg(CommentHolder holder, List<String> mImgUrls, int position) {
@@ -82,6 +91,13 @@ public class ArticleNewAdapter extends PageAdapter<ArticleBean> implements DataL
         Glide.with(mActivity).load(mImgUrls.get(position)).into(imageView);
     }
 
+    private void addContent(CommentHolder holder, String line) {
+        View imgItem = LayoutInflater.from(mActivity).inflate(R.layout.activity_article_item_content, null, false);
+        holder.contentContainer.addView(imgItem);
+        TextView contentView = (TextView) imgItem.findViewById(R.id.content);
+        contentView.setMovementMethod(LinkMovementMethod.getInstance());
+        contentView.setText(Html.fromHtml(line));
+    }
 
     @Override
     public void dataStartedLoading() {
@@ -96,12 +112,14 @@ public class ArticleNewAdapter extends PageAdapter<ArticleBean> implements DataL
 
     /* package */ static class CommentHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.content)
-        CustomTextView content;
         @Bind(R.id.article_user_name)
         TextView userName;
         @Bind(R.id.content_container)
         LinearLayout contentContainer;
+        @Bind(R.id.quote_container)
+        View quoteContainer;
+        @Bind(R.id.article_quote)
+        TextView articleQuote;
 
         public CommentHolder(View itemView) {
             super(itemView);

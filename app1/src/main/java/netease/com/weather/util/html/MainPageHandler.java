@@ -34,7 +34,7 @@ public class MainPageHandler implements HtmlHandler<List<MainSlider>> {
     }
 
     @Override
-    public void save() {
+    public void save(String key) {
 
     }
 

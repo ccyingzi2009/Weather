@@ -1,4 +1,4 @@
-package netease.com.weather.util.string;
+package netease.com.weather.util;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

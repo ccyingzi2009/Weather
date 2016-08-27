@@ -7,15 +7,18 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
+import netease.com.weather.data.model.MainBean;
 import netease.com.weather.data.model.MainSlider;
+import netease.com.weather.util.JsonUtils;
+import netease.com.weather.util.PrefHelper;
 
 /**
  * Created by user on 16-3-17.
  */
-public class MainPageHandler implements HtmlHandler<List<MainSlider>> {
+public class MainPageHandler extends BaseHandler<MainBean> {
 
     @Override
-    public List<MainSlider> process(String html) {
+    public MainBean process(String html) {
         Element element = Jsoup.parse(html);
         List<MainSlider> mainSliders = new ArrayList<>();
         //解析十大
@@ -30,12 +33,19 @@ public class MainPageHandler implements HtmlHandler<List<MainSlider>> {
                 parseData(w_section.getElementsByClass("topics").first(), mainSliders, sectionName);
             }
         }
-        return mainSliders;
+
+        MainBean bean = new MainBean();
+        bean.setSliders(mainSliders);
+        return bean;
     }
 
     @Override
     public void save(String key) {
-
+        MainBean bean = getData();
+        if (bean != null) {
+            String manStr = JsonUtils.toJson(bean);
+            PrefHelper.putString(key, manStr);
+        }
     }
 
     private void parseData(Element elementNode, List<MainSlider> mainSliders, String senctionName) {

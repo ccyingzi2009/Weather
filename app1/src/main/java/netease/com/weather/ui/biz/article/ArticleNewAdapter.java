@@ -1,6 +1,10 @@
 package netease.com.weather.ui.biz.article;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -13,7 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -22,6 +28,7 @@ import netease.com.weather.R;
 import netease.com.weather.data.DataLoadingSubject;
 import netease.com.weather.data.model.ArticleSingleBean;
 import netease.com.weather.ui.base.PageAdapter;
+import netease.com.weather.ui.biz.pics.PicShowActivity;
 import netease.com.weather.util.StringUtils;
 
 /**
@@ -81,14 +88,32 @@ public class ArticleNewAdapter extends PageAdapter<ArticleSingleBean> implements
 
     }
 
-    private void addImg(CommentHolder holder, List<String> mImgUrls, int position) {
+    private void addImg(CommentHolder holder, final List<String> mImgUrls, int position) {
         if (mImgUrls.size() <= position) {
             return;
         }
         View imgItem = LayoutInflater.from(mActivity).inflate(R.layout.activity_article_item_img, null, false);
         holder.contentContainer.addView(imgItem);
-        ImageView imageView = (ImageView) imgItem.findViewById(R.id.article_img);
-        Glide.with(mActivity).load(mImgUrls.get(position)).into(imageView);
+        final ImageView imageView = (ImageView) imgItem.findViewById(R.id.article_img);
+        Glide.with(mActivity).load(mImgUrls.get(position)).into(new GlideDrawableImageViewTarget(imageView, 1));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            imageView.setTransitionName(PicShowActivity.SCENE_IMAGE);
+        }
+        imgItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                args.putSerializable(PicShowActivity.PIC_SHOW_IMGS, (ArrayList)mImgUrls);
+                Intent intent = new Intent(mActivity, PicShowActivity.class);
+                intent.putExtras(args);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mActivity.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(mActivity, imageView, PicShowActivity.SCENE_IMAGE).toBundle());
+                }else {
+                    mActivity.startActivity(intent);
+                }
+            }
+        });
     }
 
     private void addContent(CommentHolder holder, String line) {

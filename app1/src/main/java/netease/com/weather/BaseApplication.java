@@ -2,6 +2,7 @@ package netease.com.weather;
 
 import android.support.multidex.MultiDexApplication;
 
+import com.antfortune.freeline.FreelineCore;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.stetho.Stetho;
 
@@ -16,6 +17,7 @@ public class BaseApplication extends MultiDexApplication {
         Fresco.initialize(this);
         Stetho.initializeWithDefaults(this);
         mInstance = this;
+        FreelineCore.init(this);
     }
 
     public static BaseApplication getInstance() {

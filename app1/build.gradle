@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.antfortune.freeline'
 
 android {
     compileSdkVersion 23
@@ -17,6 +18,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    freeline {
+        hack true
     }
 
 }
@@ -48,7 +53,6 @@ dependencies {
     compile "com.android.support:design:${supportLibVersion}"
     /* multidex */
     compile 'com.android.support:multidex:1.0.1'
-
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.okhttp3:mockwebserver:3.2.0'
@@ -57,22 +61,21 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.facebook.fresco:fresco:0.8.1'
-
     compile "com.facebook.stetho:stetho:${stethoVersion}"
     compile "com.facebook.stetho:stetho-okhttp3:${stethoVersion}"
-
     /* MD BottomBar*/
     compile 'com.roughike:bottom-bar:1.0.8'
-
     /* log */
     compile 'com.github.zhaokaiqiang.klog:library:1.5.0'
-
     compile 'de.greenrobot:eventbus:2.4.0'
     // Gif
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.15'
     // adapter
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
+    //imageloader --- glide
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 
-
+    //freeLine
+    compile 'com.antfortune.freeline:runtime:0.5.3'
 
 }

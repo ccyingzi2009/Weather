@@ -31,10 +31,7 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
     SwipeRefreshLayout swipeRefreshLayout;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.loading_view)
-    View loadingView;
-    @Bind(R.id.layoutLoadFailed)
-    View loadingFailed;
+
 
     private PageAdapter<T> mAdapter;
     protected int mPage = -1;
@@ -90,7 +87,6 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
 
     @Override
     public void loadNet() {
-        onTaskStateChange(TaskState.prepare);
         onPullDownToRefresh();
     }
 
@@ -128,6 +124,7 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
 
     //下拉刷新
     protected void onPullDownToRefresh() {
+        onTaskStateChange(TaskState.prepare);
         createRequest(RefreshMode.refresh);
         swipeRefreshLayout.setRefreshing(true);
     }
@@ -207,29 +204,6 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
     @Override
     protected void onTaskStateChange(TaskState state) {
         super.onTaskStateChange(state);
-        if (recycleView == null || loadingView == null || loadingFailed == null) return;
-        if (state == TaskState.prepare) {
-            if (isContentEmpty()) {
-                recycleView.setVisibility(View.GONE);
-                loadingView.setVisibility(View.VISIBLE);
-            } else {
-                recycleView.setVisibility(View.VISIBLE);
-                loadingView.setVisibility(View.GONE);
-            }
-        } else if (state == TaskState.success) {
-            recycleView.setVisibility(View.VISIBLE);
-            loadingView.setVisibility(View.GONE);
-            loadingFailed.setVisibility(View.GONE);
-        } else if (state == TaskState.failed) {
-            if (isContentEmpty()) {
-                loadingFailed.setVisibility(View.VISIBLE);
-                recycleView.setVisibility(View.GONE);
-                loadingView.setVisibility(View.GONE);
-            } else {
-                loadingFailed.setVisibility(View.GONE);
-                recycleView.setVisibility(View.VISIBLE);
-                loadingView.setVisibility(View.GONE);
-            }
-        }
+
     }
 }

@@ -2,6 +2,7 @@ package netease.com.weather.ui.base;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,5 +41,12 @@ public abstract class BaseFragment extends Fragment {
 
     protected void initLayout(View v, LayoutInflater inflater, ViewGroup container) {
 
+    }
+
+    public ActionBar getActionBar(){
+        if (getActivity() != null) {
+            return ((BaseActivity)getActivity()).getSupportActionBar();
+        }
+        return null;
     }
 }

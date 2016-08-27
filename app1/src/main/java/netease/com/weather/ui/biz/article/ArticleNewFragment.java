@@ -25,8 +25,9 @@ import netease.com.weather.util.request.HtmlRequest;
 public class ArticleNewFragment extends BaseLoadListFragment<ArticleSingleBean> {
 
     public final static String ARTICLE_URL = "article_url";
-
     private String mArticleUrl;
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +35,9 @@ public class ArticleNewFragment extends BaseLoadListFragment<ArticleSingleBean> 
         Bundle args = getArguments();
         if (args != null) {
             mArticleUrl = args.getString(ARTICLE_URL);
+            //Toast.makeText(getContext(), "增量", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override

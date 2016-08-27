@@ -1,9 +1,9 @@
 package netease.com.weather.ui.biz.pics;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
@@ -137,8 +137,8 @@ public class PicShowActivity extends BaseActivity implements View.OnClickListene
             container.addView(view, ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
             final PhotoView imageView = (PhotoView) view.findViewById(R.id.imageview);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) imageView.setTransitionName(SCENE_IMAGE);
-            
+            ViewCompat.setTransitionName(imageView, PicShowActivity.SCENE_IMAGE);
+
             final ProgressBar bar = (ProgressBar) view.findViewById(R.id.progress_bar);
             final PhotoViewAttacher attacher = new PhotoViewAttacher(imageView);
             bar.setVisibility(View.VISIBLE);

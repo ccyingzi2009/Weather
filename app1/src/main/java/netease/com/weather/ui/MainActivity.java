@@ -1,5 +1,6 @@
 package netease.com.weather.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -9,12 +10,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.biz.main.SampleFragment;
+import netease.com.weather.ui.biz.pc.LoginActivity;
 
 
 public class MainActivity extends BaseActivity {
@@ -49,6 +52,16 @@ public class MainActivity extends BaseActivity {
 
         View headerView = navView.inflateHeaderView(R.layout.nav_header_main);
         //todo headerView
+        ImageView imageView = (ImageView) headerView.findViewById(R.id.imageView);
+        if (imageView != null) {
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
+            });
+        }
+
 
 //        mBottomBar = BottomBar.attach(this, savedInstanceState);
 //        mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,

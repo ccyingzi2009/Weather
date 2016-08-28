@@ -49,6 +49,11 @@
             android:name=".ui.biz.pics.PicShowActivity"
             android:label="@string/title_activity_detail">
         </activity>
+
+        <activity
+            android:name=".ui.biz.pc.LoginActivity"
+            >
+        </activity>
     </application>
 
 </manifest>

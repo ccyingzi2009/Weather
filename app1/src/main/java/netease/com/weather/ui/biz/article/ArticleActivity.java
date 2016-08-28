@@ -1,13 +1,18 @@
 package netease.com.weather.ui.biz.article;
 
+import android.app.ActivityOptions;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.transition.Explode;
+import android.transition.Fade;
 
 import netease.com.weather.R;
 import netease.com.weather.ui.base.BaseActivity;
+import netease.com.weather.ui.biz.pics.PicShowActivity;
 
 /**
  * Created by user on 16-4-21.
@@ -19,6 +24,13 @@ public class ArticleActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Fade explode = new Fade();
+            explode.setDuration(500);
+            getWindow().setEnterTransition(explode);
+        }
+
         Bundle args = getIntent().getExtras();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();

@@ -1,6 +1,8 @@
 package netease.com.weather.ui.biz.main;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,9 +18,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.data.model.MainSlider;
+import netease.com.weather.ui.MainActivity;
 import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.biz.article.ArticleActivity;
 import netease.com.weather.ui.biz.article.ArticleNewFragment;
+import netease.com.weather.ui.biz.pics.PicShowActivity;
 
 /**
  * Created by user on 16-8-3.
@@ -26,9 +30,9 @@ import netease.com.weather.ui.biz.article.ArticleNewFragment;
 public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyViewHolder> implements View.OnClickListener, StickyRecyclerHeadersAdapter<MainListAdapter.HeaderViewHolder> {
     private LayoutInflater mInflater;
     private List<MainSlider> mList;
-    private BaseActivity mActivity;
+    private MainActivity mActivity;
 
-    public MainListAdapter(BaseActivity activity
+    public MainListAdapter(MainActivity activity
             , List<MainSlider> list) {
         mActivity = activity;
         mInflater = LayoutInflater.from(activity);
@@ -96,7 +100,12 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
                     args.putSerializable(ArticleNewFragment.ARTICLE_URL, articleUrl);
                     Intent intent = new Intent(mActivity, ArticleActivity.class);
                     intent.putExtras(args);
-                    v.getContext().startActivity(intent);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mActivity.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(mActivity).toBundle());
+                    }else {
+                        mActivity.startActivity(intent);
+                    }
                 }
             });
         }

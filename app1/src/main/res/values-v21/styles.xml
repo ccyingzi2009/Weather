@@ -48,4 +48,6 @@
     <style name="LoadingProgressBar">
         android:indeterminateDrawable="@drawable/loading_bar1
     </style>
+
+    <!--theme login-->
 </resources>

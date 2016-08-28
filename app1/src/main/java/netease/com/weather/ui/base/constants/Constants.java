@@ -12,10 +12,12 @@ public class Constants {
 
     //文章页
     public final static String M_ARTICLE_URL = M_BASE_URL + "%s";
+    //login
+    public final static String URL_LOGIN = M_BASE_URL + "user/login";
 
 
+    //以下为shareP
     //PreConstant
     public final static String PREF_ARCICLE = "pref_arcicle";
-
 
 }

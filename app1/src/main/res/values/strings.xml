@@ -6,4 +6,12 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_detail">DetailActivity</string>
+
+    <!--login-->
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="guest">游客</string>
+    <string name="dn_login_action">登陆</string>
+
+
 </resources>

@@ -55,7 +55,7 @@ public class ArticleNewFragment extends BaseLoadListFragment<ArticleSingleBean> 
 
     @Override
     protected PageAdapter<ArticleSingleBean> createAdapter() {
-        return new ArticleNewAdapter(getActivity(), this);
+        return new ArticleNewAdapter((ArticleActivity) getActivity(), this);
     }
 
     @Override

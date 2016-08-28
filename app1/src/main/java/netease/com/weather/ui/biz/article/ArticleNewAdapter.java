@@ -1,6 +1,5 @@
 package netease.com.weather.ui.biz.article;
 
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
@@ -37,9 +36,9 @@ import netease.com.weather.util.StringUtils;
  */
 public class ArticleNewAdapter extends PageAdapter<ArticleSingleBean> implements DataLoadingSubject.DataLoadingCallbacks {
 
-    private Activity mActivity;
+    private ArticleActivity mActivity;
 
-    public ArticleNewAdapter(Activity activity, OnFooterViewCallback callback) {
+    public ArticleNewAdapter(ArticleActivity activity, OnFooterViewCallback callback) {
         super(callback);
         mActivity = activity;
     }
@@ -98,7 +97,6 @@ public class ArticleNewAdapter extends PageAdapter<ArticleSingleBean> implements
         final ImageView imageView = (ImageView) imgItem.findViewById(R.id.article_img);
         Glide.with(mActivity).load(mImgUrls.get(position)).into(new GlideDrawableImageViewTarget(imageView, 1));
 
-        ViewCompat.setTransitionName(imageView, PicShowActivity.SCENE_IMAGE);
         imgItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,11 +104,12 @@ public class ArticleNewAdapter extends PageAdapter<ArticleSingleBean> implements
                 args.putSerializable(PicShowActivity.PIC_SHOW_IMGS, (ArrayList)mImgUrls);
                 Intent intent = new Intent(mActivity, PicShowActivity.class);
                 intent.putExtras(args);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     mActivity.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(mActivity, imageView, PicShowActivity.SCENE_IMAGE).toBundle());
                 }else {
                     mActivity.startActivity(intent);
-                }
+                }*/
+                mActivity.startActivity(intent);
             }
         });
     }

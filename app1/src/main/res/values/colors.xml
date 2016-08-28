@@ -19,5 +19,6 @@
     <!--列表标题颜色-->
     <color name="list_title_color">#3b424c</color>
 
+    <color name="designer_news_link_highlight">#b303a9f4</color>
 
 </resources>

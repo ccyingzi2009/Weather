@@ -52,8 +52,6 @@ public class PicShowActivity extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.common_pic_show_fragment);
         ButterKnife.bind(this);
 
-
-
         Bundle args = getIntent().getExtras();
         if (args != null) {
             imgs = args.getStringArrayList(PIC_SHOW_IMGS);
@@ -137,25 +135,28 @@ public class PicShowActivity extends BaseActivity implements View.OnClickListene
             container.addView(view, ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
             final PhotoView imageView = (PhotoView) view.findViewById(R.id.imageview);
-            ViewCompat.setTransitionName(imageView, PicShowActivity.SCENE_IMAGE);
 
             final ProgressBar bar = (ProgressBar) view.findViewById(R.id.progress_bar);
             final PhotoViewAttacher attacher = new PhotoViewAttacher(imageView);
             bar.setVisibility(View.VISIBLE);
-            Glide.with(mContext).load(images.get(position)).listener(new RequestListener<String, GlideDrawable>() {
-                @Override
-                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                    Log.d("Glide=====", "onException");
-                    return false;
-                }
+            Glide.with(mContext)
+                    .load(images.get(position))
+                    .listener(new RequestListener<String, GlideDrawable>() {
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            Log.d("Glide=====", "onException");
+                            return false;
+                        }
 
-                @Override
-                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                    Log.d("Glide=====", "onResourceReady");
-                    bar.setVisibility(View.GONE);
-                    return false;
-                }
-            }).into(new GlideDrawableImageViewTarget(imageView));
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                            Log.d("Glide=====", "onResourceReady");
+                            bar.setVisibility(View.GONE);
+                            return false;
+                        }
+                    })
+                    .fitCenter()//把图片按比例放大（缩小到）view的宽度，居中显示
+                    .into(new GlideDrawableImageViewTarget(imageView));
 
             attacher.setOnPhotoTapListener(mListener);
 

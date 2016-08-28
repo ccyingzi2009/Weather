@@ -18,10 +18,21 @@ public class HtmlRequest<T> extends BaseRequest<T> {
     private String mEncode = "GBK";
     private Boolean mSaveCache = false;
 
+    /**
+     * 默认不缓存
+     * @param url
+     * @param htmlHandler
+     */
     public HtmlRequest(String url, HtmlHandler<T> htmlHandler) {
         this(url, htmlHandler, false);
     }
 
+    /**
+     *
+     * @param url
+     * @param htmlHandler
+     * @param saveCache 是否缓存数据
+     */
     public HtmlRequest(String url, HtmlHandler<T> htmlHandler, boolean saveCache) {
         this(url, htmlHandler, "GBK", saveCache);
     }

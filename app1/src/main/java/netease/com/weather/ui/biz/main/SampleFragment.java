@@ -35,6 +35,7 @@ import butterknife.Bind;
 import netease.com.weather.R;
 import netease.com.weather.data.model.MainBean;
 import netease.com.weather.data.model.MainSlider;
+import netease.com.weather.ui.MainActivity;
 import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.base.BaseLoadFragment;
 import netease.com.weather.ui.base.constants.Constants;
@@ -74,7 +75,7 @@ public class SampleFragment extends BaseLoadFragment<MainBean> {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (mListAdapter == null) {
-            mListAdapter = new MainListAdapter((BaseActivity) getContext(), mLists);
+            mListAdapter = new MainListAdapter((MainActivity) getContext(), mLists);
         }
     }
 
@@ -98,7 +99,7 @@ public class SampleFragment extends BaseLoadFragment<MainBean> {
     @Override
     protected BaseRequest<MainBean> onCreateNet(RefreshMode mode) {
         String url = Constants.MAIN_URL;
-        return new HtmlRequest<>(url, new MainPageHandler());
+        return new HtmlRequest<>(url, new MainPageHandler(), true);
     }
 
     @Override

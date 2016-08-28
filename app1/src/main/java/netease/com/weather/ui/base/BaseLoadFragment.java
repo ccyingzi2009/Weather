@@ -3,12 +3,14 @@ package netease.com.weather.ui.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 import netease.com.weather.R;
+import netease.com.weather.util.NetUtils;
 import netease.com.weather.util.request.BaseRequest;
 import netease.com.weather.util.request.VolleyUtils;
 
@@ -88,6 +90,9 @@ public abstract class BaseLoadFragment<T> extends BaseFragment {
             });
 
             VolleyUtils.addRequest(request, this);
+        }
+        if (!NetUtils.checkNetwork()) {
+            Toast.makeText(getContext(), "请检测网络", Toast.LENGTH_SHORT).show();
         }
 
     }

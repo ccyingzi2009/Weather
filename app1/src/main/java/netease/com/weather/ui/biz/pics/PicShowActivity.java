@@ -3,7 +3,6 @@ package netease.com.weather.ui.biz.pics;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
@@ -13,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
@@ -155,7 +155,9 @@ public class PicShowActivity extends BaseActivity implements View.OnClickListene
                             return false;
                         }
                     })
-                    .fitCenter()//把图片按比例放大（缩小到）view的宽度，居中显示
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .fitCenter()
+                    .centerCrop()
                     .into(new GlideDrawableImageViewTarget(imageView));
 
             attacher.setOnPhotoTapListener(mListener);

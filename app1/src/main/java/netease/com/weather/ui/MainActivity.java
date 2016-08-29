@@ -18,6 +18,7 @@ import netease.com.weather.R;
 import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.biz.main.SampleFragment;
 import netease.com.weather.ui.biz.pc.LoginActivity;
+import netease.com.weather.ui.biz.test.TestActivity;
 
 
 public class MainActivity extends BaseActivity {
@@ -62,6 +63,17 @@ public class MainActivity extends BaseActivity {
             });
         }
 
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_settings:
+                        startActivity(new Intent(MainActivity.this, TestActivity.class));
+                        break;
+                }
+                return false;
+            }
+        });
 
 //        mBottomBar = BottomBar.attach(this, savedInstanceState);
 //        mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,

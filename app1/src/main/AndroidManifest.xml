@@ -3,6 +3,8 @@
           package="netease.com.weather">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
 
     <application
         android:name=".BaseApplication"
@@ -53,6 +55,10 @@
         <activity
             android:name=".ui.biz.pc.LoginActivity"
             >
+        </activity>
+
+        <activity
+            android:name=".ui.biz.test.TestActivity">
         </activity>
     </application>
 

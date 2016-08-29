@@ -1,10 +1,7 @@
 package netease.com.weather.ui.biz.article;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -17,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
 import java.util.ArrayList;
@@ -95,7 +93,9 @@ public class ArticleNewAdapter extends PageAdapter<ArticleSingleBean> implements
         View imgItem = LayoutInflater.from(mActivity).inflate(R.layout.activity_article_item_img, null, false);
         holder.contentContainer.addView(imgItem);
         final ImageView imageView = (ImageView) imgItem.findViewById(R.id.article_img);
-        Glide.with(mActivity).load(mImgUrls.get(position)).into(new GlideDrawableImageViewTarget(imageView, 1));
+        Glide.with(mActivity).load(mImgUrls.get(position))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(new GlideDrawableImageViewTarget(imageView, 1));
 
         imgItem.setOnClickListener(new View.OnClickListener() {
             @Override

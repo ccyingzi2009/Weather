@@ -136,6 +136,10 @@ public class PicShowActivity extends BaseActivity implements View.OnClickListene
                     ViewGroup.LayoutParams.MATCH_PARENT);
             final PhotoView imageView = (PhotoView) view.findViewById(R.id.imageview);
 
+            PhotoView photoView = new PhotoView(mContext);
+            container.addView(photoView, ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT);
+
             final ProgressBar bar = (ProgressBar) view.findViewById(R.id.progress_bar);
             final PhotoViewAttacher attacher = new PhotoViewAttacher(imageView);
             bar.setVisibility(View.VISIBLE);
@@ -158,12 +162,11 @@ public class PicShowActivity extends BaseActivity implements View.OnClickListene
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .fitCenter()
                     .centerCrop()
-                    .into(new GlideDrawableImageViewTarget(imageView));
+                    .into(new GlideDrawableImageViewTarget(photoView));
 
             attacher.setOnPhotoTapListener(mListener);
 
-
-            return new PageItem(view, attacher);
+            return photoView;
         }
 
         @Override
@@ -173,15 +176,17 @@ public class PicShowActivity extends BaseActivity implements View.OnClickListene
 
         @Override
         public boolean isViewFromObject(View view, Object object) {
-            return view == ((PageItem) object).mView;
+            return view == object;
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            PageItem item = (PageItem) object;
-            item.mAttacher.cleanup();
-            container.removeView(item.mView);
-            item.clear();
+//            PageItem item = (PageItem) object;
+//            item.mAttacher.cleanup();
+//            container.removeView(item.mView);
+//            item.clear();
+
+            container.removeView((View) object);
         }
 
 

@@ -25,7 +25,7 @@ public class VolleyUtils {
     }
 
     private void init(Context context) {
-        mRequestQueue = Volley.newRequestQueue(context, null);
+        mRequestQueue = Volley.newRequestQueue(context, new MyHurlStack());
     }
 
     private static VolleyUtils getSingleton() {

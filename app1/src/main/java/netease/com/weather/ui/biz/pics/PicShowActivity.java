@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
@@ -65,6 +66,14 @@ public class PicShowActivity extends BaseActivity implements View.OnClickListene
             if (imgs != null && !imgs.isEmpty()) {
                 toolbar.setTitle(mPosition + 1 + "/" + imgs.size());
             }
+        }
+
+        if (isLollipop()) {
+            Window window = getWindow();
+            window.getDecorView().setSystemUiVisibility(
+                              View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
 
         mViewPager = (ViewPager) findViewById(R.id.pic_viewpager);
@@ -132,8 +141,8 @@ public class PicShowActivity extends BaseActivity implements View.OnClickListene
         public Object instantiateItem(ViewGroup container, int position) {
             View view = mInflater.inflate(R.layout.comm_pic_show_fragment_item, container, false);
 
-            container.addView(view, ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT);
+//            container.addView(view, ViewGroup.LayoutParams.MATCH_PARENT,
+//                    ViewGroup.LayoutParams.MATCH_PARENT);
             final PhotoView imageView = (PhotoView) view.findViewById(R.id.imageview);
 
             PhotoView photoView = new PhotoView(mContext);
@@ -155,13 +164,12 @@ public class PicShowActivity extends BaseActivity implements View.OnClickListene
                         @Override
                         public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                             Log.d("Glide=====", "onResourceReady");
-                            bar.setVisibility(View.GONE);
+                            //bar.setVisibility(View.GONE);
                             return false;
                         }
                     })
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .fitCenter()
-                    .centerCrop()
                     .into(new GlideDrawableImageViewTarget(photoView));
 
             attacher.setOnPhotoTapListener(mListener);

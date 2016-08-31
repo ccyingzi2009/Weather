@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+
 import com.google.gson.reflect.TypeToken;
 
 import java.util.List;

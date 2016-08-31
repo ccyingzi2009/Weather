@@ -3,6 +3,7 @@ package netease.com.weather.util.request;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
+import com.android.volley.toolbox.HttpHeaderParser;
 
 import java.util.Map;
 
@@ -28,7 +29,12 @@ public class LoginRequest extends BaseRequest<UserBean> {
     @Override
     protected Response<UserBean> parseNetworkResponse(NetworkResponse response) {
         Map<String, String> headers = response.headers;
+        UserBean userBean = new UserBean();
+        return Response.success(userBean, HttpHeaderParser.parseCacheHeaders(response));
+    }
 
-        return null;
+    @Override
+    public void setRedirectUrl(String redirectUrl) {
+        super.setRedirectUrl(redirectUrl);
     }
 }

@@ -40,17 +40,21 @@
             android:name=".ui.base.BaseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="newsmth" android:host="article"/>
+
+                <data
+                    android:host="article"
+                    android:scheme="newsmth"/>
             </intent-filter>
         </activity>
 
 
         <activity
             android:name=".ui.biz.pics.PicShowActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/title_activity_detail">
+            android:label="@string/title_activity_detail"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity
@@ -61,6 +65,8 @@
         <activity
             android:name=".ui.biz.test.TestActivity">
         </activity>
+
+        <service android:name=".ui.biz.update.VersionUpdateService"/>
     </application>
 
 </manifest>

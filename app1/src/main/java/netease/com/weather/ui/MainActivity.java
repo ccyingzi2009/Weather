@@ -2,7 +2,9 @@ package netease.com.weather.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +13,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -70,6 +76,9 @@ public class MainActivity extends BaseActivity {
                     case R.id.nav_settings:
                         startActivity(new Intent(MainActivity.this, TestActivity.class));
                         break;
+                    case R.id.nav_about:
+                        showUpdateDialog();
+                        break;
                 }
                 return false;
             }
@@ -90,6 +99,19 @@ public class MainActivity extends BaseActivity {
 //        mBottomBar.mapColorForTab(3, "#FF5252");
 //        mBottomBar.mapColorForTab(4, "#FF9800");
 
+    }
+
+    private void showUpdateDialog() {
+//        MaterialDialog dialog = new MaterialDialog.Builder(this).title("更新")
+//                .positiveText("更新")
+//                .onPositive(new MaterialDialog.SingleButtonCallback() {
+//                    @Override
+//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                        Toast.makeText(MainActivity.this, "更新", Toast.LENGTH_SHORT).show();
+//                    }
+//                })
+//                .negativeText("取消")
+//                .show();
     }
 
     @Override

@@ -24,7 +24,14 @@ android {
         hack true
     }
     useLibrary 'org.apache.http.legacy'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
 }
+
 
 /*
 afterEvaluate{

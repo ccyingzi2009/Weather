@@ -11,16 +11,22 @@ public abstract class BaseRequest<T> extends Request<T> {
 
     protected String mUrl;
     public BaseRequest(String url) {
-        this(Method.GET, url);
+        this(url, null);
         mUrl = url;
     }
 
-    public BaseRequest(int method, String url) {
+    public BaseRequest(String url, IResponseListener<T> responseListener) {
+        this(Method.GET, url, responseListener);
+        mUrl = url;
+    }
+
+    public BaseRequest(int method, String url, IResponseListener<T> responseListener) {
         super(method, url, null);
         //volley内部根据url缓存，post情况下url一致但参数不一致，故设置post情况下不使用cache
         if (method == Method.POST) {
             setShouldCache(false);
         }
+        mListener = responseListener;
     }
 
     @Override

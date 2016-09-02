@@ -12,6 +12,12 @@
     <string name="password">password</string>
     <string name="guest">游客</string>
     <string name="dn_login_action">登陆</string>
+    <!--update-->
+    <string name="update_check_title">提示</string>
+    <string name="update_check_content">检测更新中</string>
+    <string name="update_check_no_update">已经是最新版本</string>
+    <string name="update_check_update">更新</string>
+    <string name="update_check_cancel">取消</string>
 
 
 </resources>

@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import netease.com.weather.ui.view.swipback.SwipeBackActivityBase;
 import netease.com.weather.ui.view.swipback.SwipeBackActivityHelper;
 import netease.com.weather.ui.view.swipback.SwipeBackLayout;
@@ -20,6 +22,7 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
 
     private SwipeBackActivityHelper mHelper;
 
+    private MaterialDialog mProgressDialog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,5 +67,28 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
 
     protected boolean isLollipop() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+            mProgressDialog = null;
+        }
+        super.onDestroy();
+    }
+
+    protected void showProgressDialog(int title, int wait) {
+        mProgressDialog = new MaterialDialog.Builder(this)
+                .title(title)
+                .content(wait)
+                .progress(true, 0)
+                .show();
+    }
+
+    protected void dismissProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
 }

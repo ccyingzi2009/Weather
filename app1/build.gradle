@@ -19,7 +19,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -71,12 +71,10 @@ dependencies {
     compile "com.facebook.stetho:stetho:${stethoVersion}"
     compile "com.facebook.stetho:stetho-okhttp3:${stethoVersion}"
     /* MD BottomBar*/
-    compile 'com.roughike:bottom-bar:1.0.8'
+    //compile 'com.roughike:bottom-bar:1.0.8'
     /* log */
     compile 'com.github.zhaokaiqiang.klog:library:1.5.0'
     compile 'de.greenrobot:eventbus:2.4.0'
-    // Gif
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.15'
     // adapter
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
     //imageloader --- glide

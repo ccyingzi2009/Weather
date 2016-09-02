@@ -17,7 +17,7 @@ public class LoginRequest extends BaseRequest<UserBean> {
     private Map<String, String> mParams;
 
     public LoginRequest(String url, Map<String, String> params) {
-        super(Method.POST, url);
+        super(Method.POST, url, null);
         mParams = params;
     }
 

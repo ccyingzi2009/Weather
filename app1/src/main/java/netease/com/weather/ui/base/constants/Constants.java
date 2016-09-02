@@ -7,6 +7,7 @@ public class Constants {
 
     public final static String BASE_URL = "http://www.newsmth.net/nForum/";
     public final static String M_BASE_URL = "http://m.newsmth.net/";
+    public final static String BASE_TEST_URL = "http://10.234.121.144/";
 
     public final static String MAIN_URL = BASE_URL + "mainpage?ajax";
 
@@ -14,6 +15,8 @@ public class Constants {
     public final static String M_ARTICLE_URL = M_BASE_URL + "%s";
     //login
     public final static String URL_LOGIN = M_BASE_URL + "user/login";
+    //update
+    public final static String URL_UPDATE = BASE_TEST_URL + "notice.json";
 
 
     //以下为shareP

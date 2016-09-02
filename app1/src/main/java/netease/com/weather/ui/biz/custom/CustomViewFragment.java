@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.ui.base.BaseFragment;
@@ -16,7 +16,7 @@ import netease.com.weather.ui.base.BaseFragment;
  */
 public class CustomViewFragment extends BaseFragment {
 
-    @Bind(R.id.send)
+    @BindView(R.id.send)
     Button mSend;
 
     public static CustomViewFragment newInstance() {

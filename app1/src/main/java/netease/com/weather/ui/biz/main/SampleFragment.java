@@ -31,7 +31,7 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import netease.com.weather.R;
 import netease.com.weather.data.model.MainBean;
 import netease.com.weather.data.model.MainSlider;
@@ -50,9 +50,9 @@ import netease.com.weather.util.request.HtmlRequest;
  */
 public class SampleFragment extends BaseLoadFragment<MainBean> {
     private static final String ARG_TEXT = "ARG_TEXT";
-    @Bind(R.id.recycle_view)
+    @BindView(R.id.recycle_view)
     RecyclerView mRecycleView;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
     private MainListAdapter mListAdapter;
     private List<MainSlider> mLists = new ArrayList<>();

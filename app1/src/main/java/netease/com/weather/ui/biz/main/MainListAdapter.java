@@ -14,15 +14,13 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.data.model.MainSlider;
 import netease.com.weather.ui.MainActivity;
-import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.biz.article.ArticleActivity;
 import netease.com.weather.ui.biz.article.ArticleNewFragment;
-import netease.com.weather.ui.biz.pics.PicShowActivity;
 
 /**
  * Created by user on 16-8-3.
@@ -85,7 +83,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.title)
+        @BindView(R.id.title)
         TextView title;
 
         public MyViewHolder(View view) {
@@ -112,7 +110,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
     }
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.title)
+        @BindView(R.id.title)
         TextView title;
 
         public HeaderViewHolder(View view) {

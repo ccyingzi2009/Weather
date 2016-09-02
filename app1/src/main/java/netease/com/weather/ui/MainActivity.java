@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,20 +17,22 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.biz.main.SampleFragment;
 import netease.com.weather.ui.biz.pc.LoginActivity;
 import netease.com.weather.ui.biz.test.TestActivity;
+import netease.com.weather.ui.biz.update.VersionUpdateModel;
+import netease.com.weather.ui.biz.update.VersionUpdateService;
 
 
 public class MainActivity extends BaseActivity {
 
-    @Bind(R.id.nav_view)
+    @BindView(R.id.nav_view)
     NavigationView navView;
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
     @Override
@@ -102,16 +103,19 @@ public class MainActivity extends BaseActivity {
     }
 
     private void showUpdateDialog() {
-//        MaterialDialog dialog = new MaterialDialog.Builder(this).title("更新")
-//                .positiveText("更新")
-//                .onPositive(new MaterialDialog.SingleButtonCallback() {
-//                    @Override
-//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//                        Toast.makeText(MainActivity.this, "更新", Toast.LENGTH_SHORT).show();
-//                    }
-//                })
-//                .negativeText("取消")
-//                .show();
+        new MaterialDialog.Builder(this).title("更新")
+                .positiveText("更新")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Toast.makeText(MainActivity.this, "更新", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, VersionUpdateService.class);
+                        intent.putExtra(VersionUpdateModel.UPDATE_URL, "http://10.234.121.144/smth.apk");
+                        startService(intent);
+                    }
+                })
+                .negativeText("取消")
+                .show();
     }
 
     @Override

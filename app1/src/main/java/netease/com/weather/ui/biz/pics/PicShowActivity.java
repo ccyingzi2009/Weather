@@ -22,7 +22,7 @@ import com.bumptech.glide.request.target.Target;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.ui.base.BaseActivity;
@@ -41,7 +41,7 @@ public class PicShowActivity extends BaseActivity implements View.OnClickListene
     private int mPosition;
     private ArrayList<String> imgs;
 
-    @Bind(R.id.pic_viewpager)
+    @BindView(R.id.pic_viewpager)
     ViewPager mViewPager;
 
     public final static String SCENE_IMAGE = "scene_image";

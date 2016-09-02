@@ -13,18 +13,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import netease.com.weather.R;
-import netease.com.weather.ui.base.BaseFragment;
 
 /**
  * Created by user on 16-4-20.
  */
 public class ArticleFragment extends Fragment {
 
-    @Bind(R.id.send)
+    @BindView(R.id.send)
     Button mSend;
 
     LopperThread lopperThread;
@@ -62,7 +61,6 @@ public class ArticleFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     private class LopperThread extends Thread {

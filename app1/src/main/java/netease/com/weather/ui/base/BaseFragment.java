@@ -36,7 +36,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     protected void initLayout(View v, LayoutInflater inflater, ViewGroup container) {

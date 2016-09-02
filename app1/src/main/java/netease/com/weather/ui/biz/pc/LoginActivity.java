@@ -13,7 +13,7 @@ import com.android.volley.VolleyError;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import netease.com.weather.R;
@@ -29,13 +29,13 @@ import netease.com.weather.util.request.VolleyUtils;
  */
 public class LoginActivity extends BaseActivity {
 
-    @Bind(R.id.username)
+    @BindView(R.id.username)
     AutoCompleteTextView username;
-    @Bind(R.id.password)
+    @BindView(R.id.password)
     EditText password;
-    @Bind(R.id.signup)
+    @BindView(R.id.signup)
     Button signup;
-    @Bind(R.id.login)
+    @BindView(R.id.login)
     Button login;
 
     public final static String PARAM_LOGIN_ID = "id";

@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.ui.base.BaseActivity;
@@ -19,7 +19,7 @@ import netease.com.weather.ui.base.BaseActivity;
  */
 public class TestActivity extends BaseActivity {
 
-    @Bind(R.id.img)
+    @BindView(R.id.img)
     ImageView mImg;
 
     @Override

@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import netease.com.weather.R;
 import netease.com.weather.util.NetUtils;
@@ -19,11 +19,11 @@ import netease.com.weather.util.request.VolleyUtils;
  */
 public abstract class BaseLoadFragment<T> extends BaseFragment {
 
-    @Nullable @Bind(R.id.loading_view)
+    @Nullable @BindView(R.id.loading_view)
     View loadingView;
-    @Nullable @Bind(R.id.layoutLoadFailed)
+    @Nullable @BindView(R.id.layoutLoadFailed)
     View loadingFailed;
-    @Nullable @Bind(R.id.layoutContent)
+    @Nullable @BindView(R.id.layoutContent)
     View layoutContent;
 
     private boolean mIsEmpty = true;

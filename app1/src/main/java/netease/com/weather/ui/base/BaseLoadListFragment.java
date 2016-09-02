@@ -15,7 +15,7 @@ import com.android.volley.VolleyError;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import netease.com.weather.R;
 import netease.com.weather.ui.common.AdapterHandler;
 
@@ -25,11 +25,11 @@ import netease.com.weather.ui.common.AdapterHandler;
 public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> implements
         SwipeRefreshLayout.OnRefreshListener, PageAdapter.OnFooterViewCallback {
 
-    @Bind(R.id.recycle_view)
+    @BindView(R.id.recycle_view)
     RecyclerView recycleView;
-    @Bind(R.id.swipeRefreshLayout)
+    @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
 

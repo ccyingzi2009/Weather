@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
 
@@ -14,7 +14,7 @@ import netease.com.weather.R;
 
 public class AActivity extends AppCompatActivity {
 
-    @Bind(R.id.start)
+    @BindView(R.id.start)
     Button mStart;
 
     @Override

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.data.DataLoadingSubject;
@@ -51,7 +51,7 @@ public class ArticleAdapter extends PageAdapter<Article.ArticleEntity> implement
 
     /* package */ static class CommentHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.content)
+        @BindView(R.id.content)
         TextView content;
 
         public CommentHolder(View itemView) {

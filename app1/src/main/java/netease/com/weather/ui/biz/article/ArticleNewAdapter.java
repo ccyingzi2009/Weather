@@ -20,7 +20,7 @@ import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.data.DataLoadingSubject;
@@ -135,13 +135,13 @@ public class ArticleNewAdapter extends PageAdapter<ArticleSingleBean> implements
 
     /* package */ static class CommentHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.article_user_name)
+        @BindView(R.id.article_user_name)
         TextView userName;
-        @Bind(R.id.content_container)
+        @BindView(R.id.content_container)
         LinearLayout contentContainer;
-        @Bind(R.id.quote_container)
+        @BindView(R.id.quote_container)
         View quoteContainer;
-        @Bind(R.id.article_quote)
+        @BindView(R.id.article_quote)
         TextView articleQuote;
 
         public CommentHolder(View itemView) {

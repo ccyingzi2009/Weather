@@ -1,11 +1,12 @@
 package netease.com.weather.data.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by liu_shuai on 16/8/22.
  */
-public class ArticleSingleBean {
+public class ArticleSingleBean implements Serializable{
 
     String content;
     String user;

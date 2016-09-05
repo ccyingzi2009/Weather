@@ -17,22 +17,34 @@ android {
 //            enabled true
 //        }
     }
-    buildTypes {
+
+    signingConfigs {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            storeFile file("/Users/user/key/smth.jks")
+            storePassword "newsmth"
+            keyAlias "newsmth"
+            keyPassword "newsmth"
         }
     }
 
-    freeline {
-        hack true
+    buildTypes {
+        release {
+            minifyEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
-    useLibrary 'org.apache.http.legacy'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+
+    freeline {
+        hack true
+    }
+    useLibrary 'org.apache.http.legacy'
 
 }
 
@@ -68,6 +80,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.mcxiaoke.volley:library:1.0.19'
+
     compile "com.facebook.stetho:stetho:${stethoVersion}"
     compile "com.facebook.stetho:stetho-okhttp3:${stethoVersion}"
     /* MD BottomBar*/
@@ -83,5 +96,5 @@ dependencies {
     compile 'com.antfortune.freeline:runtime:0.5.3'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.google.code.gson:gson:2.7'
-    compile ('com.afollestad.material-dialogs:core:0.9.0.1')
+    compile 'com.afollestad.material-dialogs:core:0.9.0.1'
 }

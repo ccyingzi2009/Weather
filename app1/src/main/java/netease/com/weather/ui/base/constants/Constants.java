@@ -24,5 +24,6 @@ public class Constants {
     //以下为shareP
     //PreConstant
     public final static String PREF_ARCICLE = "pref_arcicle";
+    public final static String PREF_COOKIE = "pref_cookie";
 
 }

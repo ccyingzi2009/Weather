@@ -167,6 +167,7 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    /** 登陆完成事件 */
     public void onEventMainThread(LoginEvent event) {
         if (event == null || TextUtils.isEmpty(event.getUserId())) {
             return;
@@ -176,8 +177,7 @@ public class MainActivity extends BaseActivity {
         }, new BaseRequest.IResponseListener<UserBean>() {
             @Override
             public void onResponse(UserBean response) {
-                View headerView = navView.inflateHeaderView(R.layout.nav_header_main);
-                ImageView headImg = (ImageView) headerView.findViewById(R.id.imageView);
+                ImageView headImg = (ImageView) navView.findViewById(R.id.imageView);
 
                 String faceUrl = response.getFace_url();
                 KLog.d(faceUrl);

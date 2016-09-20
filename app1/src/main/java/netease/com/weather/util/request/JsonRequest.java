@@ -2,13 +2,19 @@ package netease.com.weather.util.request;
 
 import android.text.TextUtils;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import netease.com.weather.ui.base.constants.Constants;
 import netease.com.weather.util.JsonUtils;
+import netease.com.weather.util.PrefHelper;
 
 /**
  * Created by user on 16-9-2.
@@ -16,9 +22,25 @@ import netease.com.weather.util.JsonUtils;
 public class JsonRequest<T> extends BaseRequest<T> {
 
     private TypeToken<T> mTypeToken;
+
     public JsonRequest(String url, TypeToken<T> typeToken, IResponseListener<T> responseListener) {
         super(url, responseListener);
         mTypeToken = typeToken;
+    }
+
+    @Override
+    protected Map<String, String> getParams() throws AuthFailureError {
+        return super.getParams();
+    }
+
+
+    @Override
+    public Map<String, String> getHeaders() throws AuthFailureError {
+        String cookie = PrefHelper.getString(Constants.PREF_COOKIE, "");
+        if (!TextUtils.isEmpty(cookie)) {
+            mHeaders.put("Cookie", cookie);
+        }
+        return super.getHeaders();
     }
 
     @Override

@@ -1,7 +1,11 @@
 package netease.com.weather.util.request;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -10,6 +14,7 @@ import com.android.volley.VolleyError;
 public abstract class BaseRequest<T> extends Request<T> {
 
     protected String mUrl;
+    protected Map<String, String> mHeaders = new HashMap<>();
     public BaseRequest(String url) {
         this(url, null);
         mUrl = url;
@@ -27,6 +32,12 @@ public abstract class BaseRequest<T> extends Request<T> {
             setShouldCache(false);
         }
         mListener = responseListener;
+    }
+
+    @Override
+    public Map<String, String> getHeaders() throws AuthFailureError {
+        mHeaders.put("X-Requested-With", "XMLHttpRequest");
+        return mHeaders;
     }
 
     @Override

@@ -24,6 +24,7 @@ import netease.com.weather.data.event.LoginEvent;
 import netease.com.weather.data.model.UserBean;
 import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.base.constants.Constants;
+import netease.com.weather.util.PrefHelper;
 import netease.com.weather.util.request.BaseRequest;
 import netease.com.weather.util.request.LoginRequest;
 import netease.com.weather.util.request.VolleyUtils;
@@ -101,6 +102,15 @@ public class LoginActivity extends BaseActivity {
                             }
                         }
                     }
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(userId).append("; ")
+                            .append(userkey).append(";")
+                            .append(userNum).append(";")
+                            .append(userPasswd);
+
+                    String requestCookie = sb.toString();
+                    PrefHelper.putString(Constants.PREF_COOKIE, requestCookie);
 
                     KLog.d(userId + " ; " + userkey + " ; " + userNum + " ; " + userPasswd + " ; ");
                     if (userId.contains(mInputUserName)) {

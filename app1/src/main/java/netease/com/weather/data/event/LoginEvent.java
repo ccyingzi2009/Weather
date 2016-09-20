@@ -2,6 +2,7 @@ package netease.com.weather.data.event;
 
 /**
  * Created by user on 16-9-20.
+ * 登陆完成事件通知
  */
 public class LoginEvent {
     private String mUserId;

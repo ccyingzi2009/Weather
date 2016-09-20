@@ -2,6 +2,7 @@ package netease.com.weather.util.request;
 
 import android.content.Context;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -55,6 +56,8 @@ public class VolleyUtils {
         if (request == null) {
             return;
         }
+        //设置超时时间
+        request.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0, 1f));
         requestQueue.add(request);
     }
 

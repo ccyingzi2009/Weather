@@ -4,7 +4,6 @@ package netease.com.weather.data.model;
  * Created by liu_shuai on 16/8/28.
  */
 public class UserBean {
-
     /**
      * id : ccyingzi2009
      * user_name : ccyingzi2009

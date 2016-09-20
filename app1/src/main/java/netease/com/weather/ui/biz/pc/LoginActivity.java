@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
+import com.socks.library.KLog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +18,9 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 import netease.com.weather.R;
+import netease.com.weather.data.event.LoginEvent;
 import netease.com.weather.data.model.UserBean;
 import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.base.constants.Constants;
@@ -41,6 +45,7 @@ public class LoginActivity extends BaseActivity {
     public final static String PARAM_LOGIN_ID = "id";
     public final static String PARAM_LOGIN_PASSWD = "passwd";
 
+    private String mInputUserName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,10 +58,13 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.login)
     void doLogin() {
         String url = Constants.URL_LOGIN;
-        
+
         String usrName = username.getText().toString().trim();
         String passWd = password.getText().toString().trim();
         if (TextUtils.isEmpty(usrName) || TextUtils.isEmpty(passWd)) return;
+
+        mInputUserName = usrName;
+
         Map<String, String> param = new HashMap<>();
         param.put(PARAM_LOGIN_ID, usrName);
         param.put(PARAM_LOGIN_PASSWD, passWd);
@@ -64,14 +72,46 @@ public class LoginActivity extends BaseActivity {
         request.setResponseListener(new BaseRequest.IResponseListener<UserBean>() {
             @Override
             public void onResponse(UserBean response) {
-                Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(VolleyError error) {
+                if (error != null && error.networkResponse != null) {
+                    NetworkResponse response = error.networkResponse;
+                    Map<String, String> header = response.headers;
+                    String userId = "";
+                    String userkey = "";
+                    String userNum = "";
+                    String userPasswd = "";
+                    for (Map.Entry<String, String> entry : header.entrySet()) {
+                        String cookie = entry.getValue();
+                        if (!TextUtils.isEmpty(cookie)) {
+                            String cookieArr[] = cookie.split(";");
+                            String setCookie = cookieArr[0];
+                            if (!TextUtils.isEmpty(setCookie)) {
+                                if (setCookie.contains(LoginModel.USERID)) {
+                                    userId = setCookie;
+                                } else if (setCookie.contains(LoginModel.USERKEY)) {
+                                    userkey = setCookie;
+                                } else if (setCookie.contains(LoginModel.USERNUM)) {
+                                    userNum = setCookie;
+                                } else if (setCookie.contains(LoginModel.USERPASSWD)) {
+                                    userPasswd = setCookie;
+                                }
+                            }
+                        }
+                    }
 
+                    KLog.d(userId + " ; " + userkey + " ; " + userNum + " ; " + userPasswd + " ; ");
+                    if (userId.contains(mInputUserName)) {
+                        Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+                        EventBus.getDefault().post(new LoginEvent(mInputUserName));
+                        finish();
+                    }
+                }
             }
         });
-        VolleyUtils.addRequest(new LoginRequest(url, param), this);
+
+        VolleyUtils.addRequest(request, this);
     }
 }

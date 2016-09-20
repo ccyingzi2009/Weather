@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,12 +18,18 @@ import android.widget.ImageView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.VolleyError;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.reflect.TypeToken;
+import com.socks.library.KLog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import netease.com.weather.R;
+import netease.com.weather.data.event.LoginEvent;
 import netease.com.weather.data.model.UpdateBean;
+import netease.com.weather.data.model.UserBean;
 import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.base.constants.Constants;
 import netease.com.weather.ui.biz.main.SampleFragment;
@@ -43,11 +50,13 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -94,15 +103,22 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
     private void checkUpdate() {
-        VolleyUtils.addRequest(new JsonRequest<>(Constants.URL_UPDATE, new TypeToken<UpdateBean>(){}, new BaseRequest.IResponseListener<UpdateBean>() {
+        VolleyUtils.addRequest(new JsonRequest<>(Constants.URL_UPDATE, new TypeToken<UpdateBean>() {
+        }, new BaseRequest.IResponseListener<UpdateBean>() {
             @Override
             public void onResponse(UpdateBean response) {
                 int versionCode = SystemUtils.getVersionCode();
                 int updateVersionCode = response.getVersionCode();
                 if (updateVersionCode > versionCode) {
                     showUpdateDialog(response);
-                }else {
+                } else {
                     showSnackBar(getResources().getString(R.string.update_check_no_update));
                 }
             }
@@ -148,5 +164,31 @@ public class MainActivity extends BaseActivity {
         Snackbar.make(drawerLayout, content, Snackbar.LENGTH_SHORT)
                 .setDuration(2000)
                 .show();
+    }
+
+
+    public void onEventMainThread(LoginEvent event) {
+        if (event == null || TextUtils.isEmpty(event.getUserId())) {
+            return;
+        }
+        String url = String.format(Constants.URL_USER_QUERY, event.getUserId());
+        VolleyUtils.addRequest(new JsonRequest<>(url, new TypeToken<UserBean>() {
+        }, new BaseRequest.IResponseListener<UserBean>() {
+            @Override
+            public void onResponse(UserBean response) {
+                View headerView = navView.inflateHeaderView(R.layout.nav_header_main);
+                ImageView headImg = (ImageView) headerView.findViewById(R.id.imageView);
+
+                String faceUrl = response.getFace_url();
+                KLog.d(faceUrl);
+                Glide.with(MainActivity.this).load(faceUrl)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(headImg);
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+            }
+        }), this);
     }
 }

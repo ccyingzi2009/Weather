@@ -17,6 +17,8 @@ public class Constants {
     public final static String URL_LOGIN = M_BASE_URL + "user/login";
     //update
     public final static String URL_UPDATE = BASE_TEST_URL + "notice.json";
+    //userQuery
+    public final static String URL_USER_QUERY = BASE_URL + "user/query/%s.json";
 
 
     //以下为shareP

@@ -23,19 +23,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocketFactory;
-
-import okhttp3.Call;
-import okhttp3.Headers;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Protocol;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 /**
  * Created by liu_shuai on 16/8/31.
@@ -69,7 +59,7 @@ public class MyHurlStack extends HurlStack {
     }
 
     /**
-     * @param urlRewriter      Rewriter to use for request URLs
+     * @param urlRewriter Rewriter to use for request URLs
      * @param sslSocketFactory SSL factory to use for HTTPS connections
      */
     public MyHurlStack(UrlRewriter urlRewriter, SSLSocketFactory sslSocketFactory) {
@@ -80,43 +70,47 @@ public class MyHurlStack extends HurlStack {
     @Override
     public HttpResponse performRequest(Request<?> request, Map<String, String> additionalHeaders)
             throws IOException, AuthFailureError {
-        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
-        int timeoutMs = request.getTimeoutMs();
-
-        clientBuilder.connectTimeout(timeoutMs, TimeUnit.MILLISECONDS);
-        clientBuilder.readTimeout(timeoutMs, TimeUnit.MILLISECONDS);
-        clientBuilder.writeTimeout(timeoutMs, TimeUnit.MILLISECONDS);
-
-        okhttp3.Request.Builder okHttpRequestBuilder = new okhttp3.Request.Builder();
-        okHttpRequestBuilder.url(request.getUrl());
-
-        Map<String, String> headers = request.getHeaders();
-        for (final String name : headers.keySet()) {
-            okHttpRequestBuilder.addHeader(name, headers.get(name));
+        String url = request.getUrl();
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.putAll(request.getHeaders());
+        map.putAll(additionalHeaders);
+        if (mUrlRewriter != null) {
+            String rewritten = mUrlRewriter.rewriteUrl(url);
+            if (rewritten == null) {
+                throw new IOException("URL blocked by rewriter: " + url);
+            }
+            url = rewritten;
         }
-        for (final String name : additionalHeaders.keySet()) {
-            okHttpRequestBuilder.addHeader(name, additionalHeaders.get(name));
+        URL parsedUrl = new URL(url);
+        HttpURLConnection connection = openConnection(parsedUrl, request);
+        for (String headerName : map.keySet()) {
+            connection.addRequestProperty(headerName, map.get(headerName));
         }
-
-        setConnectionParametersForRequest(okHttpRequestBuilder, request);
-
-        OkHttpClient client = clientBuilder.build();
-        okhttp3.Request okHttpRequest = okHttpRequestBuilder.build();
-        Call okHttpCall = client.newCall(okHttpRequest);
-        Response okHttpResponse = okHttpCall.execute();
-
-        StatusLine responseStatus = new BasicStatusLine(parseProtocol(okHttpResponse.protocol()), okHttpResponse.code(), okHttpResponse.message());
+        setConnectionParametersForRequest(connection, request);
+        // Initialize HttpResponse with data from the HttpURLConnection.
+        ProtocolVersion protocolVersion = new ProtocolVersion("HTTP", 1, 1);
+        int responseCode = connection.getResponseCode();
+        if (responseCode == -1) {
+            // -1 is returned by getResponseCode() if the response code could not be retrieved.
+            // Signal to the caller that something was wrong with the connection.
+            throw new IOException("Could not retrieve response code from HttpUrlConnection.");
+        }
+        StatusLine responseStatus = new BasicStatusLine(protocolVersion,
+                connection.getResponseCode(), connection.getResponseMessage());
         BasicHttpResponse response = new BasicHttpResponse(responseStatus);
-        response.setEntity(entityFromOkHttpResponse(okHttpResponse));
-
-        Headers responseHeaders = okHttpResponse.headers();
-        for (int i = 0, len = responseHeaders.size(); i < len; i++) {
-            final String name = responseHeaders.name(i), value = responseHeaders.value(i);
-            if (name != null) {
-                if (name.equals("Set-Cookie")) {
-                    response.addHeader(new BasicHeader(name + i, value));
+        if (hasResponseBody(request.getMethod(), responseStatus.getStatusCode())) {
+            response.setEntity(entityFromConnection(connection));
+        }
+        for (Map.Entry<String, List<String>> header : connection.getHeaderFields().entrySet()) {
+            if (header.getKey() != null) {
+                if ("Set-Cookie".equals(header.getKey())) {
+                    for (int i = 0; i < header.getValue().size(); i++) {
+                        Header h = new BasicHeader(header.getKey() + i, header.getValue().get(i));
+                        response.addHeader(h);
+                    }
                 }else {
-                    response.addHeader(new BasicHeader(name, value));
+                    Header h = new BasicHeader(header.getKey(), header.getValue().get(0));
+                    response.addHeader(h);
                 }
             }
         }
@@ -124,27 +118,12 @@ public class MyHurlStack extends HurlStack {
         return response;
     }
 
-    private static HttpEntity entityFromOkHttpResponse(Response r) throws IOException {
-        BasicHttpEntity entity = new BasicHttpEntity();
-        ResponseBody body = r.body();
-
-        entity.setContent(body.byteStream());
-        entity.setContentLength(body.contentLength());
-        entity.setContentEncoding(r.header("Content-Encoding"));
-
-        if (body.contentType() != null) {
-            entity.setContentType(body.contentType().type());
-        }
-        return entity;
-    }
-
     /**
      * Checks if a response message contains a body.
-     *
-     * @param requestMethod request method
-     * @param responseCode  response status code
-     * @return whether the response has a body
      * @see <a href="https://tools.ietf.org/html/rfc7230#section-3.3">RFC 7230 section 3.3</a>
+     * @param requestMethod request method
+     * @param responseCode response status code
+     * @return whether the response has a body
      */
     private static boolean hasResponseBody(int requestMethod, int responseCode) {
         return requestMethod != Request.Method.HEAD
@@ -155,7 +134,6 @@ public class MyHurlStack extends HurlStack {
 
     /**
      * Initializes an {@link HttpEntity} from the given {@link HttpURLConnection}.
-     *
      * @param connection
      * @return an HttpEntity populated with data from <code>connection</code>.
      */
@@ -183,7 +161,6 @@ public class MyHurlStack extends HurlStack {
 
     /**
      * Opens an {@link HttpURLConnection} with parameters.
-     *
      * @param url
      * @return an open connection
      * @throws IOException
@@ -196,76 +173,70 @@ public class MyHurlStack extends HurlStack {
         connection.setReadTimeout(timeoutMs);
         connection.setUseCaches(false);
         connection.setDoInput(true);
+        connection.setInstanceFollowRedirects(false);//不自动执行重定向
 
         // use caller-provided custom SslSocketFactory, if any, for HTTPS
         if ("https".equals(url.getProtocol()) && mSslSocketFactory != null) {
-            ((HttpsURLConnection) connection).setSSLSocketFactory(mSslSocketFactory);
+            ((HttpsURLConnection)connection).setSSLSocketFactory(mSslSocketFactory);
         }
 
         return connection;
     }
 
-    private static void setConnectionParametersForRequest(okhttp3.Request.Builder builder, com.android.volley.Request<?> request)
-            throws IOException, AuthFailureError {
+    @SuppressWarnings("deprecation")
+    /* package */ static void setConnectionParametersForRequest(HttpURLConnection connection,
+                                                                Request<?> request) throws IOException, AuthFailureError {
         switch (request.getMethod()) {
             case Request.Method.DEPRECATED_GET_OR_POST:
-                // Ensure backwards compatibility.  Volley assumes a request with a null body is a GET.
+                // This is the deprecated way that needs to be handled for backwards compatibility.
+                // If the request's post body is null, then the assumption is that the request is
+                // GET.  Otherwise, it is assumed that the request is a POST.
                 byte[] postBody = request.getPostBody();
                 if (postBody != null) {
-                    builder.post(RequestBody.create(MediaType.parse(request.getPostBodyContentType()), postBody));
+                    // Prepare output. There is no need to set Content-Length explicitly,
+                    // since this is handled by HttpURLConnection using the size of the prepared
+                    // output stream.
+                    connection.setDoOutput(true);
+                    connection.setRequestMethod("POST");
+                    connection.addRequestProperty(HEADER_CONTENT_TYPE,
+                            request.getPostBodyContentType());
+                    DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+                    out.write(postBody);
+                    out.close();
                 }
                 break;
             case Request.Method.GET:
-                builder.get();
+                // Not necessary to set the request method because connection defaults to GET but
+                // being explicit here.
+                connection.setRequestMethod("GET");
                 break;
             case Request.Method.DELETE:
-                builder.delete();
+                connection.setRequestMethod("DELETE");
                 break;
             case Request.Method.POST:
-                builder.post(createRequestBody(request));
+                connection.setRequestMethod("POST");
+                addBodyIfExists(connection, request);
                 break;
             case Request.Method.PUT:
-                builder.put(createRequestBody(request));
+                connection.setRequestMethod("PUT");
+                addBodyIfExists(connection, request);
                 break;
             case Request.Method.HEAD:
-                builder.head();
+                connection.setRequestMethod("HEAD");
                 break;
             case Request.Method.OPTIONS:
-                builder.method("OPTIONS", null);
+                connection.setRequestMethod("OPTIONS");
                 break;
             case Request.Method.TRACE:
-                builder.method("TRACE", null);
+                connection.setRequestMethod("TRACE");
                 break;
             case Request.Method.PATCH:
-                builder.patch(createRequestBody(request));
+                connection.setRequestMethod("PATCH");
+                addBodyIfExists(connection, request);
                 break;
             default:
                 throw new IllegalStateException("Unknown method type.");
         }
-    }
-
-    private static ProtocolVersion parseProtocol(final Protocol p) {
-        switch (p) {
-            case HTTP_1_0:
-                return new ProtocolVersion("HTTP", 1, 0);
-            case HTTP_1_1:
-                return new ProtocolVersion("HTTP", 1, 1);
-            case SPDY_3:
-                return new ProtocolVersion("SPDY", 3, 1);
-            case HTTP_2:
-                return new ProtocolVersion("HTTP", 2, 0);
-        }
-
-        throw new IllegalAccessError("Unkwown protocol");
-    }
-
-    private static RequestBody createRequestBody(Request r) throws AuthFailureError {
-        final byte[] body = r.getBody();
-        if (body == null) {
-            return null;
-        }
-
-        return RequestBody.create(MediaType.parse(r.getBodyContentType()), body);
     }
 
     private static void addBodyIfExists(HttpURLConnection connection, Request<?> request)

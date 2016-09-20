@@ -58,6 +58,7 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.login)
     void doLogin() {
+        showProgressDialog(R.string.update_check_title, R.string.login_loading);
         String url = Constants.URL_LOGIN;
 
         String usrName = username.getText().toString().trim();
@@ -90,13 +91,13 @@ public class LoginActivity extends BaseActivity {
                             String cookieArr[] = cookie.split(";");
                             String setCookie = cookieArr[0];
                             if (!TextUtils.isEmpty(setCookie)) {
-                                if (setCookie.contains(LoginModel.USERID)) {
+                                if (setCookie.contains(AccountModel.USERID)) {
                                     userId = setCookie;
-                                } else if (setCookie.contains(LoginModel.USERKEY)) {
+                                } else if (setCookie.contains(AccountModel.USERKEY)) {
                                     userkey = setCookie;
-                                } else if (setCookie.contains(LoginModel.USERNUM)) {
+                                } else if (setCookie.contains(AccountModel.USERNUM)) {
                                     userNum = setCookie;
-                                } else if (setCookie.contains(LoginModel.USERPASSWD)) {
+                                } else if (setCookie.contains(AccountModel.USERPASSWD)) {
                                     userPasswd = setCookie;
                                 }
                             }
@@ -110,7 +111,7 @@ public class LoginActivity extends BaseActivity {
                             .append(userPasswd);
 
                     String requestCookie = sb.toString();
-                    PrefHelper.putString(Constants.PREF_COOKIE, requestCookie);
+                    PrefHelper.putString(AccountModel.PREF_COOKIE, requestCookie);
 
                     KLog.d(userId + " ; " + userkey + " ; " + userNum + " ; " + userPasswd + " ; ");
                     if (userId.contains(mInputUserName)) {
@@ -119,6 +120,7 @@ public class LoginActivity extends BaseActivity {
                         finish();
                     }
                 }
+                dismissProgressDialog();
             }
         });
 

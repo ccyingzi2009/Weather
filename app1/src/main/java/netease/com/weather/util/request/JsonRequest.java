@@ -9,10 +9,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.reflect.TypeToken;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import netease.com.weather.ui.base.constants.Constants;
+import netease.com.weather.ui.biz.pc.AccountModel;
 import netease.com.weather.util.JsonUtils;
 import netease.com.weather.util.PrefHelper;
 
@@ -36,7 +35,7 @@ public class JsonRequest<T> extends BaseRequest<T> {
 
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
-        String cookie = PrefHelper.getString(Constants.PREF_COOKIE, "");
+        String cookie = PrefHelper.getString(AccountModel.PREF_COOKIE, "");
         if (!TextUtils.isEmpty(cookie)) {
             mHeaders.put("Cookie", cookie);
         }

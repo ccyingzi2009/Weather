@@ -89,6 +89,7 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
     protected void dismissProgressDialog() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
+            mProgressDialog = null;
         }
     }
 }

@@ -15,4 +15,8 @@ public class JsonUtils {
     public static <T> T fromJson(String jsonStr, TypeToken<T> typeToken) {
          return new Gson().fromJson(jsonStr, typeToken.getType());
     }
+
+    public static <T> T fromJson(String jsonStr, Class<T> c) {
+        return new Gson().fromJson(jsonStr, c);
+    }
 }

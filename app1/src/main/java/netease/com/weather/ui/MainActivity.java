@@ -1,6 +1,7 @@
 package netease.com.weather.ui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -8,20 +9,22 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.gson.reflect.TypeToken;
-import com.socks.library.KLog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +36,7 @@ import netease.com.weather.data.model.UserBean;
 import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.base.constants.Constants;
 import netease.com.weather.ui.biz.main.SampleFragment;
+import netease.com.weather.ui.biz.pc.AccountModel;
 import netease.com.weather.ui.biz.pc.LoginActivity;
 import netease.com.weather.ui.biz.test.TestActivity;
 import netease.com.weather.ui.biz.update.VersionUpdateModel;
@@ -75,18 +79,13 @@ public class MainActivity extends BaseActivity {
         //首页禁止手势返回
         setSwipeBackEnable(false);
 
-        View headerView = navView.inflateHeaderView(R.layout.nav_header_main);
-        //todo headerView
-        ImageView imageView = (ImageView) headerView.findViewById(R.id.imageView);
-        if (imageView != null) {
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                }
-            });
-        }
+        initNaviView();
 
+    }
+
+    //初始化导航栏
+    private void initNaviView() {
+        navView.inflateHeaderView(R.layout.nav_header_main);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -101,6 +100,8 @@ public class MainActivity extends BaseActivity {
                 return false;
             }
         });
+
+        updateUserInfo();
     }
 
     @Override
@@ -109,6 +110,7 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    //检测更新
     private void checkUpdate() {
         VolleyUtils.addRequest(new JsonRequest<>(Constants.URL_UPDATE, new TypeToken<UpdateBean>() {
         }, new BaseRequest.IResponseListener<UpdateBean>() {
@@ -167,7 +169,9 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    /** 登陆完成事件 */
+    /**
+     * 登陆完成事件
+     */
     public void onEventMainThread(LoginEvent event) {
         if (event == null || TextUtils.isEmpty(event.getUserId())) {
             return;
@@ -177,18 +181,55 @@ public class MainActivity extends BaseActivity {
         }, new BaseRequest.IResponseListener<UserBean>() {
             @Override
             public void onResponse(UserBean response) {
-                ImageView headImg = (ImageView) navView.findViewById(R.id.imageView);
-
-                String faceUrl = response.getFace_url();
-                KLog.d(faceUrl);
-                Glide.with(MainActivity.this).load(faceUrl)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(headImg);
+                AccountModel.saveAccout(response);
+                updateUserInfo();
             }
 
             @Override
             public void onError(VolleyError error) {
             }
         }), this);
+    }
+
+    //更新首页用户信息(头像、昵称)
+    private void updateUserInfo() {
+        if (navView == null) {
+            return;
+        }
+        View headerView = navView.getHeaderView(0);
+        final ImageView imageView = (ImageView) headerView.findViewById(R.id.imageView);
+        if (imageView != null) {
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
+            });
+        }
+
+        if (AccountModel.isLogin()) { //初始化个人信息
+            UserBean userBean = AccountModel.getUserBean();
+            if (userBean != null) {
+                //头像
+                assert imageView != null;
+                Glide.with(MainActivity.this).load(userBean.getFace_url())
+                        .asBitmap()
+                        .centerCrop()
+                        .into(new BitmapImageViewTarget(imageView) {// 如何设置圆角
+                            @Override
+                            protected void setResource(Bitmap resource) {
+                                super.setResource(resource);
+                                RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(getResources(), resource);
+                                drawable.setCircular(true);
+                                imageView.setImageDrawable(drawable);
+                            }
+                        });
+                //用户名
+                TextView userName = (TextView) headerView.findViewById(R.id.userName);
+                if (userName != null) {
+                    userName.setText(userBean.getUser_name());
+                }
+            }
+        }
     }
 }

@@ -18,6 +18,8 @@
     <string name="update_check_no_update">已经是最新版本</string>
     <string name="update_check_update">更新</string>
     <string name="update_check_cancel">取消</string>
+    <!--login-->
+    <string name="login_loading">正在登陆</string>
 
 
 </resources>

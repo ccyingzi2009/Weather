@@ -17,7 +17,7 @@
     <dimen name="padding_normal">16dp</dimen>
 
     <!--HeadSize-->
-    <dimen name="main_head_pic_size">48dp</dimen>
+    <dimen name="main_head_pic_size">60dp</dimen>
 
 
 </resources>

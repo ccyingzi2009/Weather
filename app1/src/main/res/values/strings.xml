@@ -20,6 +20,8 @@
     <string name="update_check_cancel">取消</string>
     <!--login-->
     <string name="login_loading">正在登陆</string>
+    <!--发表回复-->
+    <string name="comment_loading">发表回复</string>
 
 
 </resources>

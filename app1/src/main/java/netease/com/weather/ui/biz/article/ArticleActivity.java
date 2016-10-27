@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.transition.Fade;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,12 +71,15 @@ public class ArticleActivity extends BaseActivity implements CommentReply.ReplyC
 
     @Override
     public void onStartReply() {
-
+        showProgressDialog(R.string.comment_loading);
     }
 
     @Override
     public void onReply(boolean success) {
+        dismissProgressDialog();
         if (success) {
+            //成功
+            Toast.makeText(this, "回复成功", Toast.LENGTH_SHORT).show();
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
             if (fragment instanceof ArticleNewFragment) {
                 ((ArticleNewFragment) fragment).replySuccess();

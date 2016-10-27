@@ -21,6 +21,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.LinearLayout;
@@ -219,6 +220,7 @@ public class ForegroundLinearLayout extends LinearLayout {
     public void drawableHotspotChanged(float x, float y) {
         super.drawableHotspotChanged(x, y);
         if (mForeground != null) {
+            if (Build.VERSION.SDK_INT >= 21)
             mForeground.setHotspot(x, y);
         }
     }

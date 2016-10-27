@@ -78,10 +78,17 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         super.onDestroy();
     }
 
-    protected void showProgressDialog(int title, int wait) {
+    protected void showProgressDialog(int title) {
         mProgressDialog = new MaterialDialog.Builder(this)
                 .title(title)
-                .content(wait)
+                .progress(true, 0)
+                .show();
+    }
+
+    protected void showProgressDialog(int title, int content) {
+        mProgressDialog = new MaterialDialog.Builder(this)
+                .title(title)
+                .content(content)
                 .progress(true, 0)
                 .show();
     }

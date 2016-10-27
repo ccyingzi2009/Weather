@@ -66,6 +66,9 @@
             android:name=".ui.biz.test.TestActivity">
         </activity>
 
+        <activity
+            android:name=".ui.biz.pc.ProfileActivity"/>
+
         <service android:name=".ui.biz.update.VersionUpdateService"/>
     </application>
 

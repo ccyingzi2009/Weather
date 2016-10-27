@@ -38,6 +38,7 @@ import netease.com.weather.ui.base.constants.Constants;
 import netease.com.weather.ui.biz.main.SampleFragment;
 import netease.com.weather.ui.biz.pc.AccountModel;
 import netease.com.weather.ui.biz.pc.LoginActivity;
+import netease.com.weather.ui.biz.pc.ProfileActivity;
 import netease.com.weather.ui.biz.test.TestActivity;
 import netease.com.weather.ui.biz.update.VersionUpdateModel;
 import netease.com.weather.ui.biz.update.VersionUpdateService;
@@ -101,6 +102,22 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        View headerView = navView.getHeaderView(0);
+        final ImageView imageView = (ImageView) headerView.findViewById(R.id.imageView);
+        if (imageView != null) {
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (AccountModel.isLogin()) {
+                        Intent i = new Intent(MainActivity.this, ProfileActivity.class);
+                        i.putExtra(AccountModel.PARAM_USERID, AccountModel.getUserId());
+                        startActivity(i);
+                    }else {
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    }
+                }
+            });
+        }
         updateUserInfo();
     }
 
@@ -181,7 +198,7 @@ public class MainActivity extends BaseActivity {
         }, new BaseRequest.IResponseListener<UserBean>() {
             @Override
             public void onResponse(UserBean response) {
-                AccountModel.saveAccout(response);
+                AccountModel.saveAccount(response);
                 updateUserInfo();
             }
 
@@ -198,14 +215,6 @@ public class MainActivity extends BaseActivity {
         }
         View headerView = navView.getHeaderView(0);
         final ImageView imageView = (ImageView) headerView.findViewById(R.id.imageView);
-        if (imageView != null) {
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                }
-            });
-        }
 
         if (AccountModel.isLogin()) { //初始化个人信息
             UserBean userBean = AccountModel.getUserBean();

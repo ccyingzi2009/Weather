@@ -3,6 +3,7 @@ package netease.com.weather.ui.biz.article;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 
 
 import com.google.gson.reflect.TypeToken;
@@ -72,6 +73,11 @@ public class ArticleNewFragment extends BaseLoadListFragment<ArticleSingleBean> 
             }
         }
         return data;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     //回复成功调用

@@ -1,10 +1,12 @@
 package netease.com.weather.ui.common;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.android.volley.VolleyError;
@@ -32,10 +34,13 @@ public class CommentReply implements View.OnClickListener {
     private String mBoardId;
     private ReplyCallback mReplyCallback;
     private AppCompatActivity mActivity;
+    private View mReplyContainer;
 
     public interface ReplyCallback {
         void onEdit();
+
         void onStartReply();
+
         void onReply(boolean success);
     }
 
@@ -58,6 +63,7 @@ public class CommentReply implements View.OnClickListener {
         if (v != null) {
             v.findViewById(R.id.reply).setOnClickListener(this);
             mEditText = (EditText) v.findViewById(R.id.reply_edit);
+            mReplyContainer = v.findViewById(R.id.comment_reply);
         }
     }
 
@@ -77,9 +83,7 @@ public class CommentReply implements View.OnClickListener {
 
     //发送
     private void send() {
-        if (mReplyCallback != null) {
-            mReplyCallback.onStartReply();
-        }
+
         if (!AccountModel.isLogin()) {
             AccountModel.gotoLogin(mActivity);
             return;
@@ -103,18 +107,53 @@ public class CommentReply implements View.OnClickListener {
                             if (mReplyCallback != null) {
                                 mReplyCallback.onReply(true);
                             }
+
+                            //初始化界面。
+                            resetReplyView();
                         }
                     }
 
                     @Override
                     public void onError(VolleyError error) {
-
+                        //回复失败
+                        if (mReplyCallback != null) {
+                            mReplyCallback.onReply(false);
+                        }
                     }
                 });
                 VolleyUtils.addRequest(request, this);
+
+                if (mReplyCallback != null) {
+                    mReplyCallback.onStartReply();
+                }
             } else {
 
             }
+        }
+    }
+
+
+    private void resetReplyView() {
+        if (mEditText != null) {
+            mEditText.getText().clear();
+            if (mEditText.hasFocus()) {
+                mEditText.clearFocus();
+            }
+            mEditText.setFocusableInTouchMode(true);
+
+        }
+
+        if (mReplyContainer != null) {
+            mReplyContainer.setFocusable(true);
+        }
+        hideSoftInput();
+    }
+
+    private void hideSoftInput() {
+        if (mActivity != null && mEditText != null) {
+            //收起键盘
+            InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0); //强制隐藏键盘
         }
     }
 }

@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.ViewOutlineProvider;
 import android.widget.RelativeLayout;
@@ -44,6 +45,7 @@ public class ForegroundRelativeLayout extends RelativeLayout {
             setForeground(d);
         }
         a.recycle();
+        if (Build.VERSION.SDK_INT >=21)
         setOutlineProvider(ViewOutlineProvider.BOUNDS);
     }
 
@@ -132,6 +134,7 @@ public class ForegroundRelativeLayout extends RelativeLayout {
     public void drawableHotspotChanged(float x, float y) {
         super.drawableHotspotChanged(x, y);
         if (foreground != null) {
+            if (Build.VERSION.SDK_INT >=21)
             foreground.setHotspot(x, y);
         }
     }

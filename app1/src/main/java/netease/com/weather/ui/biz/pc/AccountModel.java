@@ -25,7 +25,10 @@ public class AccountModel {
     public final static String PREF_USER_NAME = "pref_user_name";
     public final static String PREF_USER_ID = "pref_user_id";
 
-    public static void saveAccout(UserBean userBean) {
+    public final static String PARAM_USERID = "param_userid";
+
+
+    public static void saveAccount(UserBean userBean) {
         PrefHelper.putString(PREF_FACE_URL, userBean.getFace_url());
         PrefHelper.putString(PREF_USER_NAME, userBean.getUser_name());
         PrefHelper.putString(PREF_USER_ID, userBean.getId());
@@ -34,7 +37,7 @@ public class AccountModel {
 
     }
 
-    public static String userId() {
+    public static String getUserId() {
         return PrefHelper.getString(PREF_USER_ID, "");
     }
 
@@ -47,7 +50,7 @@ public class AccountModel {
     }
 
     public final static boolean isLogin() {
-        return !TextUtils.isEmpty(userId());
+        return !TextUtils.isEmpty(getUserId());
     }
 
     public static void gotoLogin(AppCompatActivity activity) {

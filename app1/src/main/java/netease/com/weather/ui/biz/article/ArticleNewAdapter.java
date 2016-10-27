@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -144,9 +145,9 @@ public class ArticleNewAdapter extends PageAdapter<ArticleSingleBean> implements
         @BindView(R.id.article_quote)
         TextView articleQuote;
 
-        public CommentHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public CommentHolder(final View view) {
+            super(view);
+            ButterKnife.bind(this, view);
         }
     }
 }

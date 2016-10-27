@@ -59,6 +59,10 @@ public class MainPageHandler extends BaseHandler<MainBean> {
             String board_url = e.select("a").get(0).attr("href");
             MainSlider slider = new MainSlider(title, articleUrl, board, board_url);
             slider.setSection(senctionName);
+            String articleId = articleUrl.substring(articleUrl.lastIndexOf("/") + 1, articleUrl.length());
+            slider.setArticleId(articleId);
+            String boardId = board_url.substring(board_url.lastIndexOf("/") + 1, board_url.length());
+            slider.setBoardId(boardId);
             mainSliders.add(slider);
         }
     }

@@ -27,6 +27,11 @@ public class JsonRequest<T> extends BaseRequest<T> {
         mTypeToken = typeToken;
     }
 
+    public JsonRequest(int method, String url, TypeToken<T> typeToken, IResponseListener<T> responseListener) {
+        super(method, url, responseListener);
+        mTypeToken = typeToken;
+    }
+
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
         return super.getParams();

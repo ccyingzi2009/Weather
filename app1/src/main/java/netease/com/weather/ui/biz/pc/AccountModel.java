@@ -1,8 +1,12 @@
 package netease.com.weather.ui.biz.pc;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import netease.com.weather.data.model.UserBean;
+import netease.com.weather.ui.MainActivity;
 import netease.com.weather.util.JsonUtils;
 import netease.com.weather.util.PrefHelper;
 
@@ -44,5 +48,9 @@ public class AccountModel {
 
     public final static boolean isLogin() {
         return !TextUtils.isEmpty(userId());
+    }
+
+    public static void gotoLogin(AppCompatActivity activity) {
+        activity.startActivity(new Intent(activity, LoginActivity.class));
     }
 }

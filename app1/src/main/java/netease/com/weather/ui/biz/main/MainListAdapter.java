@@ -20,6 +20,7 @@ import netease.com.weather.R;
 import netease.com.weather.data.model.MainSlider;
 import netease.com.weather.ui.MainActivity;
 import netease.com.weather.ui.biz.article.ArticleActivity;
+import netease.com.weather.ui.biz.article.ArticleModel;
 import netease.com.weather.ui.biz.article.ArticleNewFragment;
 
 /**
@@ -95,7 +96,11 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
                     Bundle args = new Bundle();
                     String articleUrl = mList.get(getLayoutPosition()).getArticle_url();
                     articleUrl = articleUrl.substring(articleUrl.indexOf("article"));
-                    args.putSerializable(ArticleNewFragment.ARTICLE_URL, articleUrl);
+                    args.putString(ArticleNewFragment.ARTICLE_URL, articleUrl);
+                    String articleId = mList.get(getLayoutPosition()).getArticleId();
+                    String boardId = mList.get(getLayoutPosition()).getBoardId();
+                    args.putString(ArticleModel.ARTICLE_ID, articleId);
+                    args.putString(ArticleModel.ARTICLE_BOARDID, boardId);
                     Intent intent = new Intent(mActivity, ArticleActivity.class);
                     intent.putExtras(args);
 

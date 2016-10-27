@@ -1,29 +1,34 @@
 package netease.com.weather.ui.biz.article;
 
-import android.app.ActivityOptions;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.transition.Explode;
 import android.transition.Fade;
+import android.widget.FrameLayout;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.ui.base.BaseActivity;
-import netease.com.weather.ui.biz.pics.PicShowActivity;
+import netease.com.weather.ui.common.CommentReply;
 
 /**
  * Created by user on 16-4-21.
  */
-public class ArticleActivity extends BaseActivity {
+public class ArticleActivity extends BaseActivity implements CommentReply.ReplyCallback {
 
+    @BindView(R.id.replyContainer)
+    FrameLayout mReplyContainer;
+    private CommentReply mReply;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
+        ButterKnife.bind(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Fade explode = new Fade();
@@ -45,11 +50,36 @@ public class ArticleActivity extends BaseActivity {
             ft.add(R.id.fragmentContainer, f);
             ft.commit();
         }
-
+        String articleId = args.getString(ArticleModel.ARTICLE_ID);
+        String boardId = args.getString(ArticleModel.ARTICLE_BOARDID);
+        mReply = new CommentReply(this, mReplyContainer);
+        mReply.ready(boardId, articleId);
+        mReply.setOnReplyCallback(this);
     }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onEdit() {
+
+    }
+
+    @Override
+    public void onStartReply() {
+
+    }
+
+    @Override
+    public void onReply(boolean success) {
+        if (success) {
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+            if (fragment instanceof ArticleNewFragment) {
+                ((ArticleNewFragment) fragment).replySuccess();
+            }
+        }
     }
 }

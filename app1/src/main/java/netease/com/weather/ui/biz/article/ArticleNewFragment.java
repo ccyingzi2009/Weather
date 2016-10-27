@@ -28,8 +28,6 @@ public class ArticleNewFragment extends BaseLoadListFragment<ArticleSingleBean> 
     public final static String ARTICLE_URL = "article_url";
     private String mArticleUrl;
 
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,5 +72,10 @@ public class ArticleNewFragment extends BaseLoadListFragment<ArticleSingleBean> 
             }
         }
         return data;
+    }
+
+    //回复成功调用
+    public void replySuccess() {
+        loadNet();
     }
 }

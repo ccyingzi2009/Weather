@@ -19,7 +19,8 @@ public class Constants {
     public final static String URL_UPDATE = BASE_TEST_URL + "notice.json";
     //userQuery
     public final static String URL_USER_QUERY = BASE_URL + "user/query/%s.json";
-
+    //reply
+    public final static String URL_REPLY = BASE_URL + "article/%s/ajax_post.json";
 
     //以下为shareP
     //PreConstant

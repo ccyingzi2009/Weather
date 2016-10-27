@@ -18,6 +18,8 @@
 
     <!--HeadSize-->
     <dimen name="main_head_pic_size">60dp</dimen>
+    <!--inputBar height-->
+    <dimen name="comment_bar_height">60dp</dimen>
 
 
 </resources>

@@ -15,7 +15,7 @@ public class BaseApplication extends MultiDexApplication {
         super.onCreate();
         Stetho.initializeWithDefaults(this);
         mInstance = this;
-        FreelineCore.init(this);
+        //FreelineCore.init(this);
     }
 
     public static BaseApplication getInstance() {

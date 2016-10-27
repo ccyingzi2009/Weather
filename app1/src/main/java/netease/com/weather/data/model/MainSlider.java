@@ -11,6 +11,8 @@ public class MainSlider implements Serializable{
     private String board;
     private String board_url;
     private String section;
+    private String boardId;
+    private String articleId;
 
     public MainSlider(String title, String article_url, String board, String board_url) {
         this.title = title;
@@ -57,5 +59,21 @@ public class MainSlider implements Serializable{
 
     public void setSection(String section) {
         this.section = section;
+    }
+
+    public String getBoardId() {
+        return boardId;
+    }
+
+    public void setBoardId(String boardId) {
+        this.boardId = boardId;
+    }
+
+    public String getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(String articleId) {
+        this.articleId = articleId;
     }
 }

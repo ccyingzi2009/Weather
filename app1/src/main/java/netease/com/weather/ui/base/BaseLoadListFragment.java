@@ -18,6 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import netease.com.weather.R;
 import netease.com.weather.ui.common.AdapterHandler;
+import netease.com.weather.ui.view.CustomItemDecoration;
 
 /**
  * Created by ls on 16-8-3.
@@ -75,6 +76,7 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
         });
 
         recycleView.setLayoutManager(createLayoutManager());
+        recycleView.addItemDecoration(new CustomItemDecoration(getContext(), CustomItemDecoration.VERTICAL_LIST));
 
         ((BaseActivity) getActivity()).setSupportActionBar(toolbar);
     }

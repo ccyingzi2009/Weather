@@ -21,5 +21,7 @@
 
     <color name="designer_news_link_highlight">#b303a9f4</color>
     <color name="comment_send_bg">#b303a9f4</color>
+    <!--name-->
+    <color name="base_list_name">#455a6b</color>
 
 </resources>

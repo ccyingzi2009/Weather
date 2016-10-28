@@ -28,7 +28,9 @@
         style="@style/ArticleUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="用户名"/>
+        tools:text="用户名"
+        android:textColor="@color/base_list_name"
+        android:textSize="@dimen/list_text_content"/>
 
     <TextView
         android:id="@+id/article_time"
@@ -60,6 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
             style="@style/ArticleContent"
+            android:textSize="@dimen/list_text_quote"
             tools:text="测试时"/>
 
         <View

@@ -20,6 +20,9 @@
     <dimen name="main_head_pic_size">60dp</dimen>
     <!--inputBar height-->
     <dimen name="comment_bar_height">60dp</dimen>
+    <!--list text size-->
+    <dimen name="list_text_content">12sp</dimen>
+    <dimen name="list_text_quote">10sp</dimen>
 
 
 </resources>

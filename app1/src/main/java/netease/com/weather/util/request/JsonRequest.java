@@ -21,6 +21,10 @@ import netease.com.weather.util.PrefHelper;
 public class JsonRequest<T> extends BaseRequest<T> {
 
     private TypeToken<T> mTypeToken;
+    public final static String ENCODE_GBK = "GBK";
+    public final static String ENCODE_UTF8 = "utf-8";
+    private String mEncode = ENCODE_UTF8;
+
 
     public JsonRequest(String url, TypeToken<T> typeToken, IResponseListener<T> responseListener) {
         super(url, responseListener);
@@ -47,10 +51,14 @@ public class JsonRequest<T> extends BaseRequest<T> {
         return super.getHeaders();
     }
 
+    public void setEncode(String encode) {
+        mEncode = encode;
+    }
+
     @Override
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
-            String jsonStr = new String(response.data, "utf-8");
+            String jsonStr = new String(response.data, mEncode);
             if (!TextUtils.isEmpty(jsonStr)) {
                 T o = JsonUtils.fromJson(jsonStr, mTypeToken);
                 if (o != null) {

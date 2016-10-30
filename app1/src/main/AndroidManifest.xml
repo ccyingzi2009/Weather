@@ -70,6 +70,10 @@
             android:name=".ui.biz.pc.ProfileActivity"/>
 
         <service android:name=".ui.biz.update.VersionUpdateService"/>
+
+
+        <activity
+            android:name=".ui.biz.board.BoardActivity"/>
     </application>
 
 </manifest>

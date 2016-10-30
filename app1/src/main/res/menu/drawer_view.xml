@@ -6,9 +6,9 @@
         android:id="@+id/group1"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_library"
+            android:id="@+id/nav_board"
 
-            android:title="Library" />
+            android:title="版面列表" />
         <item
             android:id="@+id/nav_playlists"
 

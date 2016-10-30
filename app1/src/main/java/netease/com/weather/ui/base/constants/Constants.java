@@ -22,6 +22,10 @@ public class Constants {
     //reply
     public final static String URL_REPLY = BASE_URL + "article/%s/ajax_post.json";
 
+    //board
+    public final static String URL_BOARD = BASE_URL + "slist.json?uid=%s&root=%s";
+
+
     //以下为shareP
     //PreConstant
     public final static String PREF_ARCICLE = "pref_arcicle";

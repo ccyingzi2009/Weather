@@ -72,6 +72,7 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                BaseLoadListFragment.this.onScrolled(recyclerView, dx, dy);
             }
         });
 
@@ -122,6 +123,10 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
                 onPullUpToRefresh();
             }
         }
+    }
+
+    protected void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        //super.onScrolled(recyclerView, dx, dy);
     }
 
     //下拉刷新

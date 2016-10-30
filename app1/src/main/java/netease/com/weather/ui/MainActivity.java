@@ -35,6 +35,7 @@ import netease.com.weather.data.model.UpdateBean;
 import netease.com.weather.data.model.UserBean;
 import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.base.constants.Constants;
+import netease.com.weather.ui.biz.board.BoardActivity;
 import netease.com.weather.ui.biz.main.SampleFragment;
 import netease.com.weather.ui.biz.pc.AccountModel;
 import netease.com.weather.ui.biz.pc.LoginActivity;
@@ -96,6 +97,9 @@ public class MainActivity extends BaseActivity {
                         break;
                     case R.id.nav_about:
                         checkUpdate();
+                        break;
+                    case R.id.nav_board:
+                        startActivity(new Intent(MainActivity.this, BoardActivity.class));
                         break;
                 }
                 return false;

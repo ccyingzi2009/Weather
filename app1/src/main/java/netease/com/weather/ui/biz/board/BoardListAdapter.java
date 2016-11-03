@@ -19,6 +19,7 @@ import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,8 +57,14 @@ public class BoardListAdapter extends PageAdapter<BoardBean> {
     @Override
     public void onBindBasicItemView(RecyclerView.ViewHolder holder, int position) {
         BoardViewHolder viewHolder = (BoardViewHolder) holder;
+
+
         viewHolder.boardName.setText(mData.get(position).getT());
 
+    }
+
+    private String patternBoardName(String t) {
+        Pattern pattern = Pattern.compile("<a href=(.*)+>([^<>]+)</a>");
     }
 
 

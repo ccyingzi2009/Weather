@@ -28,9 +28,19 @@
         style="@style/ArticleUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
         android:textColor="@color/base_list_name"
-        android:textSize="@dimen/list_text_content"
+        android:textSize="@dimen/board_list_title"
+        android:textStyle="bold"
         tools:text="版面列表"/>
 
+    <ImageView
+        android:id="@+id/board_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_arrow_right_black"/>
 
 </netease.com.weather.ui.view.ForegroundRelativeLayout>

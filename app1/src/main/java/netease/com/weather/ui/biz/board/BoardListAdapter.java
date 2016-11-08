@@ -3,34 +3,21 @@ package netease.com.weather.ui.biz.board;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
-import netease.com.weather.data.DataLoadingSubject;
-import netease.com.weather.data.model.ArticleSingleBean;
 import netease.com.weather.data.model.BoardBean;
 import netease.com.weather.ui.base.PageAdapter;
-import netease.com.weather.ui.biz.article.ArticleActivity;
-import netease.com.weather.ui.biz.pics.PicShowActivity;
-import netease.com.weather.util.StringUtils;
 
 /**
  * Created by user on 16-4-21.
@@ -58,24 +45,57 @@ public class BoardListAdapter extends PageAdapter<BoardBean> {
     public void onBindBasicItemView(RecyclerView.ViewHolder holder, int position) {
         BoardViewHolder viewHolder = (BoardViewHolder) holder;
 
+        String boardName = mData.get(position).getT();
+        viewHolder.boardName.setText(patternBoardName(boardName));
 
-        viewHolder.boardName.setText(mData.get(position).getT());
+        String id = mData.get(position).getId();
+        if (!TextUtils.isEmpty(id)) {//id不为空则为版块分组
+            viewHolder.boardArrow.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.boardArrow.setVisibility(View.GONE);
+        }
 
     }
 
     private String patternBoardName(String t) {
-        Pattern pattern = Pattern.compile("<a href=(.*)+>([^<>]+)</a>");
+        Pattern pattern = Pattern.compile(">([^<>]+)<");
+        Matcher uMatcher = pattern.matcher(t);
+        if (uMatcher.find()) {
+            t = uMatcher.group(0);
+            t = t.replaceAll("<", "").replaceAll(">", "");
+        }
+        return t;
     }
 
 
-    /* package */ static class BoardViewHolder extends RecyclerView.ViewHolder {
+    class BoardViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.board_name)
         TextView boardName;
+        @BindView(R.id.board_arrow)
+        ImageView boardArrow;
 
         public BoardViewHolder(final View view) {
             super(view);
             ButterKnife.bind(this, view);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getLayoutPosition();
+                    BoardBean boardBean = mData.get(position);
+                    String id = boardBean.getId();
+                    if (!TextUtils.isEmpty(id)) {//id不为空则为版块分组
+                        Bundle args = new Bundle();
+                        args.putString(BoardListFragment.PARAM_BOARD, id);
+                        Intent i = new Intent(mActivity, BoardActivity.class);
+                        i.putExtras(args);
+                        mActivity.startActivity(i);
+                    } else {
+
+                    }
+                }
+            });
+
         }
     }
 }

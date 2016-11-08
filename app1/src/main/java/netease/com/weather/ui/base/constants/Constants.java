@@ -24,6 +24,9 @@ public class Constants {
 
     //board
     public final static String URL_BOARD = BASE_URL + "slist.json?uid=%s&root=%s";
+    //board_article
+    public final static String URL_BOARD_ARTICLE = M_BASE_URL + "board/%s";
+
 
 
     //以下为shareP

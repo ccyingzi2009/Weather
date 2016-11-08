@@ -1,5 +1,7 @@
 package netease.com.weather.ui.biz.board;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
@@ -19,12 +21,24 @@ import netease.com.weather.util.request.JsonRequest;
  */
 
 public class BoardListFragment extends BaseLoadListFragment<BoardBean> {
+    public final static String PARAM_BOARD = "param_board";
     private String mBoardId = "list-section";
     public final static String DEFAULT_ACCOUNT = "guest";
 
     @Override
     protected PageAdapter<BoardBean> createAdapter() {
         return new BoardListAdapter((BoardActivity) getActivity());
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        if (args != null) {
+            if (!TextUtils.isEmpty(args.getString(PARAM_BOARD))) {
+                mBoardId = args.getString(PARAM_BOARD);
+            }
+        }
     }
 
     @Override

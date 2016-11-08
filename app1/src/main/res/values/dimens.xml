@@ -24,5 +24,7 @@
     <dimen name="list_text_content">12sp</dimen>
     <dimen name="list_text_quote">10sp</dimen>
 
+    <dimen name="board_list_title">14sp</dimen>
+
 
 </resources>

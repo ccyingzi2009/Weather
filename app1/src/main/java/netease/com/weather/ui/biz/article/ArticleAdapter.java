@@ -49,7 +49,7 @@ public class ArticleAdapter extends PageAdapter<Article.ArticleEntity> implement
     }
 
 
-    /* package */ static class CommentHolder extends RecyclerView.ViewHolder {
+    public class CommentHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.content)
         TextView content;

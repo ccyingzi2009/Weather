@@ -1,57 +1,42 @@
 package netease.com.weather.ui;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.text.TextUtils;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.support.annotation.IdRes;
+import android.support.annotation.Nullable;
+import android.widget.FrameLayout;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.android.volley.VolleyError;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.google.gson.reflect.TypeToken;
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabSelectListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 import netease.com.weather.R;
-import netease.com.weather.data.event.LoginEvent;
-import netease.com.weather.data.model.UpdateBean;
-import netease.com.weather.data.model.UserBean;
 import netease.com.weather.ui.base.BaseActivity;
-import netease.com.weather.ui.base.constants.Constants;
-import netease.com.weather.ui.biz.board.BoardActivity;
-import netease.com.weather.ui.biz.main.SampleFragment;
-import netease.com.weather.ui.biz.pc.AccountModel;
-import netease.com.weather.ui.biz.pc.LoginActivity;
-import netease.com.weather.ui.biz.pc.ProfileActivity;
-import netease.com.weather.ui.biz.test.TestActivity;
-import netease.com.weather.ui.biz.update.VersionUpdateModel;
-import netease.com.weather.ui.biz.update.VersionUpdateService;
-import netease.com.weather.util.SystemUtils;
-import netease.com.weather.util.request.BaseRequest;
-import netease.com.weather.util.request.JsonRequest;
-import netease.com.weather.util.request.VolleyUtils;
 
 
 public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.nav_view)
+    @BindView(R.id.bottomBar)
+    BottomBar bottomBar;
+    @BindView(R.id.contentContainer)
+    FrameLayout contentContainer;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main1);
+        ButterKnife.bind(this);
+
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelected(@IdRes int tabId) {
+
+            }
+        });
+
+    }
+}
+/*    @BindView(R.id.nav_view)
     NavigationView navView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -190,9 +175,9 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    /**
-     * 登陆完成事件
-     */
+    *//**
+ * 登陆完成事件
+ *//*
     public void onEventMainThread(LoginEvent event) {
         if (event == null || TextUtils.isEmpty(event.getUserId())) {
             return;
@@ -245,4 +230,4 @@ public class MainActivity extends BaseActivity {
             }
         }
     }
-}
+}*/

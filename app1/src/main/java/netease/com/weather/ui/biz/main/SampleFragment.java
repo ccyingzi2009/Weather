@@ -52,8 +52,6 @@ public class SampleFragment extends BaseLoadFragment<MainBean> {
     private static final String ARG_TEXT = "ARG_TEXT";
     @BindView(R.id.recycle_view)
     RecyclerView mRecycleView;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
     private MainListAdapter mListAdapter;
     private List<MainSlider> mLists = new ArrayList<>();
 
@@ -82,12 +80,6 @@ public class SampleFragment extends BaseLoadFragment<MainBean> {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((BaseActivity) getActivity()).setSupportActionBar(mToolbar);
-        ActionBar ab = ((BaseActivity) getActivity()).getSupportActionBar();
-        if (ab != null) {
-            ab.setDisplayHomeAsUpEnabled(true);
-            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-        }
         loadNet();
     }
 

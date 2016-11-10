@@ -18,9 +18,9 @@
 
     <!-- main theme light. -->
     <style name="MainTheme" parent="AppThemeLight">
-        <!--设置statusBar楼出来抽屉-->
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!--&lt;!&ndash;设置statusBar楼出来抽屉&ndash;&gt;-->
+        <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+        <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
     </style>
 
     <!-- theme dark. -->

@@ -1,9 +1,15 @@
 package netease.com.weather.ui;
 
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
-import android.widget.FrameLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -12,20 +18,30 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.ui.base.BaseActivity;
+import netease.com.weather.ui.biz.board.BoardListFragment;
+import netease.com.weather.ui.biz.main.SampleFragment;
+import netease.com.weather.ui.biz.pc.ProfileFragment;
+import netease.com.weather.util.SystemBarTintManager;
 
 
 public class MainActivity extends BaseActivity {
 
     @BindView(R.id.bottomBar)
     BottomBar bottomBar;
-    @BindView(R.id.contentContainer)
-    FrameLayout contentContainer;
+    @BindView(R.id.viewPager)
+    ViewPager mViewPager;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
         ButterKnife.bind(this);
+
+        setSupportActionBar(mToolbar);
+        setupStatusBar();
 
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
@@ -34,6 +50,52 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        MainPagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager(), this);
+        mViewPager.setAdapter(adapter);
+        mViewPager.setOffscreenPageLimit(3);
+    }
+
+    private void setupStatusBar() {
+        SystemBarTintManager tintManager = new SystemBarTintManager(this/*, mTintViewContainer*/);
+        tintManager.setStatusBarTintEnabled(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            tintManager.setStatusBarTintColor(getResources().getColor(R.color.colorPrimary));
+        }
+    }
+
+    static class MainPagerAdapter extends FragmentStatePagerAdapter {
+        private Context mContext;
+
+        public MainPagerAdapter(FragmentManager fm, Context context) {
+            super(fm);
+            mContext = context;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment = null;
+            switch (position) {
+                case 0:
+                    fragment = Fragment.instantiate(mContext, SampleFragment.class.getName());
+                    break;
+                case 1:
+                    fragment = Fragment.instantiate(mContext, BoardListFragment.class.getName());
+                    break;
+                case 2:
+                    fragment = Fragment.instantiate(mContext, ProfileFragment.class.getName());
+                    break;
+                default:
+                    break;
+            }
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
     }
 }
 /*    @BindView(R.id.nav_view)

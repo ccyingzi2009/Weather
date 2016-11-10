@@ -63,14 +63,9 @@
         </activity>
 
         <activity
-            android:name=".ui.biz.test.TestActivity">
-        </activity>
-
-        <activity
-            android:name=".ui.biz.pc.ProfileActivity"/>
+            android:name=".ui.biz.test.TestActivity"/>
 
         <service android:name=".ui.biz.update.VersionUpdateService"/>
-
 
         <activity
             android:name=".ui.biz.board.BoardActivity"/>

@@ -69,4 +69,8 @@
     </style>
 
 
+    <style name="HomeToolbar" >
+        <item name="android:background">@color/toolbar_material_grey_850</item>
+    </style>
+
 </resources>

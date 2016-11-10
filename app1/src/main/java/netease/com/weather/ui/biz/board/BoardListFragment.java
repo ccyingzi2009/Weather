@@ -9,6 +9,8 @@ import com.google.gson.reflect.TypeToken;
 import java.util.List;
 
 import netease.com.weather.data.model.BoardBean;
+import netease.com.weather.ui.MainActivity;
+import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.base.BaseLoadListFragment;
 import netease.com.weather.ui.base.PageAdapter;
 import netease.com.weather.ui.base.constants.Constants;
@@ -27,7 +29,7 @@ public class BoardListFragment extends BaseLoadListFragment<BoardBean> {
 
     @Override
     protected PageAdapter<BoardBean> createAdapter() {
-        return new BoardListAdapter((BoardActivity) getActivity());
+        return new BoardListAdapter((BaseActivity) getActivity());
     }
 
     @Override

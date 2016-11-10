@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import netease.com.weather.R;
 import netease.com.weather.data.model.BoardBean;
+import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.base.PageAdapter;
 
 /**
@@ -24,9 +25,9 @@ import netease.com.weather.ui.base.PageAdapter;
  */
 public class BoardListAdapter extends PageAdapter<BoardBean> {
 
-    private BoardActivity mActivity;
+    private BaseActivity mActivity;
 
-    public BoardListAdapter(BoardActivity activity) {
+    public BoardListAdapter(BaseActivity activity) {
         super(null);
         mActivity = activity;
     }

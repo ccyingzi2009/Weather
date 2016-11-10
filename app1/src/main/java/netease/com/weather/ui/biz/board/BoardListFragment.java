@@ -11,6 +11,7 @@ import java.util.List;
 import netease.com.weather.data.model.BoardBean;
 import netease.com.weather.ui.MainActivity;
 import netease.com.weather.ui.base.BaseActivity;
+import netease.com.weather.ui.base.BaseLoadFragment;
 import netease.com.weather.ui.base.BaseLoadListFragment;
 import netease.com.weather.ui.base.PageAdapter;
 import netease.com.weather.ui.base.constants.Constants;
@@ -52,5 +53,13 @@ public class BoardListFragment extends BaseLoadListFragment<BoardBean> {
         JsonRequest r = new JsonRequest<List<BoardBean>>(url, new TypeToken<List<BoardBean>>() {}, null);
         r.setEncode(JsonRequest.ENCODE_GBK);
         return r;
+    }
+
+    @Override
+    public void onNetResponse(RefreshMode mode, List<BoardBean> response) {
+        super.onNetResponse(mode, response);
+        if (getAdapter() != null) {
+            getAdapter().showFooter(false);
+        }
     }
 }

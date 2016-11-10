@@ -9,7 +9,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ActionMenuView;
+import android.widget.TextView;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -41,18 +45,52 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
+        animateToolbar();
+
         setupStatusBar();
+
+        MainPagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager(), this);
 
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
+                switch (tabId) {
+                    //case R.id.tab_1:
+                    case R.id.tab_1:
+                        mViewPager.setCurrentItem(0, false);
+                        break;
+                    case R.id.tab_2:
+                        mViewPager.setCurrentItem(1, false);
+                        break;
+                    case R.id.tab_3:
+                        mViewPager.setCurrentItem(2, false);
+                        break;
 
+                }
             }
         });
 
-        MainPagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager(), this);
+
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(3);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (bottomBar != null) {
+                    bottomBar.selectTabAtPosition(position);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void setupStatusBar() {
@@ -60,7 +98,7 @@ public class MainActivity extends BaseActivity {
         tintManager.setStatusBarTintEnabled(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
-        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             tintManager.setStatusBarTintColor(getResources().getColor(R.color.colorPrimary));
         }
     }
@@ -97,6 +135,30 @@ public class MainActivity extends BaseActivity {
             return 3;
         }
     }
+
+    /**
+     * Toolbar的title动画
+     */
+    private void animateToolbar() {
+        // this is gross but toolbar doesn't expose it's children to animate them :(
+        View t = mToolbar.getChildAt(0);
+        if (t != null && t instanceof TextView) {
+            TextView title = (TextView) t;
+
+            // fade in and space out the title.  Animating the letterSpacing performs horribly so
+            // fake it by setting the desired letterSpacing then animating the scaleX ¯\_(ツ)_/¯
+            title.setAlpha(0f);
+            title.setScaleX(0.8f);
+
+            title.animate()
+                    .alpha(1f)
+                    .scaleX(1f)
+                    .setStartDelay(300)
+                    .setDuration(900)
+                    .setInterpolator(new LinearOutSlowInInterpolator());
+        }
+    }
+
 }
 /*    @BindView(R.id.nav_view)
     NavigationView navView;

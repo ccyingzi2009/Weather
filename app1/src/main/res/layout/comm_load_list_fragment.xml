@@ -6,14 +6,6 @@
                 android:fitsSystemWindows="true"
                 android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
     <LinearLayout
         android:id="@+id/layoutContent"
         android:layout_width="match_parent"

@@ -30,8 +30,6 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
     RecyclerView recycleView;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
 
 
     private PageAdapter<T> mAdapter;
@@ -79,7 +77,6 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
         recycleView.setLayoutManager(createLayoutManager());
         recycleView.addItemDecoration(new CustomItemDecoration(getContext(), CustomItemDecoration.VERTICAL_LIST));
 
-        ((BaseActivity) getActivity()).setSupportActionBar(toolbar);
     }
 
     protected abstract PageAdapter<T> createAdapter();
@@ -108,7 +105,7 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
         if (recycleView == null) {
             return;
         }
-        if (state == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && mPage != -1 && !mRefreshConfig.pageEnd) {
+        if (mAdapter.useFooter() && state == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && mPage != -1 && !mRefreshConfig.pageEnd) {
             int count = recycleView.getChildCount();
             RecyclerView.LayoutManager layoutManager = recycleView.getLayoutManager();
             int totalCount = 0;
@@ -156,7 +153,7 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
     }
 
     @Override
-    final public void onNetResponse(RefreshMode mode, List<T> response) {
+    public void onNetResponse(RefreshMode mode, List<T> response) {
         super.onNetResponse(mode, response);
         if (swipeRefreshLayout == null) return;
 
@@ -212,5 +209,9 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
     protected void onTaskStateChange(TaskState state) {
         super.onTaskStateChange(state);
 
+    }
+
+    protected PageAdapter getAdapter() {
+        return mAdapter;
     }
 }

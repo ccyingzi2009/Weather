@@ -47,8 +47,6 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(mToolbar);
         animateToolbar();
 
-        setupStatusBar();
-
         MainPagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager(), this);
 
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
@@ -93,15 +91,7 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    private void setupStatusBar() {
-        SystemBarTintManager tintManager = new SystemBarTintManager(this/*, mTintViewContainer*/);
-        tintManager.setStatusBarTintEnabled(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            tintManager.setStatusBarTintColor(getResources().getColor(R.color.colorPrimary));
-        }
-    }
+
 
     static class MainPagerAdapter extends FragmentStatePagerAdapter {
         private Context mContext;

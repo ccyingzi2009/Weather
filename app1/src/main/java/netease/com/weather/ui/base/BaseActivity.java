@@ -10,10 +10,12 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import netease.com.weather.R;
 import netease.com.weather.ui.view.swipback.SwipeBackActivityBase;
 import netease.com.weather.ui.view.swipback.SwipeBackActivityHelper;
 import netease.com.weather.ui.view.swipback.SwipeBackLayout;
 import netease.com.weather.ui.view.swipback.Utils;
+import netease.com.weather.util.SystemBarTintManager;
 
 /**
  * Created by liu_shuai on 16/4/20.
@@ -31,6 +33,18 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
 
         mHelper = new SwipeBackActivityHelper(this);
         mHelper.onActivityCreate();
+
+        setupStatusBar();
+    }
+
+    private void setupStatusBar() {
+        SystemBarTintManager tintManager = new SystemBarTintManager(this/*, mTintViewContainer*/);
+        tintManager.setStatusBarTintEnabled(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            tintManager.setStatusBarTintColor(getResources().getColor(R.color.colorPrimary));
+        }
     }
 
 

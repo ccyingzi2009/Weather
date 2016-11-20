@@ -1,11 +1,15 @@
 package netease.com.weather.ui.biz.article;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +24,8 @@ import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +35,7 @@ import netease.com.weather.data.model.ArticleSingleBean;
 import netease.com.weather.ui.base.PageAdapter;
 import netease.com.weather.ui.biz.pics.PicShowActivity;
 import netease.com.weather.util.StringUtils;
+import pl.droidsonroids.gif.GifDrawable;
 
 /**
  * Created by user on 16-4-21.
@@ -102,7 +109,7 @@ public class ArticleNewAdapter extends PageAdapter<ArticleSingleBean> implements
             @Override
             public void onClick(View v) {
                 Bundle args = new Bundle();
-                args.putSerializable(PicShowActivity.PIC_SHOW_IMGS, (ArrayList)mImgUrls);
+                args.putSerializable(PicShowActivity.PIC_SHOW_IMGS, (ArrayList) mImgUrls);
                 Intent intent = new Intent(mActivity, PicShowActivity.class);
                 intent.putExtras(args);
                 /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -118,9 +125,39 @@ public class ArticleNewAdapter extends PageAdapter<ArticleSingleBean> implements
     private void addContent(CommentHolder holder, String line) {
         View imgItem = LayoutInflater.from(mActivity).inflate(R.layout.activity_article_item_content, null, false);
         holder.contentContainer.addView(imgItem);
-        TextView contentView = (TextView) imgItem.findViewById(R.id.content);
+        final TextView contentView = (TextView) imgItem.findViewById(R.id.content);
         contentView.setMovementMethod(LinkMovementMethod.getInstance());
-        contentView.setText(Html.fromHtml(line));
+        //contentView.setText(Html.fromHtml(line));
+
+        SpannableStringBuilder sb = new SpannableStringBuilder(Html.fromHtml(line));
+        Pattern pattern = Pattern.compile("emoj(.*\\d.*) ");
+        Matcher matcher = pattern.matcher(line);
+        while (matcher.find()) {
+            GifDrawable gifDrawable = GifDrawable.createFromResource(mActivity.getResources(), R.drawable.a2);
+            if (gifDrawable != null) {
+                gifDrawable.setBounds(0, 0, gifDrawable.getIntrinsicWidth() * 2, gifDrawable.getIntrinsicHeight() * 2);
+                sb.setSpan(new ImageSpan(gifDrawable), matcher.start(), matcher.end() - 1, 0);
+                gifDrawable.setCallback(new Drawable.Callback() {
+                    @Override
+                    public void invalidateDrawable(@Nullable Drawable drawablem) {
+                        contentView.invalidate();
+                    }
+
+                    @Override
+                    public void scheduleDrawable(@Nullable Drawable drawablem, @Nullable Runnable runnablem, long lm) {
+                        contentView.postDelayed(runnablem, lm);
+                    }
+
+                    @Override
+                    public void unscheduleDrawable(@Nullable Drawable drawablem, @Nullable Runnable runnablem) {
+                        contentView.removeCallbacks(runnablem);
+
+                    }
+                });
+            }
+        }
+        contentView.setText(sb);
+
     }
 
     @Override

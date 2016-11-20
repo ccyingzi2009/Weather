@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
  */
 public class StringUtils {
     public final static String IMG_NODE = "<IMG_NODE>";
+    public final static String IMG_TAG = "emoj";
     public static Object[] parseMobileContent(String content) {
         String[] lines = content.split("<br>");
         ArrayList<String> attachList = new ArrayList();
@@ -18,11 +19,21 @@ public class StringUtils {
 
         boolean refStart = false;
         for (String line : lines) {
+            //处理a标签
             Pattern urlPattern = Pattern.compile("<a target=\"_blank\" href=\"([^<>]+)\"><img");
             Matcher urlMatcher = urlPattern.matcher(line);
             if (urlMatcher.find()) {
                 attachList.add(urlMatcher.group(1));
                 sb.append(IMG_NODE); //添加图片标签
+                continue;
+            }
+            //处理表情
+            Pattern imgPattern = Pattern.compile("<img src=\"/img/ubb/(.*\\d.*)\" style=([^<>]+)\">(.*)"); //style=[^<>]+>">(.*)
+            Matcher imgMatcher = imgPattern.matcher(line);
+            if (imgMatcher.find()) {
+                sb.append(IMG_TAG).append(imgMatcher.group(1)).append(" ");
+                sb.append(imgMatcher.group(3));
+                sb.append("<br/>");
                 continue;
             }
             if (line.startsWith("修改") || line.startsWith("FROM")) {

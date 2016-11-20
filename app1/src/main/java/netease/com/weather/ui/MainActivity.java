@@ -25,6 +25,7 @@ import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.biz.board.BoardListFragment;
 import netease.com.weather.ui.biz.main.SampleFragment;
 import netease.com.weather.ui.biz.pc.ProfileFragment;
+import netease.com.weather.ui.biz.test.TestFragment;
 import netease.com.weather.util.SystemBarTintManager;
 
 
@@ -112,7 +113,7 @@ public class MainActivity extends BaseActivity {
                     fragment = Fragment.instantiate(mContext, BoardListFragment.class.getName());
                     break;
                 case 2:
-                    fragment = Fragment.instantiate(mContext, ProfileFragment.class.getName());
+                    fragment = Fragment.instantiate(mContext, TestFragment.class.getName());
                     break;
                 default:
                     break;
@@ -323,7 +324,7 @@ public class MainActivity extends BaseActivity {
             UserBean userBean = AccountModel.getUserBean();
             if (userBean != null) {
                 //头像
-                assert imageView != null;
+                 imageView != null;
                 Glide.with(MainActivity.this).load(userBean.getFace_url())
                         .asBitmap()
                         .centerCrop()

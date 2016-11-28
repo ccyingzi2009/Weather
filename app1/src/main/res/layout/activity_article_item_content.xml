@@ -5,7 +5,4 @@
     android:id="@+id/content"
     style="@style/ArticleContent"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="bottom"
-    android:textSize="@dimen/list_text_content"
-    tools:text="这是内容"/>
+    android:layout_height="wrap_content"/>

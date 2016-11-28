@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
@@ -16,12 +17,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -34,6 +35,7 @@ import netease.com.weather.data.DataLoadingSubject;
 import netease.com.weather.data.model.ArticleSingleBean;
 import netease.com.weather.ui.base.PageAdapter;
 import netease.com.weather.ui.biz.pics.PicShowActivity;
+import netease.com.weather.ui.view.EmojImageSpan;
 import netease.com.weather.util.StringUtils;
 import pl.droidsonroids.gif.GifDrawable;
 
@@ -129,14 +131,26 @@ public class ArticleNewAdapter extends PageAdapter<ArticleSingleBean> implements
         contentView.setMovementMethod(LinkMovementMethod.getInstance());
         //contentView.setText(Html.fromHtml(line));
 
-        SpannableStringBuilder sb = new SpannableStringBuilder(Html.fromHtml(line));
-        Pattern pattern = Pattern.compile("emoj(.*\\d.*) ");
-        Matcher matcher = pattern.matcher(line);
+
+        line = line.replaceAll("<img", "#img");
+        String html = Html.fromHtml(line).toString();
+        SpannableStringBuilder sb = new SpannableStringBuilder(html);
+        Pattern pattern = Pattern.compile("#img\\s*src=\"/img/ubb/([^#>]+)\"\\s*style=([^#>]+>)");
+        Matcher matcher = pattern.matcher(sb);
         while (matcher.find()) {
-            GifDrawable gifDrawable = GifDrawable.createFromResource(mActivity.getResources(), R.drawable.a2);
+            String emojArr[] = matcher.group(1).split("/");
+            if (emojArr.length < 2) {
+                return;
+            }
+            GifDrawable gifDrawable = null;
+            try {
+                gifDrawable = new GifDrawable(mActivity.getAssets(), "img/" + emojArr[0] + "/" + emojArr[0] + emojArr[1]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (gifDrawable != null) {
-                gifDrawable.setBounds(0, 0, gifDrawable.getIntrinsicWidth() * 2, gifDrawable.getIntrinsicHeight() * 2);
-                sb.setSpan(new ImageSpan(gifDrawable), matcher.start(), matcher.end() - 1, 0);
+                gifDrawable.setBounds(0, 0, gifDrawable.getIntrinsicWidth() * 2 , gifDrawable.getIntrinsicHeight() * 2);
+                sb.setSpan(new ImageSpan(gifDrawable), matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 gifDrawable.setCallback(new Drawable.Callback() {
                     @Override
                     public void invalidateDrawable(@Nullable Drawable drawablem) {

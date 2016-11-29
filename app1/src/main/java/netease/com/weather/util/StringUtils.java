@@ -8,6 +8,9 @@ import java.util.regex.Pattern;
  * Created by user on 16-8-23.
  */
 public class StringUtils {
+
+    public final static String ASSERTS_PATH = "file:///android_asset/";
+
     public final static String IMG_NODE = "<IMG_NODE>";
     public static Object[] parseMobileContent(String content) {
         String[] lines = content.split("<br>");

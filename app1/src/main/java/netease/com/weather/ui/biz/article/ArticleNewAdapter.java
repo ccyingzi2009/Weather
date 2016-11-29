@@ -35,7 +35,6 @@ import netease.com.weather.data.DataLoadingSubject;
 import netease.com.weather.data.model.ArticleSingleBean;
 import netease.com.weather.ui.base.PageAdapter;
 import netease.com.weather.ui.biz.pics.PicShowActivity;
-import netease.com.weather.ui.view.EmojImageSpan;
 import netease.com.weather.util.StringUtils;
 import pl.droidsonroids.gif.GifDrawable;
 

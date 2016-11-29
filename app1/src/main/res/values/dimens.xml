@@ -26,5 +26,8 @@
 
     <dimen name="board_list_title">14sp</dimen>
 
+    <!--表情高度-->
+    <dimen name="reply_img">180dp</dimen>
+
 
 </resources>

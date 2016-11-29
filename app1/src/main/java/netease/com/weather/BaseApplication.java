@@ -13,7 +13,7 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        Stetho.initializeWithDefaults(this);
+        //Stetho.initializeWithDefaults(this);
         mInstance = this;
         //FreelineCore.init(this);
     }

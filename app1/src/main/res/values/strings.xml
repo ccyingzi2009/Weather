@@ -23,5 +23,5 @@
     <!--发表回复-->
     <string name="comment_loading">发表回复</string>
 
-
+    <item type="id" name="tag_img"/>
 </resources>

@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import netease.com.weather.R;
+import netease.com.weather.data.event.PicSelectEvent;
 import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.common.CommentReply;
 
@@ -30,6 +32,8 @@ public class ArticleActivity extends BaseActivity implements CommentReply.ReplyC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Fade explode = new Fade();
@@ -62,6 +66,8 @@ public class ArticleActivity extends BaseActivity implements CommentReply.ReplyC
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
+
     }
 
     @Override
@@ -84,6 +90,12 @@ public class ArticleActivity extends BaseActivity implements CommentReply.ReplyC
             if (fragment instanceof ArticleNewFragment) {
                 ((ArticleNewFragment) fragment).replySuccess();
             }
+        }
+    }
+
+    public void onEventMainThread(PicSelectEvent event) {
+        if (mReply != null) {
+            mReply.onPicSelected(event.getPicName());
         }
     }
 }

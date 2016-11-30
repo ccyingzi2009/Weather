@@ -23,7 +23,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import netease.com.weather.R;
+import netease.com.weather.data.event.PicSelectEvent;
 import netease.com.weather.ui.base.BaseFragment;
 import netease.com.weather.ui.view.AutoPlayTarget;
 import netease.com.weather.util.StringUtils;
@@ -36,35 +38,19 @@ public class ReplyImgFragment extends BaseFragment {
     private String mDirName;
     public final static String PARAM_DIR_NAME = "param_dir_name";
     private ImgAdapter mImgAdapter;
-    private ImgSelectedCallback mImgSelectedCallback;
-
-    public interface ImgSelectedCallback {
-        void onSelected(String text);
-    }
-
-    public  void registerImgSelectedCallback(ImgSelectedCallback callback) {
-        if (callback != null){
-            mImgSelectedCallback = callback;
-        }
-    }
-
-    public void unRegisterImgSelectedCallback() {
-        mImgSelectedCallback = null;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mDirName = getArguments().getString(PARAM_DIR_NAME);
-            mImgAdapter = new ImgAdapter(getContext(), mDirName, mImgSelectedCallback);
+            mImgAdapter = new ImgAdapter(getContext(), mDirName);
         }
 
     }
 
     @Override
     public void onDestroyView() {
-        unRegisterImgSelectedCallback();
         super.onDestroyView();
     }
 
@@ -94,12 +80,10 @@ public class ReplyImgFragment extends BaseFragment {
         private List<String> mImgPaths = new ArrayList<>();
         private LayoutInflater mLayoutInflater;
         private String mDirName;
-        private ImgSelectedCallback mImgSelectedCallback;
 
-        public ImgAdapter(Context context, String dirName, ImgSelectedCallback callback) {
+        public ImgAdapter(Context context, String dirName) {
             mLayoutInflater = LayoutInflater.from(context);
             mDirName = dirName;
-            mImgSelectedCallback = callback;
         }
 
         public void setImgPaths(List<String> imgPaths) {
@@ -171,15 +155,16 @@ public class ReplyImgFragment extends BaseFragment {
                 }
             });
 
-            view.setTag(R.id.tag_img, mImgPaths.get(i));
-            view.setOnClickListener(new View.OnClickListener() {
+            holder.img.setTag(R.id.tag_img, mImgPaths.get(i));
+            holder.img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     String name = (String) view.getTag(R.id.tag_img);
                     if (!TextUtils.isEmpty(name)) {
                         String[] ems = name.split("\\.");
-                        if (ems.length == 2)
-                        mImgSelectedCallback.onSelected("[" + ems[0] + "]");
+                        if (ems.length == 2) {
+                            EventBus.getDefault().post(new PicSelectEvent("[" + ems[0] + "]"));
+                        }
                     }
                 }
             });

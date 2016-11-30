@@ -32,7 +32,7 @@ import netease.com.weather.util.request.VolleyUtils;
  * Created by user on 16-10-27.
  */
 
-public class CommentReply implements View.OnClickListener, ReplyImgFragment.ImgSelectedCallback {
+public class CommentReply implements View.OnClickListener {
 
     private EditText mEditText;
     private String mArticleId;
@@ -43,12 +43,13 @@ public class CommentReply implements View.OnClickListener, ReplyImgFragment.ImgS
     private ViewPager mViewPager;
     private PageAdapter mAdapter;
 
-    @Override
-    public void onSelected(String text) {
+    public void onPicSelected(String picName) {
         if (mEditText != null) {
             String currentText = mEditText.getText().toString();
-            mEditText.setText(currentText + text);
-            mEditText.setSelection(mEditText.getText().length());
+            mEditText.setText(currentText + picName);
+            int selection = mEditText.getSelectionStart();
+            mEditText.setSelection(selection + picName.length());
+            
         }
     }
 
@@ -83,7 +84,7 @@ public class CommentReply implements View.OnClickListener, ReplyImgFragment.ImgS
             mReplyContainer = v.findViewById(R.id.comment_reply);
             mViewPager = (ViewPager) v.findViewById(R.id.viewPager);
             if (mAdapter == null) {
-                mAdapter = new PageAdapter(activity.getSupportFragmentManager(), this);
+                mAdapter = new PageAdapter(activity.getSupportFragmentManager());
             }
             mViewPager.setAdapter(mAdapter);
         }
@@ -91,11 +92,8 @@ public class CommentReply implements View.OnClickListener, ReplyImgFragment.ImgS
 
     public static class PageAdapter extends FragmentPagerAdapter {
 
-        public ReplyImgFragment.ImgSelectedCallback mCallback;
-
-        public PageAdapter(FragmentManager fm, ReplyImgFragment.ImgSelectedCallback callback) {
+        public PageAdapter(FragmentManager fm) {
             super(fm);
-            mCallback = callback;
         }
 
         @Override
@@ -118,7 +116,6 @@ public class CommentReply implements View.OnClickListener, ReplyImgFragment.ImgS
             Bundle args = new Bundle();
             args.putString(ReplyImgFragment.PARAM_DIR_NAME, dirName);
             ReplyImgFragment fragment = new ReplyImgFragment();
-            fragment.registerImgSelectedCallback(mCallback);
             fragment.setArguments(args);
             return fragment;
         }

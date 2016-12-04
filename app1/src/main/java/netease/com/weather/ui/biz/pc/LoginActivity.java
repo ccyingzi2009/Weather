@@ -1,5 +1,6 @@
 package netease.com.weather.ui.biz.pc;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;

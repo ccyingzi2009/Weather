@@ -113,7 +113,7 @@ public class MainActivity extends BaseActivity {
                     fragment = Fragment.instantiate(mContext, BoardListFragment.class.getName());
                     break;
                 case 2:
-                    fragment = Fragment.instantiate(mContext, TestFragment.class.getName());
+                    fragment = Fragment.instantiate(mContext, ProfileFragment.class.getName());
                     break;
                 default:
                     break;

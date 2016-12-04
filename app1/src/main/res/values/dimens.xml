@@ -28,6 +28,7 @@
 
     <!--表情高度-->
     <dimen name="reply_img">180dp</dimen>
-
+    <!--输入法初始化高度-->
+    <dimen name="reply_height_default">400dp</dimen>
 
 </resources>

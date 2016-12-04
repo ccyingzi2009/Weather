@@ -8,9 +8,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -24,6 +27,7 @@ import netease.com.weather.R;
 import netease.com.weather.data.model.CommentResponseBean;
 import netease.com.weather.ui.base.constants.Constants;
 import netease.com.weather.ui.biz.pc.AccountModel;
+import netease.com.weather.util.EmotionUtils;
 import netease.com.weather.util.request.BaseRequest;
 import netease.com.weather.util.request.CommentReplyRequest;
 import netease.com.weather.util.request.VolleyUtils;
@@ -43,13 +47,17 @@ public class CommentReply implements View.OnClickListener {
     private ViewPager mViewPager;
     private PageAdapter mAdapter;
 
+    public final static int PARAM_DELAY = 200;
+
     public void onPicSelected(String picName) {
         if (mEditText != null) {
             String currentText = mEditText.getText().toString();
-            mEditText.setText(currentText + picName);
-            int selection = mEditText.getSelectionStart();
-            mEditText.setSelection(selection + picName.length());
-            
+            StringBuilder sb = new StringBuilder(currentText);
+            int currentPosition = mEditText.getSelectionStart();
+            sb.insert(currentPosition, picName);
+            mEditText.setText(sb.toString());
+            mEditText.setSelection(currentPosition + picName.length());
+
         }
     }
 
@@ -81,13 +89,40 @@ public class CommentReply implements View.OnClickListener {
             v.findViewById(R.id.reply).setOnClickListener(this);
             v.findViewById(R.id.add_emoji).setOnClickListener(this);
             mEditText = (EditText) v.findViewById(R.id.reply_edit);
+            mEditText.setOnClickListener(this);
             mReplyContainer = v.findViewById(R.id.comment_reply);
             mViewPager = (ViewPager) v.findViewById(R.id.viewPager);
             if (mAdapter == null) {
                 mAdapter = new PageAdapter(activity.getSupportFragmentManager());
             }
             mViewPager.setAdapter(mAdapter);
+
+            final View root = mActivity.findViewById(android.R.id.content);
+            if (root != null) {
+                root.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        Log.d("CommentReply", "onGlobalLayout");
+                        if (!isEmotionVisible()) {
+                            setEmotionHeight(EmotionUtils.getInputHeight(mActivity));
+                        }
+                        if (EmotionUtils.isSoftInputShow(mActivity)) {
+                            int height = EmotionUtils.getSoftInputHeight(mActivity);
+                            if (height > 0) {
+                                EmotionUtils.setInputHeight(height);
+                            }
+                        }
+                    }
+                });
+            }
         }
+    }
+
+    public boolean isEmotionVisible() {
+        if (mViewPager != null) {
+            return mViewPager.getVisibility() == View.VISIBLE;
+        }
+        return false;
     }
 
     public static class PageAdapter extends FragmentPagerAdapter {
@@ -134,7 +169,54 @@ public class CommentReply implements View.OnClickListener {
                 send();
                 break;
             case R.id.add_emoji:
+                if (mViewPager != null) {
+                    if (mViewPager.getVisibility() == View.VISIBLE) {
+                        EmotionUtils.showSoftInput(mActivity, mEditText);
+                        v.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                hideEmotionView();
+
+                            }
+                        }, PARAM_DELAY);
+                    } else {
+                        showEmotionView();
+                        EmotionUtils.hideSoftInput(mActivity, mEditText);
+                    }
+
+                }
                 break;
+            case R.id.reply_edit:
+                v.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideEmotionView();
+                    }
+                }, PARAM_DELAY);
+                break;
+        }
+    }
+
+    private void setEmotionHeight(int height) {
+        ViewGroup.LayoutParams params = mViewPager.getLayoutParams();
+        params.height = height;
+    }
+
+    private void showEmotionView() {
+        if (mViewPager != null) {
+            mViewPager.setVisibility(View.VISIBLE);
+        }
+        if (mActivity != null) {
+            EmotionUtils.updateSoftInputMethod(mActivity, WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+        }
+    }
+
+    private void hideEmotionView() {
+        if (mViewPager != null) {
+            mViewPager.setVisibility(View.GONE);
+        }
+        if (mActivity != null) {
+            EmotionUtils.updateSoftInputMethod(mActivity, WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         }
     }
 

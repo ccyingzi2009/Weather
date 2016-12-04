@@ -32,5 +32,6 @@ public class Constants {
     //以下为shareP
     //PreConstant
     public final static String PREF_ARCICLE = "pref_arcicle";
+    public final static String PREF_INPUT_HEIGHT = "pref_input_height";
 
 }

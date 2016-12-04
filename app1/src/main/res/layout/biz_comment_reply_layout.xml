@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<netease.com.weather.ui.view.ForegroundLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                    android:layout_width="fill_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:orientation="vertical">
+<netease.com.weather.ui.view.ForegroundLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
     <!--父控件设置focusable && focusableInTouchMode 保证EditText不获取焦点-->
@@ -63,5 +64,6 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/reply_img"/>
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 </netease.com.weather.ui.view.ForegroundLinearLayout>

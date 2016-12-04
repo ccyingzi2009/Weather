@@ -21,6 +21,7 @@ import com.bumptech.glide.load.resource.gif.GifDrawable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -69,6 +70,7 @@ public class ReplyImgFragment extends BaseFragment {
         try {
             String[] imgs = assertManager.list("img/" + mDirName);
             List<String> imgPaths = Arrays.asList(imgs);
+            Collections.sort(imgPaths);
             mImgAdapter.setImgPaths(imgPaths);
         } catch (IOException e) {
             e.printStackTrace();

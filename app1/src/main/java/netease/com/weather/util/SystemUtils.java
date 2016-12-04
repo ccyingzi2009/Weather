@@ -23,6 +23,12 @@ public class SystemUtils {
         return dm.widthPixels;
     }
 
+    public static int getScreenHeight() {
+        Context context = BaseApplication.getInstance();
+        DisplayMetrics dm = context.getApplicationContext().getResources().getDisplayMetrics();
+        return dm.heightPixels;
+    }
+
     public static int getVersionCode() {
         int versionCode = 0;
         Context context = BaseApplication.getInstance();

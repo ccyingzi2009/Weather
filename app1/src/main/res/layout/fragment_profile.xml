@@ -11,7 +11,8 @@
         android:layout_width="@dimen/main_head_pic_size"
         android:layout_height="@dimen/main_head_pic_size"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="?attr/actionBarSize"/>
+        android:layout_marginTop="?attr/actionBarSize"
+        android:src="@drawable/avatar_default"/>
 </LinearLayout>
 
     <!--

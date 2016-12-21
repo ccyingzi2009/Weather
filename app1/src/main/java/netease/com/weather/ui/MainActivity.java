@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
+import com.tencent.smtt.sdk.QbSdk;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,6 +91,7 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+
     }
 
 

@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,7 +106,8 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
                     intent.putExtras(args);
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        mActivity.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(mActivity).toBundle());
+                        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(itemView, itemView.getWidth() / 2 , itemView.getHeight() / 2, 100, 0);
+                        mActivity.startActivity(intent, optionsCompat.toBundle());
                     }else {
                         mActivity.startActivity(intent);
                     }

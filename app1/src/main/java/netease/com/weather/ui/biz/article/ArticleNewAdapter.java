@@ -35,6 +35,7 @@ import netease.com.weather.data.DataLoadingSubject;
 import netease.com.weather.data.model.ArticleSingleBean;
 import netease.com.weather.ui.base.PageAdapter;
 import netease.com.weather.ui.biz.pics.PicShowActivity;
+import netease.com.weather.ui.view.CustomTextView;
 import netease.com.weather.util.StringUtils;
 import pl.droidsonroids.gif.GifDrawable;
 
@@ -86,7 +87,7 @@ public class ArticleNewAdapter extends PageAdapter<ArticleSingleBean> implements
 
         //绑定引用
         String quote = article.getQuote();
-        holder.articleQuote.setText(Html.fromHtml(quote));
+        holder.articleQuote.setText(quote);
         if (!TextUtils.isEmpty(quote)) {
             holder.quoteContainer.setVisibility(View.VISIBLE);
         } else {
@@ -126,50 +127,12 @@ public class ArticleNewAdapter extends PageAdapter<ArticleSingleBean> implements
     private void addContent(CommentHolder holder, String line) {
         View imgItem = LayoutInflater.from(mActivity).inflate(R.layout.activity_article_item_content, null, false);
         holder.contentContainer.addView(imgItem);
-        final TextView contentView = (TextView) imgItem.findViewById(R.id.content);
+        final CustomTextView contentView = (CustomTextView) imgItem.findViewById(R.id.content);
         contentView.setMovementMethod(LinkMovementMethod.getInstance());
         //contentView.setText(Html.fromHtml(line));
+        contentView.setText(line);
 
 
-        line = line.replaceAll("<img", "#img");
-        String html = Html.fromHtml(line).toString();
-        SpannableStringBuilder sb = new SpannableStringBuilder(html);
-        Pattern pattern = Pattern.compile("#img\\s*src=\"/img/ubb/([^#>]+)\"\\s*style=([^#>]+>)");
-        Matcher matcher = pattern.matcher(sb);
-        while (matcher.find()) {
-            String emojArr[] = matcher.group(1).split("/");
-            if (emojArr.length < 2) {
-                return;
-            }
-            GifDrawable gifDrawable = null;
-            try {
-                gifDrawable = new GifDrawable(mActivity.getAssets(), "img/" + emojArr[0] + "/" + emojArr[0] + emojArr[1]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (gifDrawable != null) {
-                gifDrawable.setBounds(0, 0, gifDrawable.getIntrinsicWidth() * 2 , gifDrawable.getIntrinsicHeight() * 2);
-                sb.setSpan(new ImageSpan(gifDrawable), matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                gifDrawable.setCallback(new Drawable.Callback() {
-                    @Override
-                    public void invalidateDrawable(@Nullable Drawable drawablem) {
-                        contentView.invalidate();
-                    }
-
-                    @Override
-                    public void scheduleDrawable(@Nullable Drawable drawablem, @Nullable Runnable runnablem, long lm) {
-                        contentView.postDelayed(runnablem, lm);
-                    }
-
-                    @Override
-                    public void unscheduleDrawable(@Nullable Drawable drawablem, @Nullable Runnable runnablem) {
-                        contentView.removeCallbacks(runnablem);
-
-                    }
-                });
-            }
-        }
-        contentView.setText(sb);
 
     }
 
@@ -193,7 +156,7 @@ public class ArticleNewAdapter extends PageAdapter<ArticleSingleBean> implements
         @BindView(R.id.quote_container)
         View quoteContainer;
         @BindView(R.id.article_quote)
-        TextView articleQuote;
+        CustomTextView articleQuote;
 
         public CommentHolder(final View view) {
             super(view);

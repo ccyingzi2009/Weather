@@ -1,12 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".ui.MainActivity">
+
+    <!-- <LinearLayout
+         android:id="@+id/title_bar"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:background="@color/background_light"
+         android:baselineAligned="false"
+         android:minHeight="?android:actionBarSize"
+         android:orientation="horizontal"
+         android:paddingBottom="@dimen/spacing_micro"
+         android:paddingTop="@dimen/spacing_micro">
+
+         <ImageView
+             android:id="@+id/close"
+             android:layout_width="?android:actionBarSize"
+             android:layout_height="?android:actionBarSize"
+             android:layout_gravity="center"
+             android:padding="12dp"
+             android:src="@android:drawable/ic_delete"/>
+
+         <TextView
+             android:id="@+id/title"
+             style="@style/main_item_title"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_gravity="start|center_vertical"
+             android:layout_weight="1"
+             android:maxLines="1"/>
+
+     </LinearLayout>-->
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/HomeToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:titleTextColor="@android:color/white"/>
 
     <FrameLayout
         android:id="@+id/replyContainer"
@@ -18,6 +59,7 @@
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/replyContainer"/>
+        android:layout_above="@id/replyContainer"
+        android:layout_below="@id/toolbar"/>
 
 </RelativeLayout>

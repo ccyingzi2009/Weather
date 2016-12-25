@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,15 +103,18 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
                     String boardId = mList.get(getLayoutPosition()).getBoardId();
                     args.putString(ArticleModel.ARTICLE_ID, articleId);
                     args.putString(ArticleModel.ARTICLE_BOARDID, boardId);
+                    args.putString(ArticleModel.ARTICLE_TITLE,  mList.get(getLayoutPosition()).getTitle());
                     Intent intent = new Intent(mActivity, ArticleActivity.class);
                     intent.putExtras(args);
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(itemView, itemView.getWidth() / 2 , itemView.getHeight() / 2, 100, 0);
+                    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        ViewCompat.setTransitionName(title, "title");
+                        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity,
+                                title, "title");
                         mActivity.startActivity(intent, optionsCompat.toBundle());
                     }else {
-                        mActivity.startActivity(intent);
-                    }
+                    }*/
+                    mActivity.startActivity(intent);
                 }
             });
         }

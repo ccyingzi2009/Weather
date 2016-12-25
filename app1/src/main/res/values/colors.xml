@@ -26,4 +26,6 @@
 
     <!--toolbar-->
     <color name="toolbar_material_grey_850">#ff303030</color>
+    <color name="background_light">#fafafa</color> <!-- grey 50 -->
+
 </resources>

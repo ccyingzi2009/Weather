@@ -44,6 +44,7 @@ public class CommentReply implements View.OnClickListener {
     private ReplyCallback mReplyCallback;
     private AppCompatActivity mActivity;
     private View mReplyContainer;
+    private View mCommentControl;
     private ViewPager mViewPager;
     private PageAdapter mAdapter;
 
@@ -91,6 +92,7 @@ public class CommentReply implements View.OnClickListener {
             mEditText = (EditText) v.findViewById(R.id.reply_edit);
             mEditText.setOnClickListener(this);
             mReplyContainer = v.findViewById(R.id.comment_reply);
+            mCommentControl = v.findViewById(R.id.comment_control);
             mViewPager = (ViewPager) v.findViewById(R.id.viewPager);
             if (mAdapter == null) {
                 mAdapter = new PageAdapter(activity.getSupportFragmentManager());
@@ -298,6 +300,16 @@ public class CommentReply implements View.OnClickListener {
             //收起键盘
             InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0); //强制隐藏键盘
+        }
+    }
+
+    public void setEditTextShow(boolean b) {
+        if (b) {
+            mReplyContainer.setVisibility(View.VISIBLE);
+            mCommentControl.setVisibility(View.INVISIBLE);
+        }else {
+            mReplyContainer.setVisibility(View.INVISIBLE);
+            mCommentControl.setVisibility(View.VISIBLE);
         }
     }
 }

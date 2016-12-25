@@ -1,7 +1,6 @@
 package netease.com.weather.ui;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -12,12 +11,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ActionMenuView;
 import android.widget.TextView;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
-import com.tencent.smtt.sdk.QbSdk;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,8 +23,7 @@ import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.biz.board.BoardListFragment;
 import netease.com.weather.ui.biz.main.SampleFragment;
 import netease.com.weather.ui.biz.pc.ProfileFragment;
-import netease.com.weather.ui.biz.test.TestFragment;
-import netease.com.weather.util.SystemBarTintManager;
+import netease.com.weather.util.SystemUtils;
 
 
 public class MainActivity extends BaseActivity {
@@ -48,6 +44,7 @@ public class MainActivity extends BaseActivity {
 
         setSupportActionBar(mToolbar);
         animateToolbar();
+        SystemUtils.setStatusBarColor(this, getResources().getColor(R.color.colorPrimary));
 
         MainPagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager(), this);
 
@@ -93,7 +90,6 @@ public class MainActivity extends BaseActivity {
         });
 
     }
-
 
 
     static class MainPagerAdapter extends FragmentStatePagerAdapter {

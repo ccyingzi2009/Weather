@@ -57,6 +57,8 @@ public class ArticleHandler extends BaseHandler<List<ArticleSingleBean>> {
         return arrayList;
     }
 
+    //<a class=\"plant\">(\d*\/\d*)< 获取分页数据
+
     @Override
     public void save(String url) {
         List<ArticleSingleBean> arrayList = getData();

@@ -7,8 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
@@ -21,8 +24,6 @@ import de.greenrobot.event.EventBus;
 import netease.com.weather.R;
 import netease.com.weather.data.event.LoginEvent;
 import netease.com.weather.data.model.UserBean;
-import netease.com.weather.ui.MainActivity;
-import netease.com.weather.ui.base.BaseActivity;
 import netease.com.weather.ui.base.BaseFragment;
 import netease.com.weather.ui.base.constants.Constants;
 import netease.com.weather.util.request.BaseRequest;
@@ -34,8 +35,10 @@ import netease.com.weather.util.request.VolleyUtils;
  */
 public class ProfileFragment extends BaseFragment implements View.OnClickListener {
 
-    @BindView(R.id.profile_avatar)
-    ImageView profileAvatar;
+    @BindView(R.id.avatar)
+    ImageView mAvatar;
+    @BindView(R.id.userName)
+    TextView mUserName;
     private UserBean mUserBean;
 
 
@@ -54,7 +57,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         super.onViewCreated(view, savedInstanceState);
         EventBus.getDefault().register(this);
         initView();
-        profileAvatar.setOnClickListener(this);
+        mAvatar.setOnClickListener(this);
     }
 
     @Override
@@ -70,17 +73,22 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                     .asBitmap()
                     .centerCrop()
                     .placeholder(R.drawable.avatar_default)
-                    .into(new BitmapImageViewTarget(profileAvatar) {// 如何设置圆角
+                    .into(new BitmapImageViewTarget(mAvatar) {// 如何设置圆角
                         @Override
                         protected void setResource(Bitmap resource) {
                             super.setResource(resource);
                             RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(getResources(), resource);
                             drawable.setCircular(true);
-                            profileAvatar.setImageDrawable(drawable);
+                            mAvatar.setImageDrawable(drawable);
                         }
                     });
+
+            String userName = mUserBean.getUser_name();
+            mUserName.setText(userName);
+
+
         } else {
-            profileAvatar.setImageResource(R.drawable.avatar_default);
+            mAvatar.setImageResource(R.drawable.avatar_default);
         }
     }
 
@@ -111,5 +119,13 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             Intent i = new Intent(getContext(), LoginActivity.class);
             startActivity(i);
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 }

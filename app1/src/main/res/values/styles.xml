@@ -72,4 +72,15 @@
         <item name="android:background">@color/toolbar_material_grey_850</item>
     </style>
 
+    <style name="main_item_title" >
+        <item name="android:textSize">@dimen/main_list_title</item>
+        <item name="android:textColor">@color/list_title_color</item>
+    </style>
+
+    <!--个人页面 item-->
+    <style name="profile_item_title" >
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/list_title_color</item>
+    </style>
+
 </resources>

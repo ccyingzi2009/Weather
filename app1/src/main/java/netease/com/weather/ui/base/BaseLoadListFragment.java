@@ -85,6 +85,12 @@ public abstract class BaseLoadListFragment<T> extends BaseLoadFragment<List<T>> 
         return new LinearLayoutManager(getContext());
     }
 
+    protected void setRefreshEnable(boolean enable) {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setEnabled(enable);
+        }
+    }
+
     @Override
     public void loadNet() {
         onPullDownToRefresh();

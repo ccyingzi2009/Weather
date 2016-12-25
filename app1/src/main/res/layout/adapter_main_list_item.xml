@@ -16,7 +16,6 @@
         android:gravity="center_vertical"
         android:lineSpacingMultiplier="1.4"
         android:maxLines="2"
-        android:textColor="@color/list_title_color"
-        android:textSize="17sp"/>
+        style="@style/main_item_title"/>
 
 </RelativeLayout>

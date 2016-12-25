@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import netease.com.weather.BaseApplication;
+import netease.com.weather.R;
 
 /**
  * Created by user on 16-8-25.
@@ -43,6 +44,20 @@ public class SystemUtils {
     }
 
     public static void setStatusBarColor(AppCompatActivity activity, int color) {
+        SystemBarTintManager tintManager = new SystemBarTintManager(activity);//*, mTintViewContainer*/
+        tintManager.setStatusBarTintEnabled(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            activity.getWindow().setStatusBarColor(color);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            tintManager.setStatusBarTintColor(color);
+        }
+    }
+
+    public static void setLightStatusBar() {
+
+    }
+
+    /*public static void setStatusBarColor(AppCompatActivity activity, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 设置状态栏透明
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -56,7 +71,7 @@ public class SystemUtils {
             rootView.setFitsSystemWindows(true);
             rootView.setClipToPadding(true);
         }
-    }
+    }*/
 
     /**
      * 生成一个和状态栏大小相同的矩形条

@@ -23,6 +23,13 @@ public class ArticleHandler extends BaseHandler<List<ArticleSingleBean>> {
 
     @Override
     public List<ArticleSingleBean> process(String html) {
+        Pattern pagePattern = Pattern.compile("<a class=\"plant\">(\\d*/\\d*)</a");
+        Matcher pageMatcher = pagePattern.matcher(html);
+        String page = null;
+        if (pageMatcher.find()) {
+            page = pageMatcher.group(1);
+        }
+
         //利用正则表达式解析数据
         Element element = Jsoup.parse(html);
         List<ArticleSingleBean> arrayList = new ArrayList<>();
@@ -49,7 +56,7 @@ public class ArticleHandler extends BaseHandler<List<ArticleSingleBean>> {
                 if (uMatcher.find()) {
                     bean.setUser(uMatcher.group(1));
                 }
-
+                bean.setPage(page);
             }
         }
 
@@ -57,7 +64,7 @@ public class ArticleHandler extends BaseHandler<List<ArticleSingleBean>> {
         return arrayList;
     }
 
-    //<a class=\"plant\">(\d*\/\d*)< 获取分页数据
+    // 获取分页数据
 
     @Override
     public void save(String url) {

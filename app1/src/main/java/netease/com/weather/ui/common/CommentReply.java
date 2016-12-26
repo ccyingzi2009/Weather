@@ -16,6 +16,7 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
@@ -45,8 +46,11 @@ public class CommentReply implements View.OnClickListener {
     private AppCompatActivity mActivity;
     private View mReplyContainer;
     private View mCommentControl;
+    private TextView mPage;
     private ViewPager mViewPager;
     private PageAdapter mAdapter;
+    private String mCurrentPage = "1";
+    private String mTotalPage = "1";
 
     public final static int PARAM_DELAY = 200;
 
@@ -92,6 +96,7 @@ public class CommentReply implements View.OnClickListener {
             mEditText = (EditText) v.findViewById(R.id.reply_edit);
             mEditText.setOnClickListener(this);
             mReplyContainer = v.findViewById(R.id.comment_reply);
+            mPage = (TextView) v.findViewById(R.id.tvPage);
             mCommentControl = v.findViewById(R.id.comment_control);
             mViewPager = (ViewPager) v.findViewById(R.id.viewPager);
             if (mAdapter == null) {
@@ -311,5 +316,27 @@ public class CommentReply implements View.OnClickListener {
             mReplyContainer.setVisibility(View.INVISIBLE);
             mCommentControl.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void setPage(String page) {
+        mPage.setText(page);
+    }
+
+    public void setTotalPage(String totalPage) {
+        mTotalPage = totalPage;
+        mPage.setText(mCurrentPage + "/" + mTotalPage);
+    }
+
+    public void setCurrentPage(String currentPage) {
+        mCurrentPage = currentPage;
+        mPage.setText(mCurrentPage + "/" + mTotalPage);
+    }
+
+    public String getTotalPage() {
+        return mTotalPage;
+    }
+
+    public String getCurrentPage() {
+        return mCurrentPage;
     }
 }

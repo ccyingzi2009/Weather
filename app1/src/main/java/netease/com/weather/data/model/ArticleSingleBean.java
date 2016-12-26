@@ -12,6 +12,7 @@ public class ArticleSingleBean implements Serializable{
     String user;
     private ArrayList<String> imgs;
     String quote;
+    String page;
 
     public String getContent() {
         return content;
@@ -43,5 +44,13 @@ public class ArticleSingleBean implements Serializable{
 
     public void setQuote(String quote) {
         this.quote = quote;
+    }
+
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
     }
 }

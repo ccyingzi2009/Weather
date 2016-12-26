@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="invisible">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="0dp"
@@ -62,26 +63,38 @@
 
     </LinearLayout>
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_reply"
+        android:visibility="gone"/>
     <RelativeLayout
         android:id="@+id/comment_control"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/comment_reply"
-        android:layout_alignTop="@id/comment_reply">
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/viewPager"
+        android:layout_toRightOf="@+id/viewPager">
 
         <ImageView
             android:id="@+id/refresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_refresh_black_24dp"/>
 
         <TextView
-            android:id="@+id/currentPage"
+            android:id="@+id/tvPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@drawable/comment_reply_page_bg"
+            android:gravity="center"
+            android:minWidth="80dp"
             android:paddingBottom="4dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -93,21 +106,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/currentPage"/>
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/tvPage"
+            android:src="@drawable/ic_arrow_left"/>
 
         <ImageView
             android:id="@+id/right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/currentPage"/>
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/tvPage"
+            android:src="@drawable/ic_arrow_right"/>
 
     </RelativeLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/comment_reply"
-        android:visibility="gone"/>
 </RelativeLayout>

@@ -4,9 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
 
     <application
@@ -27,12 +27,21 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme">
+        </activity>
+
+        <activity android:name=".ui.biz.welcome.AdActivity"/>
+
+        <!-- use an alias in case we want to change the launch activity later without breaking
+            homescreen shortcuts.  Note must be defined after the targetActivity -->
+        <activity-alias
+            android:name=".Launcher"
+            android:targetActivity=".ui.biz.welcome.AdActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity-alias>
 
-        </activity>
 
         <activity
             android:name=".ui.biz.article.ArticleActivity"
@@ -63,7 +72,7 @@
 
         <activity
             android:name=".ui.biz.pc.LoginActivity"
-            >
+        >
         </activity>
 
         <activity

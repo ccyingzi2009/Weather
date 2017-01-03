@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    android:fitsSystemWindows="true"
+    tools:context=".ui.MainActivity">
 
-   <Button
-       android:id="@+id/send"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:textSize="30dp"
-       android:gravity="center_horizontal"
-       android:text="send"/>
-</FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/replyContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
+    <include
+        layout="@layout/comm_load_list_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/replyContainer" />
+
+</RelativeLayout>

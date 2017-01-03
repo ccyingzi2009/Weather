@@ -26,13 +26,11 @@ import netease.com.weather.util.SystemUtils;
 /**
  * Created by user on 16-4-21.
  */
-public class ArticleActivity extends BaseActivity implements CommentReply.ReplyCallback {
+public class ArticleActivity extends BaseActivity {
 
-    @BindView(R.id.replyContainer)
-    FrameLayout mReplyContainer;
+
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    private CommentReply mReply;
 
 
     @Override
@@ -41,7 +39,6 @@ public class ArticleActivity extends BaseActivity implements CommentReply.ReplyC
         Bundle args = getIntent().getExtras();
         setContentView(R.layout.activity_article);
         ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
 
         //fideStatus();
         //mTitleBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -65,11 +62,8 @@ public class ArticleActivity extends BaseActivity implements CommentReply.ReplyC
             ft.add(R.id.fragmentContainer, f);
             ft.commit();
         }
-        String articleId = args.getString(ArticleModel.ARTICLE_ID);
-        String boardId = args.getString(ArticleModel.ARTICLE_BOARDID);
-        mReply = new CommentReply(this, mReplyContainer);
-        mReply.ready(boardId, articleId);
-        mReply.setOnReplyCallback(this);
+
+
     }
 
 
@@ -86,46 +80,5 @@ public class ArticleActivity extends BaseActivity implements CommentReply.ReplyC
             statusBarColorAnimate.setDuration(400);
             statusBarColorAnimate.start();
         }
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-
-    }
-
-    @Override
-    public void onEdit() {
-
-    }
-
-    @Override
-    public void onStartReply() {
-        showProgressDialog(R.string.comment_loading);
-    }
-
-    @Override
-    public void onReply(boolean success) {
-        dismissProgressDialog();
-        if (success) {
-            //成功
-            Toast.makeText(this, "回复成功", Toast.LENGTH_SHORT).show();
-            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-            if (fragment instanceof ArticleNewFragment) {
-                ((ArticleNewFragment) fragment).replySuccess();
-            }
-        }
-    }
-
-    public void onEventMainThread(PicSelectEvent event) {
-        if (mReply != null) {
-            mReply.onPicSelected(event.getPicName());
-        }
-    }
-
-    public CommentReply getCommentReply() {
-        return mReply;
     }
 }

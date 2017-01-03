@@ -49,8 +49,8 @@ public class CommentReply implements View.OnClickListener {
     private TextView mPage;
     private ViewPager mViewPager;
     private PageAdapter mAdapter;
-    private String mCurrentPage = "1";
-    private String mTotalPage = "1";
+    private int mCurrentPage = 1;
+    private int mTotalPage = 1;
 
     public final static int PARAM_DELAY = 200;
 
@@ -72,6 +72,8 @@ public class CommentReply implements View.OnClickListener {
         void onStartReply();
 
         void onReply(boolean success);
+
+        void onPageChange(boolean left);
     }
 
     public void setOnReplyCallback(ReplyCallback callback) {
@@ -98,6 +100,8 @@ public class CommentReply implements View.OnClickListener {
             mReplyContainer = v.findViewById(R.id.comment_reply);
             mPage = (TextView) v.findViewById(R.id.tvPage);
             mCommentControl = v.findViewById(R.id.comment_control);
+            v.findViewById(R.id.left).setOnClickListener(this);
+            v.findViewById(R.id.right).setOnClickListener(this);
             mViewPager = (ViewPager) v.findViewById(R.id.viewPager);
             if (mAdapter == null) {
                 mAdapter = new PageAdapter(activity.getSupportFragmentManager());
@@ -201,6 +205,23 @@ public class CommentReply implements View.OnClickListener {
                     }
                 }, PARAM_DELAY);
                 break;
+            case R.id.left:
+                if (mReplyCallback != null) {
+                    if (mCurrentPage > 1) {
+                        setCurrentPage(mCurrentPage--);
+                        mReplyCallback.onPageChange(true);
+                    }
+                }
+                break;
+            case R.id.right:
+                if (mReplyCallback != null) {
+                    if (mCurrentPage < mTotalPage) {
+                        setCurrentPage(mCurrentPage++);
+                        mReplyCallback.onPageChange(false);
+                    }
+                }
+                break;
+
         }
     }
 
@@ -312,7 +333,7 @@ public class CommentReply implements View.OnClickListener {
         if (b) {
             mReplyContainer.setVisibility(View.VISIBLE);
             mCommentControl.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             mReplyContainer.setVisibility(View.INVISIBLE);
             mCommentControl.setVisibility(View.VISIBLE);
         }
@@ -322,21 +343,21 @@ public class CommentReply implements View.OnClickListener {
         mPage.setText(page);
     }
 
-    public void setTotalPage(String totalPage) {
+    public void setTotalPage(int totalPage) {
         mTotalPage = totalPage;
         mPage.setText(mCurrentPage + "/" + mTotalPage);
     }
 
-    public void setCurrentPage(String currentPage) {
+    public void setCurrentPage(int currentPage) {
         mCurrentPage = currentPage;
         mPage.setText(mCurrentPage + "/" + mTotalPage);
     }
 
-    public String getTotalPage() {
+    public int getTotalPage() {
         return mTotalPage;
     }
 
-    public String getCurrentPage() {
+    public int getCurrentPage() {
         return mCurrentPage;
     }
 }

@@ -49,17 +49,11 @@
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:titleTextColor="@android:color/white"/>
 
-    <FrameLayout
-        android:id="@+id/replyContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
 
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/replyContainer"
         android:layout_below="@id/toolbar"/>
 
 </RelativeLayout>
